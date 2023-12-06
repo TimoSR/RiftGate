@@ -1,0 +1,100 @@
+# Service name and the Folder name should be the same on git!
+# Remember to update Service name on yaml file aswell.
+
+# Update the marked areas with x_service to eg. leaderboard_service... (The name needs to be small)
+
+############################
+name: PROD CI for x_service 
+############################
+
+############################
+env:
+  SERVICE_NAME: x_service
+############################
+
+on:
+  pull_request:
+    types: [opened, synchronize, closed]
+    branches:
+    - master
+    tags:
+      - 'v*'
+    paths:
+    # Path needs to be changed to fit Service Folder (As it does not support env)
+    ############################
+    - 'x_service/**'
+    ############################
+  workflow_dispatch:
+
+jobs:
+  test_dotnet_core:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet: ['7.x.x', '8.x.x']
+    steps:
+    
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ matrix.dotnet }}
+
+    - name: Run Tests
+      run: |
+        cd ${{ env.SERVICE_NAME }}
+        dotnet restore x_service.sln
+        dotnet test x_service.sln
+      env:
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+  build_push_docker:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    needs: [test_dotnet_core]
+    steps:
+
+      - uses: actions/checkout@v3
+
+      # - name: Where are we
+      #   run: |
+      #     ls
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-  
+     
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          #Github will hold the secrets
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract version or SHA
+        id: get_version
+        run: |
+          if [[ $GITHUB_REF == refs/tags/v* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+          else
+            VERSION=${GITHUB_SHA::7}
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: ./${{ env.SERVICE_NAME }}  # path to the directory that contains the Dockerfile
+          file: ./${{ env.SERVICE_NAME }}/Dockerfile  # path to the Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.SERVICE_NAME }}_prod:${{ env.VERSION }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
