@@ -18,6 +18,7 @@ You are not permitted to:
 
 Distribute or sublicense the Software to third parties.
 Use the Software for illegal purposes or in a way that disrupts others.
+
 4. Contributions and Fixes
 
 If you make any modifications or fixes to the Software, you agree to submit these changes back to Riftgate. Your contributions shall be licensed under the same terms as this Agreement.
