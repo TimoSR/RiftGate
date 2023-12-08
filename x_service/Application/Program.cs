@@ -1,6 +1,5 @@
 using Application._Registration.DataSeeder;
 using Application._Registration.Events;
-using Application._Registration.GraphQL;
 using Application._Registration.Services;
 using Application.Startup;
 using AspNetCoreRateLimit;
@@ -86,7 +85,7 @@ public class Program
         builder.Services.AddDomainServices();
 
         // Add / Disable GraphQL (MapGraphQL should be out-commented too)
-        builder.Services.AddGraphQlServices();
+        //builder.Services.AddGraphQlServices();
         
         //Adding the Controllers
         builder.Services.AddControllers();
@@ -167,7 +166,7 @@ public class Program
         // Websockets is required to enable subscriptions with GraphQL
         app.UseWebSockets();
 
-        app.MapGraphQL();
+        //app.MapGraphQL();
 
         await app.RunAsync();
     }
