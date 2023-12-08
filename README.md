@@ -1,2 +1,2 @@
-# RiftGate
-A Online Multiplayer Game System.
+# Riftgate
+Online Multiplayer Game Services.
