@@ -4,6 +4,10 @@ public class CreateAuctionCommand
 {
     public int ItemId { get; set; }
     public DateTime StartTime { get; set; }
+    //Unit Price (Stack)
+    //Duration
+    //Deposit (Cost of creating the auction)
+    //Total Price
     public DateTime EndTime { get; set; }
     public decimal StartingBid { get; set; }
     // Add any other properties that are required to create an auction
