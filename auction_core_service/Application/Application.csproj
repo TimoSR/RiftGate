@@ -41,7 +41,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="AppServices\#Interfaces\" />
+    <Folder Include="AppServices\V1\" />
     <Folder Include="AppServices\V2\" />
+    <Folder Include="Controllers\REST\V1\" />
     <Folder Include="Controllers\REST\V2\" />
   </ItemGroup>
   

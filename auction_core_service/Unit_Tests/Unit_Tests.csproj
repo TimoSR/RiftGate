@@ -31,10 +31,6 @@
 
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="UserManagement\Domain\" />
-    </ItemGroup>
-
 
 
 

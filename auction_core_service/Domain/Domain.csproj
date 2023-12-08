@@ -12,7 +12,11 @@
     <PackageReference Include="protobuf-net.Core" Version="3.2.26" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UserManagement\ValueObjects\" />
+    <Folder Include="Messages\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Services\#Interfaces\" />
+    <Folder Include="Utilities\" />
+    <Folder Include="ValueObjects\" />
     <Folder Include="_Shared\" />
     <Folder Include="_Shared\Events\Subscribed\" />
     <Folder Include="_Shared\Events\Topics\" />
