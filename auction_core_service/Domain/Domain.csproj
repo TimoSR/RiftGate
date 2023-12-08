@@ -13,7 +13,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Messages\" />
-    <Folder Include="Repositories\" />
     <Folder Include="Services\#Interfaces\" />
     <Folder Include="Utilities\" />
     <Folder Include="ValueObjects\" />
