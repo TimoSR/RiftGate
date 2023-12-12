@@ -1,4 +1,4 @@
-using Infrastructure.Persistence.Google_PubSub;
+using Infrastructure.Persistence._Interfaces;
 using MediatR;
 using x_serviceAPI.Features.AFeature.ApplicationLayer.IntegrationEvents.Published;
 using x_serviceAPI.Features.AFeature.DomainLayer.DomainEvents;
@@ -10,9 +10,9 @@ namespace x_serviceAPI.Features.AFeature.ApplicationLayer.EventHandlers;
 
 public class RegisterEventHandler : INotificationHandler<UserRegisteredDomainEvent>
 {
-    private readonly IntegrationEventHandler _integrationEventHandler; // Concrete implementation for publishing events
+    private readonly IIntegrationEventHandler _integrationEventHandler; // Concrete implementation for publishing events
 
-    public RegisterEventHandler(IntegrationEventHandler integrationEventHandler)
+    public RegisterEventHandler(IIntegrationEventHandler integrationEventHandler)
     {
         _integrationEventHandler = integrationEventHandler;
     }

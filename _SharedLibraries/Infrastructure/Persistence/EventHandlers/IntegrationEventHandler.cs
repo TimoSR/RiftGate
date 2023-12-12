@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Encoding = System.Text.Encoding;
 
-namespace Infrastructure.Persistence.Google_PubSub;
+namespace Infrastructure.Persistence.EventHandlers;
 
 public class IntegrationEventHandler : IIntegrationEventHandler
 {

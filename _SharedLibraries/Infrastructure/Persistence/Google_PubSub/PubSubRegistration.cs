@@ -1,6 +1,8 @@
+using CodingPatterns.DomainLayer;
 using Google.Cloud.PubSub.V1;
 using Grpc.Core;
 using Infrastructure.Persistence._Interfaces;
+using Infrastructure.Persistence.EventHandlers;
 using Infrastructure.UtilityServices._Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -44,6 +46,7 @@ public static class PubSubRegistration {
         });
         
         services.AddScoped<IIntegrationEventHandler, IntegrationEventHandler>();
+        services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
             
         return services;
     }

@@ -1,5 +1,6 @@
 using System.Reflection;
 using CodingPatterns.DomainLayer;
+using Infrastructure.Persistence.EventHandlers;
 
 namespace x_serviceAPI.Features._Registration;
 

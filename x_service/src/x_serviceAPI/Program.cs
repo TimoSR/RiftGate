@@ -1,5 +1,6 @@
 using Application._Registration.DataSeeder;
 using AspNetCoreRateLimit;
+using Infrastructure._Registration.Utilities;
 using Infrastructure.Middleware;
 using Infrastructure.Persistence.Google_PubSub;
 using Infrastructure.Persistence.MongoDB;

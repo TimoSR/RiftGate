@@ -1,5 +1,6 @@
 using System.Reflection;
-using _SharedKernel.Patterns.DomainRules;
+using CodingPatterns.DomainLayer;
+using Infrastructure.Persistence.EventHandlers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure._Registration.Repositories;

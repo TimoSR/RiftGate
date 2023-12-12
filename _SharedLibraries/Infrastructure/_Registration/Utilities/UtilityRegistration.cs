@@ -1,5 +1,5 @@
 using System.Reflection;
-using _SharedKernel.Patterns.RegistrationHooks.Utilities;
+using CodingPatterns.InfrastructureLayer.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure._Registration.Utilities;
@@ -10,7 +10,7 @@ public static class UtilityRegistration
     {   
         
         // Fetch all types that are classes and implement the IUtilityTool interface.
-        var types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.GetInterfaces().Contains(typeof(IUtilityTool)));
+        var types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.GetInterfaces().Contains(typeof(IUtilityService)));
 
         foreach (var type in types)
         {
