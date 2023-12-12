@@ -42,9 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AppServices\xFeature\V1\AppServices\#Interfaces\" />
-    <Folder Include="AppServices\xFeature\V1\Controllers\REST\" />
-    <Folder Include="AppServices\xFeature\V1\Controllers\WebHooks\" />
+    <Folder Include="Features\xFeature\ApplicationLayer\" />
+    <Folder Include="Features\xFeature\Domain\Entities\" />
+    <Folder Include="Features\xFeature\Infrastructure\Repositories\" />
   </ItemGroup>
   
 </Project>
