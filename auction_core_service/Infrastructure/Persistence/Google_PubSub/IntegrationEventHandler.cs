@@ -1,5 +1,5 @@
 using System.Reflection;
-using _SharedKernel.Patterns.IntegrationEvents;
+using _SharedKernel.Patterns.PubSub;
 using Google.Cloud.PubSub.V1;
 using Google.Protobuf;
 using Infrastructure.Persistence._Interfaces;
@@ -12,21 +12,21 @@ using Encoding = System.Text.Encoding;
 
 namespace Infrastructure.Persistence.Google_PubSub;
 
-public class EventHandler : IEventHandler
+public class IntegrationEventHandler : IIntegrationEventHandler
 {
     private readonly IJsonSerializer _jsonSerializer;
     private readonly IProtobufSerializer _protobufSerializer;
     private readonly PublisherServiceApiClient _publisherService;
-    private readonly ILogger<EventHandler> _logger;
+    private readonly ILogger<IntegrationEventHandler> _logger;
     private readonly string _projectId;
     private readonly string _serviceName;
 
-    public EventHandler(
+    public IntegrationEventHandler(
         IConfiguration config,
         PublisherServiceApiClient publisherService,
         IJsonSerializer jsonSerializer,
         IProtobufSerializer protobufSerializer,
-        ILogger<EventHandler> logger
+        ILogger<IntegrationEventHandler> logger
         )
     {
         _projectId = config.ProjectId;
@@ -89,7 +89,7 @@ public class EventHandler : IEventHandler
         }
     }
     
-    public async Task PublishJsonEventAsync<TEvent>(TEvent eventMessage) where TEvent : IPubEvent
+    public async Task PublishJsonEventAsync<TEvent>(TEvent eventMessage) where TEvent : IDomainEvent
     {
         var eventType = typeof(TEvent);
         var serializedMessage = _jsonSerializer.Serialize(eventMessage);
@@ -97,7 +97,7 @@ public class EventHandler : IEventHandler
         await PublishMessageAsync(eventMessage, topicId, eventType.Name, serializedMessage);
     }
 
-    public async Task PublishProtobufEventAsync<TEvent>(TEvent eventMessage) where TEvent : IPubEvent
+    public async Task PublishProtobufEventAsync<TEvent>(TEvent eventMessage) where TEvent : IDomainEvent
     {
         var eventType = typeof(TEvent);
         var serializedMessage = _protobufSerializer.Serialize(eventMessage);
@@ -115,7 +115,7 @@ public class EventHandler : IEventHandler
         return $"{_serviceName}-{eventName}";
     }
 
-    private async Task PublishMessageAsync<TEvent>(TEvent @event, string topicId, string eventType, string formattedMessage) where TEvent : IPubEvent
+    private async Task PublishMessageAsync<TEvent>(TEvent @event, string topicId, string eventType, string formattedMessage) where TEvent : IDomainEvent
     {
         var topicName = TopicName.FromProjectTopic(_projectId, topicId);
         

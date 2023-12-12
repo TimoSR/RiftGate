@@ -1,6 +1,8 @@
+using MediatR;
+
 namespace _SharedKernel.Patterns.RegistrationHooks.Events._Interfaces;
 
-public interface IPubEvent
+public interface IDomainEvent : INotification
 {
     string Message { get; }
 }

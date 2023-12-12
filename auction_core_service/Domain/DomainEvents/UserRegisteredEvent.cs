@@ -1,9 +1,10 @@
-using _SharedKernel.Patterns.DomainRules;
+using _SharedKernel.Patterns.RegistrationHooks.Events._Interfaces;
 
 namespace Domain.DomainEvents;
 
 public class UserRegisteredEvent : IDomainEvent
 {
+    public string Message { get; }
     public int UserId { get; }
     public string Username { get; }
     public string Email { get; }
@@ -16,4 +17,6 @@ public class UserRegisteredEvent : IDomainEvent
         Email = email;
         // Initialize other properties
     }
+
+ 
 }

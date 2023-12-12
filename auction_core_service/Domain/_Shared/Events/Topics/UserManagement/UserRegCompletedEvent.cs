@@ -6,7 +6,7 @@ namespace Domain._Shared.Events.Topics.UserManagement;
 
 [ProtoContract]
 [TopicName("UserRegCompletedTopic")]
-public class UserRegCompletedEvent : IPubEvent
+public class UserRegCompletedEvent : IDomainEvent
 {
     public string Message => "User Registration Completed!";
     

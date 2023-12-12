@@ -28,7 +28,7 @@ public class PubTopicsRegister
         // Using reflection to get all types implementing IPubEvent
         var eventTypes = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(assembly => assembly.GetTypes())
-            .Where(type => type.GetInterfaces().Contains(typeof(IPubEvent)) && !type.IsInterface)
+            .Where(type => type.GetInterfaces().Contains(typeof(IDomainEvent)) && !type.IsInterface)
             .ToList();
 
         foreach (var eventType in eventTypes)

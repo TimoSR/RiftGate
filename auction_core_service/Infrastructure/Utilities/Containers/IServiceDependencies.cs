@@ -5,5 +5,5 @@ namespace Infrastructure.Utilities.Containers;
 public interface IServiceDependencies
 {
     ICacheManager CacheManager { get; }
-    IEventHandler EventHandler { get; }
+    IIntegrationEventHandler IntegrationEventHandler { get; }
 }

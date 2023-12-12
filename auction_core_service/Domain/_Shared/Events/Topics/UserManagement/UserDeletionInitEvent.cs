@@ -6,7 +6,7 @@ namespace Domain._Shared.Events.Topics.UserManagement;
 
 [ProtoContract]
 [TopicName("UserDeletionInitTopic")]
-public class UserDeletionInitEvent : IPubEvent
+public class UserDeletionInitEvent : IDomainEvent
 {
     public string Message => "User Deletion Initiated";
     

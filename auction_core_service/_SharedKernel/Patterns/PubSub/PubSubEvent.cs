@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace _SharedKernel.Patterns.IntegrationEvents;
+namespace _SharedKernel.Patterns.PubSub;
 
 public class PubSubEvent
 {

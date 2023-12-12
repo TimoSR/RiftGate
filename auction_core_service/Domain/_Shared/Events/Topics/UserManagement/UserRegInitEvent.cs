@@ -6,7 +6,7 @@ namespace Domain._Shared.Events.Topics.UserManagement;
 
 [ProtoContract]
 [TopicName("UserRegInitTopic")]
-public class UserRegInitEvent : IPubEvent
+public class UserRegInitEvent : IDomainEvent
 {
     public string Message => "User registration Initiated";
 
