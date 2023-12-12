@@ -1,10 +1,10 @@
-using _SharedKernel.Patterns.RegistrationHooks.Events._Interfaces;
+using _SharedKernel.Patterns.InfrastructureLayer.IntegrationEvents;
 
 namespace Infrastructure.Persistence._Interfaces;
 
 public interface IIntegrationEventHandler
 {
-    Task PublishJsonEventAsync<TEvent>(TEvent eventMessage) where TEvent : IDomainEvent;
-    Task PublishProtobufEventAsync<TEvent>(TEvent eventMessage) where TEvent : IDomainEvent;
-    TEvent? ProcessReceivedEvent<TEvent>(string receivedEvent) where TEvent : class;
+    Task PublishJsonEventAsync<TEvent>(TEvent eventMessage) where TEvent : IPublishIntegrationEvent;
+    Task PublishProtobufEventAsync<TEvent>(TEvent eventMessage) where TEvent : IPublishIntegrationEvent;
+    TEvent? ProcessReceivedEvent<TEvent>(string receivedEvent) where TEvent : class, ISubscribeIntegrationEvent;
 }

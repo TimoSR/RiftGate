@@ -16,7 +16,7 @@ public class User : Entity, IAggregateRoot
         // User registration logic...
 
         // Raise the UserRegisteredEvent
-        var userRegisteredEvent = new UserRegisteredEvent(this.Id, this.Username, this.Email);
+        var userRegisteredEvent = new UserRegisteredDomainEvent(this.Id, this.Username, this.Email);
         this.AddDomainEvent(userRegisteredEvent);
     }
 

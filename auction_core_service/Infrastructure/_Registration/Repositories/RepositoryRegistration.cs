@@ -1,5 +1,5 @@
 using System.Reflection;
-using Infrastructure.Persistence._Interfaces;
+using _SharedKernel.Patterns.DomainRules;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure._Registration.Repositories;
@@ -8,9 +8,13 @@ public static class RepositoryRegistration
 {
     public static IServiceCollection AddApplicationRepositories(this IServiceCollection services)
     {
+        // Register DomainEventDispatcher
+        services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+        
+        //Registering IRepositories
         var types = Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract && t.GetInterfaces()
-                .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRepository<>)))
+                .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(Persistence._Interfaces.IRepository<>)))
             .ToList();
     
         if (!types.Any())
@@ -24,7 +28,7 @@ public static class RepositoryRegistration
             
             services.AddScoped(serviceType, type);
         }
-    
+
         return services;
     }
 }

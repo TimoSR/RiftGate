@@ -1,5 +1,5 @@
 using System.Reflection;
-using _SharedKernel.Patterns.RegistrationHooks.Services._Interfaces;
+using _SharedKernel.Patterns.ApplicationLayer.ApplicationServices;
 
 namespace Application._Registration.Services;
 

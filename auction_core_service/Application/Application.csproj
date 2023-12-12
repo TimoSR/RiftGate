@@ -42,10 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AppServices\V1\xService\Queries\Login\" />
-    <Folder Include="AppServices\V2\" />
-    <Folder Include="Controllers\REST\V1\" />
-    <Folder Include="Controllers\REST\V2\" />
+    <Folder Include="AppServices\xFeature\V1\AppServices\#Interfaces\" />
+    <Folder Include="AppServices\xFeature\V1\Controllers\REST\" />
+    <Folder Include="AppServices\xFeature\V1\Controllers\WebHooks\" />
   </ItemGroup>
   
 </Project>

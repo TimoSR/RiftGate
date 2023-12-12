@@ -1,11 +1,11 @@
 using System.Reflection;
-using _SharedKernel.Patterns.PubSub;
+using _SharedKernel.Patterns.InfrastructureLayer.IntegrationEvents;
+using _SharedKernel.Patterns.InfrastructureLayer.Persistence.GooglePubSub;
+using _SharedKernel.Patterns.IntegrationEvents.GooglePubSub._Attributes;
 using Google.Cloud.PubSub.V1;
 using Google.Protobuf;
 using Infrastructure.Persistence._Interfaces;
 using Infrastructure.Utilities._Interfaces;
-using _SharedKernel.Patterns.RegistrationHooks.Events._Attributes;
-using _SharedKernel.Patterns.RegistrationHooks.Events._Interfaces;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Encoding = System.Text.Encoding;
@@ -37,7 +37,7 @@ public class IntegrationEventHandler : IIntegrationEventHandler
         _protobufSerializer = protobufSerializer;
     }
 
-    public TEvent? ProcessReceivedEvent<TEvent>(string receivedEvent) where TEvent : class
+    public TEvent? ProcessReceivedEvent<TEvent>(string receivedEvent) where TEvent : class, ISubscribeIntegrationEvent
     {   
         var pubSubEvent = JsonConvert.DeserializeObject<PubSubEvent>(receivedEvent);
         if (pubSubEvent == null)
@@ -66,17 +66,8 @@ public class IntegrationEventHandler : IIntegrationEventHandler
         _logger.LogError("Both JSON and Protobuf Deserialization failed for event data: {EventData}", decodedString);
         return null;
     }
-
-    private void LogEventProcessed(PubSubEvent pubSubEvent)
-    {
-        _logger.LogInformation("Event Processed: Description: {Description}, Event Type: {EventType}, Message ID: {MessageID}, Publish Time: {PublishTime}",
-            pubSubEvent.Message.Attributes.Description,
-            pubSubEvent.Message.Attributes.EventType,
-            pubSubEvent.Message.MessageId,
-            pubSubEvent.Message.PublishTime);
-    }
     
-    private TEvent? TryDeserialize<TEvent>(string data, Func<string, TEvent?> deserializeFunc) where TEvent : class
+    private TEvent? TryDeserialize<TEvent>(string data, Func<string, TEvent?> deserializeFunc) where TEvent : class, ISubscribeIntegrationEvent
     {
         try
         {
@@ -88,8 +79,17 @@ public class IntegrationEventHandler : IIntegrationEventHandler
             return null;
         }
     }
+
+    private void LogEventProcessed(PubSubEvent pubSubEvent)
+    {
+        _logger.LogInformation("Event Processed: Description: {Description}, Event Type: {EventType}, Message ID: {MessageID}, Publish Time: {PublishTime}",
+            pubSubEvent.Message.Attributes.Description,
+            pubSubEvent.Message.Attributes.EventType,
+            pubSubEvent.Message.MessageId,
+            pubSubEvent.Message.PublishTime);
+    }
     
-    public async Task PublishJsonEventAsync<TEvent>(TEvent eventMessage) where TEvent : IDomainEvent
+    public async Task PublishJsonEventAsync<TEvent>(TEvent eventMessage) where TEvent : IPublishIntegrationEvent
     {
         var eventType = typeof(TEvent);
         var serializedMessage = _jsonSerializer.Serialize(eventMessage);
@@ -97,7 +97,7 @@ public class IntegrationEventHandler : IIntegrationEventHandler
         await PublishMessageAsync(eventMessage, topicId, eventType.Name, serializedMessage);
     }
 
-    public async Task PublishProtobufEventAsync<TEvent>(TEvent eventMessage) where TEvent : IDomainEvent
+    public async Task PublishProtobufEventAsync<TEvent>(TEvent eventMessage) where TEvent : IPublishIntegrationEvent
     {
         var eventType = typeof(TEvent);
         var serializedMessage = _protobufSerializer.Serialize(eventMessage);
@@ -115,7 +115,7 @@ public class IntegrationEventHandler : IIntegrationEventHandler
         return $"{_serviceName}-{eventName}";
     }
 
-    private async Task PublishMessageAsync<TEvent>(TEvent @event, string topicId, string eventType, string formattedMessage) where TEvent : IDomainEvent
+    private async Task PublishMessageAsync<TEvent>(TEvent @event, string topicId, string eventType, string formattedMessage) where TEvent : IPublishIntegrationEvent
     {
         var topicName = TopicName.FromProjectTopic(_projectId, topicId);
         
