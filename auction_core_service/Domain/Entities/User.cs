@@ -1,11 +1,24 @@
+using _SharedKernel.Patterns.DomainRules;
+using Domain.DomainEvents;
 using Domain.Enums;
 
 namespace Domain.Entities;
 
-public class User
+public class User : Entity, IAggregateRoot
 {
-    public int UserId { get; set; } // Unique identifier matching the User Management service
-    public string DisplayName { get; set; } // User's display name for auction purposes
-    public UserRole Role { get; set; }
-    public virtual ICollection<Bid> Bids { get; set; } // Collection of Bids
+    // User properties and methods
+    public override int Id { get; }
+    public string Username { get; }
+    public string Email { get; }
+
+    public void Register()
+    {
+        // User registration logic...
+
+        // Raise the UserRegisteredEvent
+        var userRegisteredEvent = new UserRegisteredEvent(this.Id, this.Username, this.Email);
+        this.AddDomainEvent(userRegisteredEvent);
+    }
+
+
 }

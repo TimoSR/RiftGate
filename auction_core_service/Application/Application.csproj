@@ -41,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AppServices\V1\" />
+    <Folder Include="AppServices\V1\xService\Queries\Login\" />
     <Folder Include="AppServices\V2\" />
     <Folder Include="Controllers\REST\V1\" />
     <Folder Include="Controllers\REST\V2\" />

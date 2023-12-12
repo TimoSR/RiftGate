@@ -21,7 +21,7 @@ public abstract class MongoRepository<T> : IRepository<T>
     protected IMongoCollection<T> GetCollection() => _dbManager.GetCollection<T>(CollectionName);
 
     private FilterDefinition<T> IdFilter(string id) => Builders<T>.Filter.Eq("Id", id);
-
+    
     public virtual async Task InsertAsync(T data)
     {
         try

@@ -1,9 +1,9 @@
 using System.Reflection;
+using _SharedKernel.Patterns.IntegrationEvents;
 using Google.Cloud.PubSub.V1;
 using Google.Protobuf;
 using Infrastructure.Persistence._Interfaces;
 using Infrastructure.Utilities._Interfaces;
-using _SharedKernel.Patterns.Events;
 using _SharedKernel.Patterns.RegistrationHooks.Events._Attributes;
 using _SharedKernel.Patterns.RegistrationHooks.Events._Interfaces;
 using Microsoft.Extensions.Logging;

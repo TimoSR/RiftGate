@@ -16,7 +16,7 @@
     <Folder Include="Services\#Interfaces\" />
     <Folder Include="Utilities\" />
     <Folder Include="ValueObjects\" />
-    <Folder Include="_Shared\" />
+    <Folder Include="_Shared\Errors\" />
     <Folder Include="_Shared\Events\Subscribed\" />
     <Folder Include="_Shared\Events\Topics\" />
   </ItemGroup>
