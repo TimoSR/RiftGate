@@ -1,4 +1,4 @@
-using CodingPatterns.Infrastructure.IntegrationEvents;
+using CodingPatterns.InfrastructureLayer.IntegrationEvents;
 
 namespace Infrastructure.Persistence._Interfaces;
 

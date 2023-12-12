@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace CodingPatterns.Infrastructure.GooglePubSub;
+namespace CodingPatterns.InfrastructureLayer.GooglePubSub;
 
 public class PubSubEvent
 {

@@ -1,4 +1,4 @@
-using CodingPatterns.Infrastructure.IntegrationEvents;
+using CodingPatterns.InfrastructureLayer.IntegrationEvents;
 using Infrastructure.Persistence._Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

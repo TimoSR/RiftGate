@@ -1,5 +1,5 @@
 using System.Security.Claims;
-using CodingPatterns.Infrastructure.Utilities;
+using CodingPatterns.InfrastructureLayer.Utilities;
 
 namespace Infrastructure.UtilityServices._Interfaces;
 

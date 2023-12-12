@@ -1,5 +1,5 @@
 using _SharedKernel.Patterns.IntegrationEvents.GooglePubSub._Attributes;
-using CodingPatterns.Infrastructure.IntegrationEvents;
+using CodingPatterns.InfrastructureLayer.IntegrationEvents;
 using Google.Api.Gax.ResourceNames;
 using Google.Cloud.PubSub.V1;
 using Infrastructure.UtilityServices._Interfaces;

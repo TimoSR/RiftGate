@@ -1,7 +1,7 @@
+using Infrastructure.Persistence.Google_PubSub;
 using MediatR;
 using x_serviceAPI.Features.AFeature.ApplicationLayer.IntegrationEvents.Published;
 using x_serviceAPI.Features.AFeature.DomainLayer.DomainEvents;
-using x_serviceAPI.Features.AFeature.InfrastructureLayer.Persistence.Google_PubSub;
 
 // Domain Handler should handle the consequences of a single event. If new domain events are to be raised
 //do not need to be explicitly called. Instead, they are automatically discovered and invoked by MediatR as long as they are registered in the application's dependency injection
