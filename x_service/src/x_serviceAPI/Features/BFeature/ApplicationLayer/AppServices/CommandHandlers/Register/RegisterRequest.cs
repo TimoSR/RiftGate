@@ -1,6 +1,4 @@
-using _SharedKernel.Patterns.DataTransferObjects;
-
-namespace Application.AppServices.xFeature.V1.AppServices.CommandHandlers.Register;
+namespace x_serviceAPI.Features.BFeature.ApplicationLayer.AppServices.CommandHandlers.Register;
 
 public class RegisterRequest : IRequest
 {

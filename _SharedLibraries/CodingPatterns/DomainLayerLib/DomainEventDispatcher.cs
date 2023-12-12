@@ -2,7 +2,7 @@ using MediatR;
 
 // Should be used within the repository dispatching the events after persistence (saved). 
 
-namespace _SharedKernel.Patterns.DomainRules;
+namespace DomainLayerLib;
 
 public class DomainEventDispatcher : IDomainEventDispatcher
 {

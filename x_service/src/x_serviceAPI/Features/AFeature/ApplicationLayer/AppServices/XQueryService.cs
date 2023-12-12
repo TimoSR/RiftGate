@@ -1,6 +1,6 @@
 
 
-namespace Application.AppServices.xFeature.V1.AppServices;
+namespace x_serviceAPI.Features.AFeature.ApplicationLayer.AppServices;
 
 public class XQueryService {
     

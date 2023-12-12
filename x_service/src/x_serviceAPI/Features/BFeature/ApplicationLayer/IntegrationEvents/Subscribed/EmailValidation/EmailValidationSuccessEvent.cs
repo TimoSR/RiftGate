@@ -1,8 +1,4 @@
-using _SharedKernel.Patterns.InfrastructureLayer.IntegrationEvents;
-using _SharedKernel.Patterns.IntegrationEvents.GooglePubSub._Attributes;
-using ProtoBuf;
-
-namespace Application.AppServices.xFeature.V1.IntegrationEvents.Subscribed.EmailValidation;
+namespace x_serviceAPI.Features.BFeature.ApplicationLayer.IntegrationEvents.Subscribed.EmailValidation;
 
 [ProtoContract]
 [TopicName("EmailValidationSuccessTopic")]

@@ -1,4 +1,4 @@
-namespace _SharedKernel.Patterns.DomainRules;
+namespace DomainLayerLib;
 
 public interface IDomainEventDispatcher
 {

@@ -1,12 +1,9 @@
-using Application.AppServices.xFeature.V1.IntegrationEvents.Published;
-using Domain.DomainEvents;
-using Infrastructure.Persistence.Google_PubSub;
-using MediatR;
+
 
 // Domain Handler should handle the consequences of a single event. If new domain events are to be raised
 //do not need to be explicitly called. Instead, they are automatically discovered and invoked by MediatR as long as they are registered in the application's dependency injection
 
-namespace Application.AppServices.V1.xService.EventHandlers;
+namespace x_serviceAPI.Features.AFeature.ApplicationLayer.EventHandlers;
 
 public class RegisterEventHandler : INotificationHandler<UserRegisteredDomainEvent>
 {

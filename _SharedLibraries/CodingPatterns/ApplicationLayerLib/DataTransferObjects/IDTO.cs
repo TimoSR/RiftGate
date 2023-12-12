@@ -1,4 +1,4 @@
-namespace _SharedKernel.Patterns.DataTransferObjects;
+namespace ApplicationLayerLib.DataTransferObjects;
 
 public interface IDto
 {

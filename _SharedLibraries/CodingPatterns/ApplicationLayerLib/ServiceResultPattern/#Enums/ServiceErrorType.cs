@@ -1,4 +1,4 @@
-namespace _SharedKernel.Patterns.ApplicationLayer.ServiceResultPattern._Enums;
+namespace ApplicationLayerLib.ServiceResultPattern._Enums;
 
 // Define the ErrorType enumeration
 public enum ServiceErrorType

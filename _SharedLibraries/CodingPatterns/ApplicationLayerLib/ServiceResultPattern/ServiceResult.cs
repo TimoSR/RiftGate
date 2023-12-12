@@ -1,6 +1,6 @@
-using _SharedKernel.Patterns.ApplicationLayer.ServiceResultPattern._Enums;
+using ApplicationLayerLib.ServiceResultPattern._Enums;
 
-namespace _SharedKernel.Patterns.ApplicationLayer.ServiceResultPattern;
+namespace ApplicationLayerLib.ServiceResultPattern;
 
 public class ServiceResult
 {

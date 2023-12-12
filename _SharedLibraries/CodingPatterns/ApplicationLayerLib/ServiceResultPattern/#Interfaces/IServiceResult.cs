@@ -1,4 +1,4 @@
-namespace _SharedKernel.Patterns._Interfaces;
+namespace ApplicationLayerLib.ServiceResultPattern._Interfaces;
 
 public interface IServiceResult
 {

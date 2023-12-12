@@ -1,6 +1,4 @@
-using _SharedKernel.Patterns.ApplicationLayer.ApplicationServices;
-
-namespace Application.AppServices.xFeature.V1.AppServices;
+namespace x_serviceAPI.Features.BFeature.ApplicationLayer.AppServices;
 
 public interface IXCommandService : IAppService
 {

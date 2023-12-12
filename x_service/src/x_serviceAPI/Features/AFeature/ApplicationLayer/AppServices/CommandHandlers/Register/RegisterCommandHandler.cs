@@ -1,4 +1,4 @@
-namespace Application.AppServices.xFeature.V1.AppServices.CommandHandlers.Register;
+namespace x_serviceAPI.Features.AFeature.ApplicationLayer.AppServices.CommandHandlers.Register;
 
 public class RegisterCommandHandler
 {

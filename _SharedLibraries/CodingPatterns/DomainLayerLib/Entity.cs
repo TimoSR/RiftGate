@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace _SharedKernel.Patterns.DomainRules;
+namespace DomainLayerLib;
 
 public abstract class Entity : IEntity
 {
