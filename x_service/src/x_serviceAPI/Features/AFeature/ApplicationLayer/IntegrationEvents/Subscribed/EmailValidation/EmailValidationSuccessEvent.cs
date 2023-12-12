@@ -1,3 +1,7 @@
+using _SharedKernel.Patterns.IntegrationEvents.GooglePubSub._Attributes;
+using CodingPatterns.Infrastructure.IntegrationEvents;
+using ProtoBuf;
+
 namespace x_serviceAPI.Features.AFeature.ApplicationLayer.IntegrationEvents.Subscribed.EmailValidation;
 
 [ProtoContract]
