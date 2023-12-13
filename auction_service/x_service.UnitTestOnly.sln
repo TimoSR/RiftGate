@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5B3E1754-6E81-43D4-BFE6-F06F9CB757E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "src\API\API.csproj", "{E94AAF62-441C-40E4-BE5B-A3D27B82278C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RiftGate-Microservice-Core", "RiftGate-Microservice-Core", "{D7800990-6997-4B93-853B-5DDAA9E8BB1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingPatterns", "src\RiftGate-Microservice-Core\CodingPatterns\CodingPatterns.csproj", "{C7F25F40-DCFF-4B30-9516-8B6E7DD5AE0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\RiftGate-Microservice-Core\Infrastructure\Infrastructure.csproj", "{C8CC70D4-6020-499B-836A-957FB038BD55}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1B1E2AC3-5485-4E91-8B64-3E7B2116BF15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "tests\UnitTests\UnitTests.csproj", "{F761D3C3-A300-4A00-887E-840663E43C30}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E94AAF62-441C-40E4-BE5B-A3D27B82278C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E94AAF62-441C-40E4-BE5B-A3D27B82278C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E94AAF62-441C-40E4-BE5B-A3D27B82278C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E94AAF62-441C-40E4-BE5B-A3D27B82278C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7F25F40-DCFF-4B30-9516-8B6E7DD5AE0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7F25F40-DCFF-4B30-9516-8B6E7DD5AE0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7F25F40-DCFF-4B30-9516-8B6E7DD5AE0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7F25F40-DCFF-4B30-9516-8B6E7DD5AE0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8CC70D4-6020-499B-836A-957FB038BD55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8CC70D4-6020-499B-836A-957FB038BD55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8CC70D4-6020-499B-836A-957FB038BD55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8CC70D4-6020-499B-836A-957FB038BD55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F761D3C3-A300-4A00-887E-840663E43C30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F761D3C3-A300-4A00-887E-840663E43C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F761D3C3-A300-4A00-887E-840663E43C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F761D3C3-A300-4A00-887E-840663E43C30}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E94AAF62-441C-40E4-BE5B-A3D27B82278C} = {5B3E1754-6E81-43D4-BFE6-F06F9CB757E9}
+		{D7800990-6997-4B93-853B-5DDAA9E8BB1C} = {5B3E1754-6E81-43D4-BFE6-F06F9CB757E9}
+		{C7F25F40-DCFF-4B30-9516-8B6E7DD5AE0A} = {D7800990-6997-4B93-853B-5DDAA9E8BB1C}
+		{C8CC70D4-6020-499B-836A-957FB038BD55} = {D7800990-6997-4B93-853B-5DDAA9E8BB1C}
+		{F761D3C3-A300-4A00-887E-840663E43C30} = {1B1E2AC3-5485-4E91-8B64-3E7B2116BF15}
+	EndGlobalSection
+EndGlobal
