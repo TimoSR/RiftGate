@@ -1,5 +1,6 @@
-using _SharedKernel.Patterns.RegistrationHooks.Events._Attributes;
-using _SharedKernel.Patterns.RegistrationHooks.Events._Interfaces;
+using _SharedKernel.Patterns.InfrastructureLayer.IntegrationEvents;
+using _SharedKernel.Patterns.IntegrationEvents;
+using _SharedKernel.Patterns.IntegrationEvents.GooglePubSub._Attributes;
 using Google.Api.Gax.ResourceNames;
 using Google.Cloud.PubSub.V1;
 using IConfiguration = Infrastructure.Utilities._Interfaces.IConfiguration;
@@ -28,7 +29,7 @@ public class PubTopicsRegister
         // Using reflection to get all types implementing IPubEvent
         var eventTypes = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(assembly => assembly.GetTypes())
-            .Where(type => type.GetInterfaces().Contains(typeof(IPubEvent)) && !type.IsInterface)
+            .Where(type => type.GetInterfaces().Contains(typeof(IPublishIntegrationEvent)) && !type.IsInterface)
             .ToList();
 
         foreach (var eventType in eventTypes)

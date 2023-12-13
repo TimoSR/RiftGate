@@ -1,5 +1,5 @@
 using System.Reflection;
-using _SharedKernel.Patterns.RegistrationHooks.Services._Interfaces;
+using _SharedKernel.Patterns.DomainLayer.DomainRules;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Domain._Shared.Registration;

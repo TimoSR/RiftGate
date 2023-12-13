@@ -90,6 +90,9 @@ public class Program
         //Adding the Controllers
         builder.Services.AddControllers();
         
+        //Mediator
+        builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
+        
         //Adding Automapper
         builder.Services.AddAutoMapper(typeof(Program));
 

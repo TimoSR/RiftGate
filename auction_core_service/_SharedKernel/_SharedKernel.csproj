@@ -7,7 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="MediatR" Version="12.2.0" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Patterns\ApplicationLayer\" />
+      <Folder Include="Patterns\DomainLayer\" />
+      <Folder Include="Patterns\RegistrationHooks\" />
     </ItemGroup>
 
 </Project>
