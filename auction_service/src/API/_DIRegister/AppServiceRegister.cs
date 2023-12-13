@@ -1,7 +1,7 @@
 using System.Reflection;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 
-namespace API.DIRegister;
+namespace API._DIRegister;
 
 public static class AppServiceRegister
 {
