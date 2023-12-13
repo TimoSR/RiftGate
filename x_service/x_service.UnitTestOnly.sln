@@ -3,19 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{199B2B45-E154-4B26-8824-E91E8E16E253}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{591A1559-54A9-455C-B330-9FD89AB7D214}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "src\API\API.csproj", "{5E1AB298-2DD9-442B-9565-8860F1E75EA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "Tests\UnitTests\UnitTests.csproj", "{3A2F6088-D8EC-49BE-8582-51D21121D802}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{016968FB-8BFC-4737-B4AE-CE0EF753A7DE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E41A90DB-09D0-4FB4-B68A-42F2EDF37204}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "Tests\UnitTests\UnitTests.csproj", "{3E70805E-D137-41D7-968D-4A5E8A52D73C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "src\API\API.csproj", "{2B85CA07-A296-4978-B91E-3458478BA84A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "Tests\IntegrationTests\IntegrationTests.csproj", "{44F32E4E-6E04-4B5C-A281-9462A38FF170}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "..\_SharedLibraries\Riftgate-Microservice-Core\Infrastructure\Infrastructure.csproj", "{17B30BE5-4CB1-4D55-95D8-5EF4BFEC6B54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingPatterns", "..\_SharedLibraries\Riftgate-Microservice-Core\CodingPatterns\CodingPatterns.csproj", "{5F57D628-FBE6-4B1E-9059-B26F01B9F4DC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "..\_SharedLibraries\Riftgate-Microservice-Core\Infrastructure\Infrastructure.csproj", "{06686A4F-62E0-403B-B1B1-ECC95087808C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingPatterns", "..\_SharedLibraries\Riftgate-Microservice-Core\CodingPatterns\CodingPatterns.csproj", "{59841B07-C659-4593-9566-3F9B5A6A1238}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,9 +32,19 @@ Global
 		{5551EF10-E5C0-4C73-9845-47FD408C48CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5551EF10-E5C0-4C73-9845-47FD408C48CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5551EF10-E5C0-4C73-9845-47FD408C48CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A2F6088-D8EC-49BE-8582-51D21121D802}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A2F6088-D8EC-49BE-8582-51D21121D802}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A2F6088-D8EC-49BE-8582-51D21121D802}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A2F6088-D8EC-49BE-8582-51D21121D802}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B85CA07-A296-4978-B91E-3458478BA84A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B85CA07-A296-4978-B91E-3458478BA84A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B85CA07-A296-4978-B91E-3458478BA84A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B85CA07-A296-4978-B91E-3458478BA84A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{44FAEF82-8E36-41C8-9679-BB23D7682848} = {570DA735-6DF5-470A-876D-5ECFFA229F19}
 		{5551EF10-E5C0-4C73-9845-47FD408C48CA} = {18E562B2-6B09-4DD6-B08B-BF7BF0BBE4E4}
+		{3A2F6088-D8EC-49BE-8582-51D21121D802} = {591A1559-54A9-455C-B330-9FD89AB7D214}
+		{2B85CA07-A296-4978-B91E-3458478BA84A} = {E41A90DB-09D0-4FB4-B68A-42F2EDF37204}
 	EndGlobalSection
 EndGlobal
