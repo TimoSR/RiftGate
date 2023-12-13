@@ -6,7 +6,7 @@ using Google.Api.Gax.ResourceNames;
 using Google.Cloud.PubSub.V1;
 using Infrastructure.Configuration;
 
-namespace API.DIRegister;
+namespace API._DIRegister;
 
 public class SubTopicsRegister
 {

@@ -2,7 +2,7 @@ using System.Reflection;
 using CodingPatterns.InfrastructureLayer.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure._Registration;
+namespace Infrastructure._DIRegister;
 
 public static class ServiceRegistration
 {

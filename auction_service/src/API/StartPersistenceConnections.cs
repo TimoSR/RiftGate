@@ -1,4 +1,4 @@
-using API.DIRegister;
+using API._DIRegister;
 using Infrastructure.Persistence._Interfaces;
 
 namespace API

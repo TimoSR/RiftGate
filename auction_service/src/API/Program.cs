@@ -1,6 +1,6 @@
-using API.DIRegister;
+using API._DIRegister;
 using AspNetCoreRateLimit;
-using Infrastructure._Registration;
+using Infrastructure._DIRegister;
 using Infrastructure.Configuration;
 using Infrastructure.Middleware;
 using Infrastructure.Persistence.Google_PubSub;

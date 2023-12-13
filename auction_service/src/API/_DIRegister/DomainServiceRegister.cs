@@ -1,7 +1,7 @@
 using System.Reflection;
 using CodingPatterns.DomainLayer;
 
-namespace API.DIRegister;
+namespace API._DIRegister;
 
 public static class DomainServiceRegister
 {
