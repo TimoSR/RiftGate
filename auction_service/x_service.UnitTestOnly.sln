@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingPatterns", "src\RiftG
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\RiftGate-Microservice-Core\Infrastructure\Infrastructure.csproj", "{DA768F53-FFE0-4AAE-B505-6F0DDB8CA54C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4C250669-D79A-4BC7-922E-9854E6C2863B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4C250669-D79A-4BC7-922E-9854E6C2863B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "Tests\UnitTests\UnitTests.csproj", "{30BAD856-4C02-4C57-8954-1BE1F72FD2AF}"
 EndProject
