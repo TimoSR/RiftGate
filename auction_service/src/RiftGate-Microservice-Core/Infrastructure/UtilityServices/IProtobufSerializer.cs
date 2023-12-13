@@ -1,8 +1,8 @@
 using CodingPatterns.InfrastructureLayer.Utilities;
 
-namespace Infrastructure.UtilityServices._Interfaces;
+namespace Infrastructure.UtilityServices;
 
-public interface IProtobufSerializer : IUtilityService
+public interface IProtobufSerializer : IFrastructureService
 {
     string Serialize<TData>(TData content);
     TModel Deserialize<TModel>(string content);

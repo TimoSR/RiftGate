@@ -3,7 +3,7 @@ using CodingPatterns.InfrastructureLayer.Utilities;
 
 namespace Infrastructure.UtilityServices._Interfaces;
 
-public interface ITokenHandler : IUtilityService
+public interface ITokenHandler : IFrastructureService
 {
     string GenerateJwtToken(string userId);
     ClaimsPrincipal? DecodeJwtToken(string token);

@@ -1,3 +1,3 @@
 namespace CodingPatterns.InfrastructureLayer.Utilities;
 
-public interface IUtilityService {}
+public interface IFrastructureService {}

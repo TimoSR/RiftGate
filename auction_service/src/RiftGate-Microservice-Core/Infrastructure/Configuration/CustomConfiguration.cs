@@ -2,7 +2,7 @@ using System.Collections;
 using Infrastructure.UtilityServices._Interfaces;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Infrastructure.UtilityServices;
+namespace Infrastructure.Configuration;
 
 public class CustomConfiguration : ICustomConfiguration
 {
