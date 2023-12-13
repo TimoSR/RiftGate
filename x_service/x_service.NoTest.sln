@@ -3,9 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DBA3D0E7-DDE7-4421-AB58-AA3CBC922DDF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{199B2B45-E154-4B26-8824-E91E8E16E253}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "x_serviceAPI", "src\x_serviceAPI\x_serviceAPI.csproj", "{2C30CF9B-B6AB-4F4B-9A8C-3E53BD623D89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "src\API\API.csproj", "{5E1AB298-2DD9-442B-9565-8860F1E75EA7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{016968FB-8BFC-4737-B4AE-CE0EF753A7DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "Tests\UnitTests\UnitTests.csproj", "{3E70805E-D137-41D7-968D-4A5E8A52D73C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "Tests\IntegrationTests\IntegrationTests.csproj", "{44F32E4E-6E04-4B5C-A281-9462A38FF170}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingPatterns", "..\_SharedLibraries\Riftgate-Microservice-Core\CodingPatterns\CodingPatterns.csproj", "{5F57D628-FBE6-4B1E-9059-B26F01B9F4DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "..\_SharedLibraries\Riftgate-Microservice-Core\Infrastructure\Infrastructure.csproj", "{06686A4F-62E0-403B-B1B1-ECC95087808C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
