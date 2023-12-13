@@ -35,8 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\_SharedLibraries\CodingPatterns\CodingPatterns.csproj" />
-    <ProjectReference Include="..\..\..\_SharedLibraries\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\_SharedLibraries\Riftgate-Microservice-Core\CodingPatterns\CodingPatterns.csproj" />
+    <ProjectReference Include="..\..\..\_SharedLibraries\Riftgate-Microservice-Core\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
