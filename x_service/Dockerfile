@@ -5,10 +5,6 @@ WORKDIR /app
 # Copy the solution file
 COPY ["x_service.NoTest.sln", "./"]
 
-# Copy shared libraries
-COPY ["src/_SharedLibraries/Riftgate-Microservice-Core/Infrastructure/Infrastructure.csproj", "src/_SharedLibraries/Riftgate-Microservice-Core/Infrastructure/"]
-COPY ["src/_SharedLibraries/Riftgate-Microservice-Core/CodingPatterns/CodingPatterns.csproj", "src/_SharedLibraries/Riftgate-Microservice-Core/CodingPatterns/"]
-
 # Copy csproj and restore
 COPY ["src/API/API.csproj", "src/API/"]
 RUN dotnet restore
