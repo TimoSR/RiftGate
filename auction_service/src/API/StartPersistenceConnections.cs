@@ -1,7 +1,7 @@
-using API.Features._DIRegister;
+using API.DIRegister;
 using Infrastructure.Persistence._Interfaces;
 
-namespace x_serviceAPI
+namespace API
 {
     public class StartPersistenceConnections : IHostedService
     {

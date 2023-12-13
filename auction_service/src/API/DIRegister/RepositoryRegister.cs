@@ -2,7 +2,7 @@ using System.Reflection;
 using CodingPatterns.DomainLayer;
 using Infrastructure.Persistence.EventHandlers;
 
-namespace API.Features._DIRegister;
+namespace API.DIRegister;
 
 public static class RepositoryRegister
 {

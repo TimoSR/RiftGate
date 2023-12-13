@@ -1,4 +1,4 @@
-using API.Features._DIRegister;
+using API.DIRegister;
 using AspNetCoreRateLimit;
 using Infrastructure._Registration;
 using Infrastructure.Configuration;
@@ -7,9 +7,6 @@ using Infrastructure.Persistence.Google_PubSub;
 using Infrastructure.Persistence.MongoDB;
 using Infrastructure.Persistence.Redis;
 using Infrastructure.Swagger;
-using Infrastructure.UtilityServices;
-using Infrastructure.UtilityServices._Interfaces;
-using x_serviceAPI;
 
 namespace API;
 
