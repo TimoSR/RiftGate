@@ -2,6 +2,7 @@ using _SharedKernel.Patterns.IntegrationEvents.GooglePubSub._Attributes;
 using CodingPatterns.InfrastructureLayer.IntegrationEvents;
 using Google.Api.Gax.ResourceNames;
 using Google.Cloud.PubSub.V1;
+using Infrastructure.Configuration;
 using Infrastructure.UtilityServices._Interfaces;
 
 namespace API.Features._DIRegister;

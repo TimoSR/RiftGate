@@ -1,7 +1,7 @@
 using System.Collections;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Infrastructure.UtilityServices._Interfaces;
+namespace Infrastructure.Configuration;
 
 public interface ICustomConfiguration
 {

@@ -2,15 +2,15 @@ using System.Reflection;
 using CodingPatterns.InfrastructureLayer.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure._Registration.Utilities;
+namespace Infrastructure._Registration;
 
-public static class UtilityRegistration
+public static class ServiceRegistration
 {
-    public static IServiceCollection RegisterUtilityServices(this IServiceCollection services)
+    public static IServiceCollection RegisterInfrastructureServices(this IServiceCollection services)
     {   
         
         // Fetch all types that are classes and implement the IUtilityTool interface.
-        var types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.GetInterfaces().Contains(typeof(IUtilityService)));
+        var types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.GetInterfaces().Contains(typeof(IFrastructureService)));
 
         foreach (var type in types)
         {
