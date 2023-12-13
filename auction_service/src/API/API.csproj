@@ -51,7 +51,8 @@
     <Folder Include="Features\MarketPlaceOperations\Auction\" />
     <Folder Include="Features\MarketPlaceOperations\Bidding\" />
     <Folder Include="Features\MarketPlaceOperations\Buyout\" />
-    <Folder Include="Features\_SharedKernel\Infrastructure\Services\" />
+    <Folder Include="Features\_SharedKernel\Domain\" />
+    <Folder Include="Features\_SharedKernel\Infrastructure\" />
     <Folder Include="Features\_SharedKernel\Utilities\" />
   </ItemGroup>
 
