@@ -3,18 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C0FB1F22-F386-4E98-8D99-817B4CD67494}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "src\API\API.csproj", "{8524437F-65A4-4F1D-B54C-6E7964018448}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8B456F40-411D-4D9D-A2C2-1EC12B1E1B42}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "Tests\UnitTests\UnitTests.csproj", "{07722915-FC7C-4702-9D0D-FE4EAED0C94B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "..\_SharedLibraries\Riftgate-Microservice-Core\Infrastructure\Infrastructure.csproj", "{17B30BE5-4CB1-4D55-95D8-5EF4BFEC6B54}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingPatterns", "..\_SharedLibraries\Riftgate-Microservice-Core\CodingPatterns\CodingPatterns.csproj", "{59841B07-C659-4593-9566-3F9B5A6A1238}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,29 +10,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{44FAEF82-8E36-41C8-9679-BB23D7682848}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44FAEF82-8E36-41C8-9679-BB23D7682848}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44FAEF82-8E36-41C8-9679-BB23D7682848}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44FAEF82-8E36-41C8-9679-BB23D7682848}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5551EF10-E5C0-4C73-9845-47FD408C48CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5551EF10-E5C0-4C73-9845-47FD408C48CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5551EF10-E5C0-4C73-9845-47FD408C48CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5551EF10-E5C0-4C73-9845-47FD408C48CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A2F6088-D8EC-49BE-8582-51D21121D802}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A2F6088-D8EC-49BE-8582-51D21121D802}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A2F6088-D8EC-49BE-8582-51D21121D802}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A2F6088-D8EC-49BE-8582-51D21121D802}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B85CA07-A296-4978-B91E-3458478BA84A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B85CA07-A296-4978-B91E-3458478BA84A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B85CA07-A296-4978-B91E-3458478BA84A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B85CA07-A296-4978-B91E-3458478BA84A}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{44FAEF82-8E36-41C8-9679-BB23D7682848} = {570DA735-6DF5-470A-876D-5ECFFA229F19}
-		{5551EF10-E5C0-4C73-9845-47FD408C48CA} = {18E562B2-6B09-4DD6-B08B-BF7BF0BBE4E4}
-		{3A2F6088-D8EC-49BE-8582-51D21121D802} = {591A1559-54A9-455C-B330-9FD89AB7D214}
-		{2B85CA07-A296-4978-B91E-3458478BA84A} = {E41A90DB-09D0-4FB4-B68A-42F2EDF37204}
 	EndGlobalSection
 EndGlobal
