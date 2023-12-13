@@ -3,15 +3,15 @@ using Infrastructure.Persistence._Interfaces;
 
 namespace x_serviceAPI
 {
-    public class StartExternalConnections : IHostedService
+    public class StartPersistenceConnections : IHostedService
     {
         private readonly IMongoDbManager _mongoDbManager;
         private readonly PubTopicsRegister _pubTopicsRegister;
         private readonly SubTopicsRegister _subTopicsRegister;
         private readonly ICacheManager _cacheManager;
-        private readonly ILogger<StartExternalConnections> _logger;
+        private readonly ILogger<StartPersistenceConnections> _logger;
 
-        public StartExternalConnections(IServiceProvider serviceProvider, ILogger<StartExternalConnections> logger)
+        public StartPersistenceConnections(IServiceProvider serviceProvider, ILogger<StartPersistenceConnections> logger)
         {
             _mongoDbManager = serviceProvider.GetService<IMongoDbManager>();
             _pubTopicsRegister = serviceProvider.GetService<PubTopicsRegister>();

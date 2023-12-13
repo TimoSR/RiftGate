@@ -68,7 +68,7 @@ public class Program
         builder.Services.AddSingleton<PubTopicsRegister>();
 
         // Hosting to make sure it dependencies connect on Program startup
-        builder.Services.AddHostedService<StartExternalConnections>();
+        builder.Services.AddHostedService<StartPersistenceConnections>();
 
         // Adding Dependencies to Service Dependency Container
         builder.Services.AddScoped<IServiceDependencies, ServiceDependencies>();
