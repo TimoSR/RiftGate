@@ -5,18 +5,17 @@ WORKDIR /app
 # Copy the solution file
 COPY ["x_service.NoTest.sln", "./"]
 
-# Copy the main API project - adjust the path as necessary
-COPY ["src/API/API.csproj", "./src/API/"]
-
-# Copy the shared library projects - adjust the path as necessary
-COPY ["_SharedLibraries/Riftgate-Microservice-Core/CodingPatterns/CodingPatterns.csproj", "./_SharedLibraries/Riftgate-Microservice-Core/CodingPatterns/"]
-COPY ["_SharedLibraries/Riftgate-Microservice-Core/Infrastructure/Infrastructure.csproj", "./_SharedLibraries/Riftgate-Microservice-Core/Infrastructure/"]
+# Copy the main API project and its dependencies
+COPY ["src/API/API.csproj", "src/API/"]
+COPY ["src/RiftGate-Microservice-Core/CodingPatterns/CodingPatterns.csproj", "src/RiftGate-Microservice-Core/CodingPatterns/"]
+COPY ["src/RiftGate-Microservice-Core/Infrastructure/Infrastructure.csproj", "src/RiftGate-Microservice-Core/Infrastructure/"]
 
 # Restore the packages
 RUN dotnet restore "x_service.NoTest.sln"
 
-# Copy the remaining source files and build the application
-COPY . .
+# Copy the source code
+COPY ["src/", "src/"]
+
 RUN dotnet publish "src/API/API.csproj" -c Release -o out
 
 # Use the runtime image to run the app
