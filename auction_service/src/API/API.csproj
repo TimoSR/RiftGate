@@ -41,7 +41,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\AFeature\InfrastructureLayer\Repositories\" />
+    <Folder Include="Features\AuctionManagement\LifeCycle\" />
+    <Folder Include="Features\AuctionManagement\Monitoring\" />
+    <Folder Include="Features\AuctionManagement\Reporting\" />
+    <Folder Include="Features\AuctionManagement\Transactions\" />
+    <Folder Include="Features\CatalogManagement\Analytics\" />
+    <Folder Include="Features\CatalogManagement\DataManagement\" />
+    <Folder Include="Features\CatalogManagement\ItemCataloging\" />
+    <Folder Include="Features\MarketPlaceOperations\Auction\" />
+    <Folder Include="Features\MarketPlaceOperations\Bidding\" />
+    <Folder Include="Features\MarketPlaceOperations\Buyout\" />
+    <Folder Include="Features\_SharedKernel\Infrastructure\Services\" />
+    <Folder Include="Features\_SharedKernel\Utilities\" />
   </ItemGroup>
 
 </Project>
