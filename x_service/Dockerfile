@@ -9,7 +9,9 @@ COPY ["x_service.NoTest.sln", "./"]
 # Copy csproj and restore
 COPY ["src/API/API.csproj", "src/API/"]
 
-
+# Copy shared libraries
+COPY ["_SharedLibraries/Riftgate-Microservice-Core/Infrastructure/Infrastructure.csproj", "SharedLibraries/Infrastructure/"]
+COPY ["_SharedLibraries/Riftgate-Microservice-Core/CodingPatterns/CodingPatterns.csproj", "SharedLibraries/CodingPatterns/"]
 
 RUN dotnet restore
 
