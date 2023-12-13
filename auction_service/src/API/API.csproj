@@ -42,7 +42,6 @@
 
   <ItemGroup>
     <Folder Include="Features\AFeature\InfrastructureLayer\Repositories\" />
-    <Folder Include="Features\AFeature\InfrastructureLayer\UtilityServices\" />
   </ItemGroup>
 
 </Project>

@@ -3,9 +3,8 @@ using CodingPatterns.InfrastructureLayer.IntegrationEvents;
 using Google.Api.Gax.ResourceNames;
 using Google.Cloud.PubSub.V1;
 using Infrastructure.Configuration;
-using Infrastructure.UtilityServices._Interfaces;
 
-namespace API.Features._DIRegister;
+namespace API.DIRegister;
 
 public class PubTopicsRegister
 {
