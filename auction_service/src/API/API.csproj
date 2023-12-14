@@ -48,7 +48,13 @@
     <Folder Include="Features\CatalogManagement\Analytics\" />
     <Folder Include="Features\CatalogManagement\DataManagement\" />
     <Folder Include="Features\CatalogManagement\ItemCataloging\" />
-    <Folder Include="Features\MarketPlaceOperations\Auction\" />
+    <Folder Include="Features\MarketPlaceOperations\Auction\Domain\_Shared\Entities\" />
+    <Folder Include="Features\MarketPlaceOperations\Auction\Domain\_Shared\Enums\" />
+    <Folder Include="Features\MarketPlaceOperations\Auction\Domain\_Shared\Events\" />
+    <Folder Include="Features\MarketPlaceOperations\Auction\Domain\_Shared\Exceptions\" />
+    <Folder Include="Features\MarketPlaceOperations\Auction\Domain\_Shared\Repositories\" />
+    <Folder Include="Features\MarketPlaceOperations\Auction\Domain\_Shared\Services\" />
+    <Folder Include="Features\MarketPlaceOperations\Auction\Domain\_Shared\ValueObjects\" />
     <Folder Include="Features\MarketPlaceOperations\Bidding\" />
     <Folder Include="Features\MarketPlaceOperations\Buyout\" />
     <Folder Include="Features\_SharedKernel\Domain\" />
