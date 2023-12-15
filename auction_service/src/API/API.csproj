@@ -41,22 +41,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\AuctionManagement\LifeCycle\" />
-    <Folder Include="Features\AuctionManagement\Monitoring\" />
-    <Folder Include="Features\AuctionManagement\Reporting\" />
-    <Folder Include="Features\AuctionManagement\Transactions\" />
-    <Folder Include="Features\CatalogManagement\Analytics\" />
-    <Folder Include="Features\CatalogManagement\DataManagement\" />
-    <Folder Include="Features\CatalogManagement\ItemCataloging\" />
-    <Folder Include="Features\MarketPlaceOperations\Auction\Domain\_Shared\Entities\" />
-    <Folder Include="Features\MarketPlaceOperations\Auction\Domain\_Shared\Enums\" />
-    <Folder Include="Features\MarketPlaceOperations\Auction\Domain\_Shared\Events\" />
-    <Folder Include="Features\MarketPlaceOperations\Auction\Domain\_Shared\Exceptions\" />
-    <Folder Include="Features\MarketPlaceOperations\Auction\Domain\_Shared\Repositories\" />
-    <Folder Include="Features\MarketPlaceOperations\Auction\Domain\_Shared\Services\" />
-    <Folder Include="Features\MarketPlaceOperations\Auction\Domain\_Shared\ValueObjects\" />
-    <Folder Include="Features\MarketPlaceOperations\Bidding\" />
-    <Folder Include="Features\MarketPlaceOperations\Buyout\" />
+    <Folder Include="Features\AFeature\Application\Controllers\V1\REST\" />
+    <Folder Include="Features\AFeature\Application\Controllers\V1\Webhooks\" />
+    <Folder Include="Features\AFeature\Application\Controllers\V2\" />
+    <Folder Include="Features\AFeature\Domain\AggregateRoots\" />
+    <Folder Include="Features\AFeature\Infrastructure\Repositories\" />
+    <Folder Include="Features\AFeature\Infrastructure\Services\" />
+    <Folder Include="Features\AuctionTimeObserver\" />
+    <Folder Include="Features\Buyout\" />
+    <Folder Include="Features\FilterAuctions\" />
+    <Folder Include="Features\MarketInsights\" />
+    <Folder Include="Features\Notifications\" />
+    <Folder Include="Features\ItemCatalogManagement\" />
+    <Folder Include="Features\ItemListing\" />
+    <Folder Include="Features\TransactionHistory\" />
     <Folder Include="Features\_SharedKernel\Domain\" />
     <Folder Include="Features\_SharedKernel\Infrastructure\" />
     <Folder Include="Features\_SharedKernel\Utilities\" />
