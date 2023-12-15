@@ -4,7 +4,7 @@ namespace CodingPatterns.DomainLayer;
 
 public abstract class Entity : IEntity
 {
-    public abstract int Id { get; }
+    public abstract string Id { get; }
 
     private List<INotification> _domainEvents;
     public IReadOnlyCollection<INotification> DomainEvents => _domainEvents?.AsReadOnly();
