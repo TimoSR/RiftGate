@@ -1,10 +1,9 @@
-using API.Features._shared.Domain;
-using API.Features.AuctionListing.ValueObjects;
+using API.Features.AuctionListing.Domain.ValueObjects;
 using CodingPatterns.DomainLayer;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace API.Features.AuctionListing;
+namespace API.Features.AuctionListing.Domain;
 
 public class Auction : Entity, IAggregateRoot
 {
@@ -12,17 +11,18 @@ public class Auction : Entity, IAggregateRoot
     
     public string SellerId { get; private set; }
     public Item Item { get; private set;}
-    public Price Price { get; private set; }
+    public Price AskPrice { get; private set; }
     public AuctionLength AuctionLength { get; private set;}
     private DateTime StartTime { get; }
-    public DateTime EndTime { get; private set; }
+    public DateTime EndTime { get; }
     public bool IsCompleted { get; private set; }
+    public Bid HighestBid { get; }
     
     public Auction(string sellerId, Item item, Price price, AuctionLength auctionLength)
     {
         SellerId = sellerId ?? throw new ArgumentNullException(nameof(sellerId));
         Item = item ?? throw new ArgumentNullException(nameof(item));
-        Price = price ?? throw new ArgumentNullException(nameof(price));
+        AskPrice = price ?? throw new ArgumentNullException(nameof(price));
         AuctionLength = auctionLength ?? throw new ArgumentNullException(nameof(auctionLength));
         StartTime =  DateTime.UtcNow;
         EndTime = StartTime.AddHours(auctionLength.Value);

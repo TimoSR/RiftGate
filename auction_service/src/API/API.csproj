@@ -54,6 +54,7 @@
     <Folder Include="Features\Notifications\" />
     <Folder Include="Features\ItemCatalogManagement\" />
     <Folder Include="Features\TransactionHistory\" />
+    <Folder Include="Features\_shared\Domain\" />
     <Folder Include="Features\_shared\Infrastructure\" />
     <Folder Include="Features\_shared\Utilities\" />
   </ItemGroup>

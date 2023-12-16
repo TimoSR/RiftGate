@@ -1,4 +1,4 @@
-namespace API.Features.AuctionListing.ValueObjects;
+namespace API.Features.AuctionListing.Domain.ValueObjects;
 
 public record AuctionLength
 {

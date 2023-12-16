@@ -1,10 +1,10 @@
 using CodingPatterns.DomainLayer;
 
-namespace API.Features.AuctionListing.ValueObjects;
+namespace API.Features.AuctionListing.Domain.ValueObjects;
 
 public record Price : IValueObject
 {
-    public decimal Amount { get; init; }
+    public decimal Amount { get; }
 
     public Price(decimal amount)
     {

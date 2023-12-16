@@ -1,6 +1,6 @@
 using CodingPatterns.DomainLayer;
 
-namespace API.Features._shared.Domain;
+namespace API.Features.AuctionListing.Domain;
 
 public class Item : Entity
 {
