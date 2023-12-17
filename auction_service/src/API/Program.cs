@@ -1,5 +1,6 @@
 using API._DIRegister;
 using AspNetCoreRateLimit;
+using FluentValidation;
 using Infrastructure._DIRegister;
 using Infrastructure.Configuration;
 using Infrastructure.Middleware;
@@ -7,6 +8,7 @@ using Infrastructure.Persistence.Google_PubSub;
 using Infrastructure.Persistence.MongoDB;
 using Infrastructure.Persistence.Redis;
 using Infrastructure.Swagger;
+using Microsoft.AspNetCore.Identity;
 
 namespace API;
 

@@ -1,6 +1,6 @@
 using CodingPatterns.DomainLayer;
 
-namespace API.Features.AFeature.DomainLayer.DomainEvents;
+namespace API.Features.AuctionListing.Domain.Events;
 
 public class UserRegisteredDomainEvent : IDomainEvent
 {
@@ -15,7 +15,7 @@ public class UserRegisteredDomainEvent : IDomainEvent
         UserId = userId;
         Username = username;
         Email = email;
-        // Initialize other properties
+        Message = $"Registered user with username {username}";
     }
 
  

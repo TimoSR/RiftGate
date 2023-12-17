@@ -1,6 +1,8 @@
-namespace API.Features.AuctionListing.Domain.ValueObjects;
+using CodingPatterns.DomainLayer;
 
-public record AuctionLength
+namespace API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
+
+public class AuctionLength : IValueObject
 {
     public int Value { get; }
     private readonly int[] _allowedValues = { 12, 24, 48 };
