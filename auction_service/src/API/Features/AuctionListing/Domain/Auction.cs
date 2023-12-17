@@ -12,10 +12,10 @@ public class Auction : Entity, IAggregateRoot
     public string SellerId { get; private set; }
     public Item Item { get; private set;}
     public Price AskPrice { get; private set; }
-    public AuctionLength AuctionLength { get; private set;}
-    private DateTime StartTime { get; }
-    public DateTime EndTime { get; }
-    public bool IsCompleted { get; private set; }
+    private AuctionLength AuctionLength { get; }
+    private DateTime StartTime { get; set; }
+    public DateTime EndTime { get; set; }
+    public bool IsCompleted { get; private set; } = false;
     public Bid HighestBid { get; }
     
     public Auction(string sellerId, Item item, Price price, AuctionLength auctionLength)
@@ -24,15 +24,13 @@ public class Auction : Entity, IAggregateRoot
         Item = item ?? throw new ArgumentNullException(nameof(item));
         AskPrice = price ?? throw new ArgumentNullException(nameof(price));
         AuctionLength = auctionLength ?? throw new ArgumentNullException(nameof(auctionLength));
-        StartTime =  DateTime.UtcNow;
-        EndTime = StartTime.AddHours(auctionLength.Value);
-        IsCompleted = false;
     }
     
     public void StartAuction()
     {
-        // Validate conditions for starting the auction
         // Set StartTime and calculate EndTime
+        StartTime =  DateTime.UtcNow;
+        EndTime = StartTime.AddHours(AuctionLength.Value);
         // Possibly raise an event indicating the auction has started
     }
     

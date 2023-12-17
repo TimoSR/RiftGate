@@ -1,33 +1,36 @@
+using CodingPatterns.DomainLayer;
 using Infrastructure.Persistence._Interfaces;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 
 namespace Infrastructure.Persistence.MongoDB;
 
-
-public abstract class MongoRepository<T> : IRepository<T>
+public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAggregateRoot
 {
     protected virtual string CollectionName => typeof(T).Name + "s";
 
     protected readonly IMongoDbManager _dbManager;
     protected readonly ILogger _logger;
+    private readonly IDomainEventDispatcher _domainEventDispatcher;
 
-    protected MongoRepository(IMongoDbManager dbManager, ILogger logger)
+    protected MongoRepository(IMongoDbManager dbManager, IDomainEventDispatcher domainEventDispatcher, ILogger logger)
     {
         _dbManager = dbManager ?? throw new ArgumentNullException(nameof(dbManager));
+        _domainEventDispatcher = domainEventDispatcher;
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     protected IMongoCollection<T> GetCollection() => _dbManager.GetCollection<T>(CollectionName);
 
     private FilterDefinition<T> IdFilter(string id) => Builders<T>.Filter.Eq("Id", id);
-    
+
     public virtual async Task InsertAsync(T data)
     {
         try
         {
             var collection = GetCollection();
             await collection.InsertOneAsync(data);
+            await _domainEventDispatcher.DispatchEventsAsync(data);
         }
         catch (Exception ex)
         {

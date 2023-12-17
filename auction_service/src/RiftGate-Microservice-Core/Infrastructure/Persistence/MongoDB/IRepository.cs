@@ -1,4 +1,4 @@
-namespace Infrastructure.Persistence._Interfaces;
+namespace Infrastructure.Persistence.MongoDB;
 
 public interface IRepository<T>
 {
