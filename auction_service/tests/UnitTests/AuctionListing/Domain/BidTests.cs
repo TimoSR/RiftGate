@@ -2,6 +2,7 @@ using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
 using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.DomainService;
 using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
 using Moq;
+using UnitTests.AuctionListing.Domain._TestData;
 
 namespace UnitTests.AuctionListing.Domain;
 
@@ -43,33 +44,15 @@ public class BidTests
     }
 
     [Theory]
-    [InlineData("")]
-    [InlineData(" ")]
-    [InlineData(null)]
-    public void Constructor_WithInvalidBidderId_ShouldThrowArgumentException(string invalidBidderId)
+    [MemberData(nameof(TestDataProvider.ConstructorTestCases), MemberType = typeof(TestDataProvider))]
+    public void Constructor_WithInvalidArguments_ShouldThrowException(
+        string bidderId, Type expectedException, string scenario = "")
     {
-        var bidAmount = new Price(100);
-
-        // Assert that an ArgumentException is thrown, regardless of the message
-        Assert.Throws<ArgumentException>(() => new Bid(invalidBidderId, bidAmount, _mockTimeService.Object));
-    }
-
-    [Fact]
-    public void Constructor_WithNullBidAmount_ShouldThrowArgumentNullException()
-    {
-        string validBidderId = "bidder123";
-
-        // Assert that an ArgumentNullException is thrown
-        Assert.Throws<ArgumentNullException>(() => new Bid(validBidderId, null, _mockTimeService.Object));
-    }
-
-    [Fact]
-    public void Constructor_WithNullTimeService_ShouldThrowArgumentNullException()
-    {
-        string validBidderId = "bidder123";
         var validBidAmount = new Price(100);
+        ITimeService timeService = scenario == "nullTimeService" ? null : _mockTimeService.Object;
+        Price bidAmount = scenario == "nullBidAmount" ? null : validBidAmount;
 
-        // Assert that an ArgumentNullException is thrown for null ITimeService
-        Assert.Throws<ArgumentNullException>(() => new Bid(validBidderId, validBidAmount, null));
+        // Assert that the expected exception is thrown
+        Assert.Throws(expectedException, () => new Bid(bidderId, bidAmount, timeService));
     }
 }

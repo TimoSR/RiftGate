@@ -1,28 +1,12 @@
 using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
+using UnitTests.AuctionListing.Domain._TestData;
 
 namespace UnitTests.AuctionListing.Domain;
 
 public class AuctionLengthTests
 {
-    public static IEnumerable<object[]> ValidAuctionLengths =>
-        new List<object[]>
-        {
-            new object[] { 12 },
-            new object[] { 24 },
-            new object[] { 48 }
-        };
-
-    public static IEnumerable<object[]> InvalidAuctionLengths =>
-        new List<object[]>
-        {
-            new object[] { 11 },
-            new object[] { 0 },
-            new object[] { -1 },
-            new object[] { 49 }
-        };
-
     [Theory]
-    [MemberData(nameof(ValidAuctionLengths))]
+    [MemberData(nameof(TestDataProvider.ValidAuctionLengths), MemberType = typeof(TestDataProvider))]
     public void Constructor_WithValidValue_ShouldNotThrowException(int validLength)
     {
         var auctionLength = new AuctionLength(validLength);
@@ -31,7 +15,7 @@ public class AuctionLengthTests
     }
 
     [Theory]
-    [MemberData(nameof(InvalidAuctionLengths))]
+    [MemberData(nameof(TestDataProvider.InvalidAuctionLengths), MemberType = typeof(TestDataProvider))]
     public void Constructor_WithInvalidValue_ShouldThrowArgumentException(int invalidLength)
     {
         var exception = Assert.Throws<ArgumentException>(() => new AuctionLength(invalidLength));

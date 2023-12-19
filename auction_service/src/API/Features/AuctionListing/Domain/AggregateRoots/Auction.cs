@@ -14,13 +14,13 @@ public abstract class Auction : Entity, IAggregateRoot
     [BsonId] [BsonRepresentation(BsonType.ObjectId)] public override string Id { get; }
     
     private readonly ITimeService _timeService;
-    protected DateTime StartTime;
-    protected DateTime EstimatedEndTime;
+    public DateTime StartTime { get; private set; }
+    public DateTime EstimatedEndTime;
     protected readonly List<Bid> Bids = new();
     private readonly AuctionLength _auctionLength;
     private readonly Item _item;
     private readonly string _sellerId;
-    protected bool IsCompleted { get; private set; }
+    public bool IsCompleted { get; private set; }
 
     protected Auction(
         string sellerId, 
@@ -42,7 +42,7 @@ public abstract class Auction : Entity, IAggregateRoot
         AddDomainEvent(new AuctionStartedEvent(Id, StartTime));
     }
 
-    protected void CompleteAuction()
+    public void CompleteAuction()
     {
         IsCompleted = true;
         var completionTime = _timeService.GetCurrentTime();
