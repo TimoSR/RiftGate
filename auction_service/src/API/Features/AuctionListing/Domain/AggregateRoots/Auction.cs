@@ -5,7 +5,7 @@ using CodingPatterns.DomainLayer;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace API.Features.AuctionListing.Domain.AggregateRoots.Abstract;
+namespace API.Features.AuctionListing.Domain.AggregateRoots;
 
 public abstract class Auction : Entity, IAggregateRoot
 {

@@ -1,5 +1,4 @@
 using API.Features._shared.Domain;
-using API.Features.AuctionListing.Domain.AggregateRoots.Abstract;
 using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
 using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
 using API.Features.AuctionListing.Domain.AggregateRoots.Events;
@@ -14,7 +13,8 @@ public class BuyoutAuction : Auction
         string sellerId, 
         Item item, 
         AuctionLength auctionLength, 
-        Price buyout) : base(sellerId, item, auctionLength)
+        Price buyout) 
+        : base(sellerId, item, auctionLength)
     {
         Buyout = buyout ?? throw new ArgumentNullException(nameof(buyout));
     }
