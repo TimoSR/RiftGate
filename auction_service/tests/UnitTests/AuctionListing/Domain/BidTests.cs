@@ -65,4 +65,13 @@ public class BidTests
         Assert.Throws<ArgumentNullException>(() => new Bid(validBidderId, null, _mockTimeService.Object));
     }
 
+    [Fact]
+    public void Constructor_WithNullTimeService_ShouldThrowArgumentNullException()
+    {
+        string validBidderId = "bidder123";
+        var validBidAmount = new Price(100);
+
+        // Assert that an ArgumentNullException is thrown for null ITimeService
+        Assert.Throws<ArgumentNullException>(() => new Bid(validBidderId, validBidAmount, null));
+    }
 }

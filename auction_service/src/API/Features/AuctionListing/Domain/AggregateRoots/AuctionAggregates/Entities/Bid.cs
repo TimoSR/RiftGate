@@ -12,18 +12,23 @@ public class Bid : Entity
 
     public Bid(string bidderId, Price bidAmount, ITimeService timeService)
     {
-        Validate(bidderId, bidAmount);
+        Validate(bidderId, bidAmount, timeService);
         BidderId = bidderId;
         BidAmount = bidAmount;
         TimeStamp = timeService.GetCurrentTime();
     }
 
-    private static void Validate(string bidderId, Price bidAmount)
+    private static void Validate(string bidderId, Price bidAmount, ITimeService timeService)
     {
         if (string.IsNullOrWhiteSpace(bidderId)) 
             throw new ArgumentException("Bidder ID cannot be null or whitespace.", nameof(bidderId));
         
         if (bidAmount == null)
-            throw new ArgumentNullException(nameof(bidAmount), "Bid amount cannot be null.");
+            throw new ArgumentNullException(nameof(bidAmount), "cannot be null.");
+
+        if (timeService == null)
+        {
+            throw new ArgumentNullException(nameof(timeService), "cannot be null.");
+        }
     }
 }
