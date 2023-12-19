@@ -9,9 +9,7 @@ public class User : Entity, IAggregateRoot
 {
     public const int MinPasswordLength = 6;
     
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public override string Id { get; }
+    //public override string Id { get; set; }
 
     private string _email;
     [BsonElement("Email")]

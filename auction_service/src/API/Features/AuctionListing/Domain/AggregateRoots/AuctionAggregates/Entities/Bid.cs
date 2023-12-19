@@ -5,7 +5,6 @@ namespace API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.En
 
 public class Bid : Entity
 {
-    public override string Id { get; }
     public Price BidAmount { get; }
     public string BidderId { get; }
     public DateTime TimeStamp { get; }

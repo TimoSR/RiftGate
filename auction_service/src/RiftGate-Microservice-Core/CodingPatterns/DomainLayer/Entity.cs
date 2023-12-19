@@ -1,11 +1,15 @@
 using MediatR;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace CodingPatterns.DomainLayer;
 
 public abstract class Entity : IEntity
 {
-    public abstract string Id { get; }
+    [BsonId] [BsonRepresentation(BsonType.ObjectId)] public string Id { get; set; }
+    
     private readonly List<INotification>? _domainEvents = new ();
+    
     public IReadOnlyCollection<INotification>? DomainEvents => _domainEvents?.AsReadOnly();
 
     public void AddDomainEvent(INotification eventItem)

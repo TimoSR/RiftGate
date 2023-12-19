@@ -2,13 +2,14 @@ using CodingPatterns.DomainLayer;
 using Infrastructure.Persistence._Interfaces;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
+using System.Reflection;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Infrastructure.Persistence.MongoDB;
 
 public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAggregateRoot
 {
-    protected virtual string CollectionName => typeof(T).Name + "s";
-
+    protected string CollectionName => typeof(T).Name + "s";
     protected readonly IMongoDbManager _dbManager;
     protected readonly ILogger _logger;
     private readonly IDomainEventDispatcher _domainEventDispatcher;
@@ -16,7 +17,7 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
     protected MongoRepository(IMongoDbManager dbManager, IDomainEventDispatcher domainEventDispatcher, ILogger logger)
     {
         _dbManager = dbManager ?? throw new ArgumentNullException(nameof(dbManager));
-        _domainEventDispatcher = domainEventDispatcher;
+        _domainEventDispatcher = domainEventDispatcher ?? throw new ArgumentNullException(nameof(domainEventDispatcher));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
@@ -32,10 +33,13 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
             await collection.InsertOneAsync(data);
             await _domainEventDispatcher.DispatchEventsAsync(data);
         }
+        catch (MongoException ex)
+        {
+            throw new MongoRepositoryConnectionException($"Error connecting to MongoDB on insert operation. Details: {ex.Message}", ex);
+        }
         catch (Exception ex)
         {
-            _logger.LogError($"Error inserting data into {CollectionName}: {ex.Message}");
-            throw;
+            throw new MongoRepositoryException($"Error inserting data into {CollectionName}. Details: {ex.Message}", ex);
         }
     }
 
@@ -46,10 +50,13 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
             var collection = GetCollection();
             return await collection.Find(_ => true).ToListAsync();
         }
+        catch (MongoException ex)
+        {
+            throw new MongoRepositoryConnectionException($"Error connecting to MongoDB on get all operation. Details: {ex.Message}", ex);
+        }
         catch (Exception ex)
         {
-            _logger.LogError($"Error retrieving all data from {CollectionName}: {ex.Message}");
-            throw;
+            throw new MongoRepositoryException($"Error retrieving all data from {CollectionName}. Details: {ex.Message}", ex);
         }
     }
 
@@ -58,12 +65,20 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
         try
         {
             var collection = GetCollection();
-            return await collection.Find(IdFilter(id)).FirstOrDefaultAsync();
+            var result = await collection.Find(IdFilter(id)).FirstOrDefaultAsync();
+            if (result == null)
+            {
+                throw new MongoRepositoryNotFoundException($"Entity with id {id} was not found in {CollectionName}.");
+            }
+            return result;
+        }
+        catch (MongoException ex)
+        {
+            throw new MongoRepositoryConnectionException($"Error connecting to MongoDB when retrieving entity with id {id}. Details: {ex.Message}", ex);
         }
         catch (Exception ex)
         {
-            _logger.LogError($"Error retrieving data by id {id} from {CollectionName}: {ex.Message}");
-            throw;
+            throw new MongoRepositoryException($"Error retrieving data by id {id} from {CollectionName}. Details: {ex.Message}", ex);
         }
     }
 
@@ -73,7 +88,7 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
         {
             var collection = GetCollection();
             var filter = IdFilter(updatedData.Id);
-            UpdateDefinition<T> updateDefinition = CreateUpdateDefinition(updatedData);
+            var updateDefinition = CreateUpdateDefinition(updatedData);
 
             if (updateDefinition != null)
             {
@@ -81,27 +96,32 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
             }
             await _domainEventDispatcher.DispatchEventsAsync(updatedData);
         }
+        catch (MongoException ex)
+        {
+            throw new MongoRepositoryConnectionException($"Error connecting to MongoDB when updating entity with id {updatedData.Id}. Details: {ex.Message}", ex);
+        }
         catch (Exception ex)
         {
-            _logger.LogError($"Error updating data by id {updatedData.Id} in {CollectionName}: {ex.Message}");
-            throw;
+            throw new MongoRepositoryException($"Error updating data by id {updatedData.Id} in {CollectionName}. Details: {ex.Message}", ex);
         }
     }
 
     private UpdateDefinition<T> CreateUpdateDefinition(T updatedData)
     {
-        var updateProps = typeof(T).GetProperties();
+        var updateProps = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
         var updateDefinitionBuilder = Builders<T>.Update;
         UpdateDefinition<T> updateDefinition = null;
 
         foreach (var prop in updateProps)
         {
-            var propValue = prop.GetValue(updatedData);
-            var update = updateDefinitionBuilder.Set(prop.Name, propValue);
-
-            updateDefinition = updateDefinition == null
-                               ? update
-                               : Builders<T>.Update.Combine(updateDefinition, update);
+            if (Attribute.IsDefined(prop, typeof(BsonElementAttribute)))
+            {
+                var bsonElementAttribute = Attribute.GetCustomAttribute(prop, typeof(BsonElementAttribute)) as BsonElementAttribute;
+                var propName = bsonElementAttribute.ElementName;
+                var propValue = prop.GetValue(updatedData);
+                var update = updateDefinitionBuilder.Set(propName, propValue);
+                updateDefinition = updateDefinition == null ? update : Builders<T>.Update.Combine(updateDefinition, update);
+            }
         }
 
         return updateDefinition;
@@ -114,20 +134,21 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
             var collection = GetCollection();
             var operationResult = await collection.DeleteOneAsync(IdFilter(deletedData.Id));
             var returnResult = operationResult.IsAcknowledged && operationResult.DeletedCount > 0;
-            
-            if (!returnResult)
+
+            if (returnResult)
             {
-                return returnResult;
+                await _domainEventDispatcher.DispatchEventsAsync(deletedData);
             }
-            
-            await _domainEventDispatcher.DispatchEventsAsync(deletedData);
 
             return returnResult;
         }
+        catch (MongoException ex)
+        {
+            throw new MongoRepositoryConnectionException($"Error connecting to MongoDB when deleting entity with id {deletedData.Id}. Details: {ex.Message}", ex);
+        }
         catch (Exception ex)
         {
-            _logger.LogError($"Error deleting data by id {deletedData.Id} from {CollectionName}: {ex.Message}");
-            throw;
+            throw new MongoRepositoryException($"Error deleting data by id {deletedData.Id} from {CollectionName}. Details: {ex.Message}", ex);
         }
     }
 }
