@@ -1,5 +1,6 @@
 using API.Features._shared.Domain;
 using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
+using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.DomainService;
 using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
 using API.Features.AuctionListing.Domain.AggregateRoots.Events;
 
@@ -13,15 +14,16 @@ public class BuyoutAuction : Auction
         string sellerId, 
         Item item, 
         AuctionLength auctionLength, 
-        Price buyout) 
-        : base(sellerId, item, auctionLength)
+        Price buyout,
+        ITimeService timeService) 
+        : base(sellerId, item, auctionLength, timeService)
     {
         Buyout = buyout ?? throw new ArgumentNullException(nameof(buyout));
     }
     
     public override void PlaceBid(Bid bid)
     {
-        if (DateTime.UtcNow < StartTime || DateTime.UtcNow > EndTime || IsCompleted)
+        if (DateTime.UtcNow < StartTime || DateTime.UtcNow > EstimatedEndTime || IsCompleted)
             throw new InvalidOperationException("The auction is not active.");
 
         var highestBid = GetCurrentHighestBid();
@@ -32,8 +34,8 @@ public class BuyoutAuction : Auction
         if (highestBid != null && bid.BidAmount.Value >= Buyout.Value)
             throw new InvalidOperationException("Bid is higher than buyout price!");
 
-        _bids.Add(bid);
+        Bids.Add(bid);
 
-        AddDomainEvent(new NewBidPlacedDomainEvent(bid.Id, bid.BidAmount.Value));
+        AddDomainEvent(new BidPlacedEvent(Id, bid));
     }
 }

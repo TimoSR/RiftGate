@@ -5,13 +5,12 @@ namespace CodingPatterns.DomainLayer;
 public abstract class Entity : IEntity
 {
     public abstract string Id { get; }
-    private List<INotification> _domainEvents;
-    public IReadOnlyCollection<INotification> DomainEvents => _domainEvents?.AsReadOnly();
+    private readonly List<INotification>? _domainEvents = new ();
+    public IReadOnlyCollection<INotification>? DomainEvents => _domainEvents?.AsReadOnly();
 
     public void AddDomainEvent(INotification eventItem)
     {
-        _domainEvents = _domainEvents ?? new List<INotification>();
-        _domainEvents.Add(eventItem);
+        _domainEvents?.Add(eventItem);
     }
 
     public void RemoveDomainEvent(INotification eventItem)

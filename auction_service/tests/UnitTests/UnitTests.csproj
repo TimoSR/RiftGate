@@ -26,4 +26,8 @@
     <ProjectReference Include="..\..\src\API\API.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AuctionListing\Domain\" />
+  </ItemGroup>
+
 </Project>
