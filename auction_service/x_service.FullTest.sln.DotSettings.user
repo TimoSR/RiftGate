@@ -4,5 +4,8 @@
     &lt;TestId&gt;xUnit::396A6534-9DCB-4750-8D6D-E94B9D34C332::net8.0::UnitTests.AuctionListing.Domain.PriceTests&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::396A6534-9DCB-4750-8D6D-E94B9D34C332::net8.0::UnitTests.AuctionListing.Domain.AuctionLengthTests&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::396A6534-9DCB-4750-8D6D-E94B9D34C332::net8.0::UnitTests.AuctionListing.Domain.BidTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::396A6534-9DCB-4750-8D6D-E94B9D34C332::net8.0::UnitTests.AuctionListing.Domain.Events.BidPlacedEventTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::396A6534-9DCB-4750-8D6D-E94B9D34C332::net8.0::UnitTests.AuctionListing.Domain.Events.AuctionStartedEventTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::396A6534-9DCB-4750-8D6D-E94B9D34C332::net8.0::UnitTests.AuctionListing.Domain.Events.AuctionCompletedEventTests.ShouldCorrectlySetProperties&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
