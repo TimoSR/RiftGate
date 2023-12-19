@@ -20,9 +20,7 @@ public abstract class Auction : Entity, IAggregateRoot
     private readonly AuctionLength _auctionLength;
     private readonly Item _item;
     private readonly string _sellerId;
-    
     protected bool IsCompleted { get; private set; }
-
 
     protected Auction(
         string sellerId, 
