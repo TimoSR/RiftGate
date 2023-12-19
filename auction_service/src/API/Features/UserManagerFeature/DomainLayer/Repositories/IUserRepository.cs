@@ -20,6 +20,5 @@ public interface IUserRepository
     Task<bool> UpdateUserStatusByEmailAsync(string email, UserStatus newStatus);
 
     // Delete Operation
-    Task<bool> DeleteUserAsync(string id);
     Task<bool> DeleteUserByEmailAsync(string email);
 }

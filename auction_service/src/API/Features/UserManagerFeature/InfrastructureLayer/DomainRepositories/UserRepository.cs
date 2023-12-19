@@ -55,7 +55,7 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
                 throw;
             }
         }
-        
+
         public async Task<bool> DeleteUserByEmailAsync(string email)
         {
             try
@@ -171,11 +171,6 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
                 _logger.LogError($"Error retrieving user by email {email} from {collectionName}: {ex.Message}");
                 throw;
             }
-        }
-
-        public async Task<bool> DeleteUserAsync(string id)
-        {
-            return await DeleteAsync(id);
         }
     }
 }

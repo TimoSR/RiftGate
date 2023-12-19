@@ -67,22 +67,23 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
         }
     }
 
-    public virtual async Task UpdateAsync(string id, T updatedData)
+    public virtual async Task UpdateAsync(T updatedData)
     {
         try
         {
             var collection = GetCollection();
-            var filter = IdFilter(id);
+            var filter = IdFilter(updatedData.Id);
             UpdateDefinition<T> updateDefinition = CreateUpdateDefinition(updatedData);
 
             if (updateDefinition != null)
             {
                 await collection.UpdateOneAsync(filter, updateDefinition);
             }
+            await _domainEventDispatcher.DispatchEventsAsync(updatedData);
         }
         catch (Exception ex)
         {
-            _logger.LogError($"Error updating data by id {id} in {CollectionName}: {ex.Message}");
+            _logger.LogError($"Error updating data by id {updatedData.Id} in {CollectionName}: {ex.Message}");
             throw;
         }
     }
@@ -106,18 +107,26 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
         return updateDefinition;
     }
 
-    public virtual async Task<bool> DeleteAsync(string id)
+    public virtual async Task<bool> DeleteAsync(T deletedData)
     {
         try
         {
             var collection = GetCollection();
-            var result = await collection.DeleteOneAsync(IdFilter(id));
+            var operationResult = await collection.DeleteOneAsync(IdFilter(deletedData.Id));
+            var returnResult = operationResult.IsAcknowledged && operationResult.DeletedCount > 0;
+            
+            if (!returnResult)
+            {
+                return returnResult;
+            }
+            
+            await _domainEventDispatcher.DispatchEventsAsync(deletedData);
 
-            return result.IsAcknowledged && result.DeletedCount > 0;
+            return returnResult;
         }
         catch (Exception ex)
         {
-            _logger.LogError($"Error deleting data by id {id} from {CollectionName}: {ex.Message}");
+            _logger.LogError($"Error deleting data by id {deletedData.Id} from {CollectionName}: {ex.Message}");
             throw;
         }
     }
