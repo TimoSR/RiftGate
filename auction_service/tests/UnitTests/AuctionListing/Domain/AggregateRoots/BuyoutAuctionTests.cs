@@ -40,14 +40,14 @@ public class BuyoutAuctionTests
     }
     
     [Fact]
-    public void CompleteAuction_ShouldSetIsCompletedAndRaiseEvent()
+    public void CompleteAuction_ShouldSetIsActiveToFalseAndRaiseEvent()
     {
         var auction = new BuyoutAuction("seller123", new Item(), new AuctionLength(24), new Price(100), _mockTimeService.Object);
 
         auction.StartAuction();
         auction.CompleteAuction();
 
-        Assert.True(auction.IsActive);
+        Assert.False(auction.IsActive);
         Assert.Contains(auction.DomainEvents, e => e is AuctionCompletedEvent);
     }
 }
