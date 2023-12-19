@@ -1,6 +1,5 @@
 using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
 using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.DomainService;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
 using API.Features.AuctionListing.Domain.AggregateRoots.Events;
 using Moq;
 
@@ -24,11 +23,10 @@ public class BidPlacedEventTests
     {
         string auctionId = "Auction123";
         var bidAmount = new Price(100);
-        var bid = new Bid("Bidder123", bidAmount, _mockTimeService.Object);
-        var eventObj = new BidPlacedEvent(auctionId, bid);
+        var eventObj = new BidPlacedEvent(auctionId, bidAmount);
 
         Assert.Equal(auctionId, eventObj.AuctionId);
-        Assert.Equal(bid, eventObj.Bid);
-        Assert.Equal($"New bid placed on auction {auctionId}. Bid Amount: {bid.BidAmount.Value}", eventObj.Message);
+        Assert.Equal(bidAmount, eventObj.Amount);
+        Assert.Equal($"New bid placed on auction {auctionId}. Bid Amount: {bidAmount.Value}", eventObj.Message);
     }
 }

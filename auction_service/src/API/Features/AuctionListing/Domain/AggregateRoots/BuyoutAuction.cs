@@ -36,6 +36,6 @@ public class BuyoutAuction : Auction
 
         Bids.Add(bid);
 
-        AddDomainEvent(new BidPlacedEvent(Id, bid));
+        AddDomainEvent(new BidPlacedEvent(Id, bid.BidAmount));
     }
 }
