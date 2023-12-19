@@ -12,8 +12,8 @@ namespace API.Features.AuctionListing.Domain.AggregateRoots;
 public abstract class Auction : Entity, IAggregateRoot
 {
     [BsonId] [BsonRepresentation(BsonType.ObjectId)] public override string Id { get; }
-    
-    protected readonly ITimeService _timeService;
+
+    private readonly ITimeService _timeService;
     public DateTime StartTime { get; private set; }
     public DateTime EstimatedEndTime { get; private set; }
     protected readonly List<Bid> Bids = new();
@@ -42,7 +42,7 @@ public abstract class Auction : Entity, IAggregateRoot
         AddDomainEvent(new AuctionStartedEvent(Id, StartTime));
     }
 
-    public bool HasAuctionExpired()
+    public bool HaveAuctionExpired()
     {
         var currentTime = _timeService.GetCurrentTime();
         return StartTime <= currentTime && currentTime <= EstimatedEndTime && !IsActive;

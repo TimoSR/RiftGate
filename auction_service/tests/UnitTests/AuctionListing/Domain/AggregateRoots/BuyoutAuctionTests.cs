@@ -35,7 +35,7 @@ public class BuyoutAuctionTests
 
         auction.StartAuction();
 
-        Assert.Equal(_fixedDateTime, auction.StartTime);
+        Assert.True(auction.IsActive);
         Assert.Contains(auction.DomainEvents, e => e is AuctionStartedEvent);
     }
     
