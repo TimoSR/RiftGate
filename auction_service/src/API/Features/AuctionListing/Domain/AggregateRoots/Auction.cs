@@ -15,7 +15,7 @@ public abstract class Auction : Entity, IAggregateRoot
     
     protected readonly ITimeService _timeService;
     public DateTime StartTime { get; private set; }
-    public DateTime EstimatedEndTime;
+    public DateTime EstimatedEndTime { get; private set; }
     protected readonly List<Bid> Bids = new();
     private readonly AuctionLength _auctionLength;
     private readonly Item _item;
@@ -40,6 +40,12 @@ public abstract class Auction : Entity, IAggregateRoot
         EstimatedEndTime = StartTime.AddHours(_auctionLength.Value);
         IsActive = true;
         AddDomainEvent(new AuctionStartedEvent(Id, StartTime));
+    }
+
+    public bool HasAuctionExpired()
+    {
+        var currentTime = _timeService.GetCurrentTime();
+        return StartTime <= currentTime && currentTime <= EstimatedEndTime && !IsActive;
     }
 
     public void CompleteAuction()

@@ -23,7 +23,7 @@ public class BuyoutAuction : Auction
     
     public override void PlaceBid(Bid bid)
     {
-        if (DateTime.UtcNow < StartTime || DateTime.UtcNow > EstimatedEndTime || IsActive)
+        if (!IsActive)
             throw new InvalidOperationException("The auction is not active.");
 
         var highestBid = GetCurrentHighestBid();
