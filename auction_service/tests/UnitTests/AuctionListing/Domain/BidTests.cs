@@ -34,14 +34,12 @@ public class BidTests
     [Fact]
     public void Constructor_WithValidInputs_ShouldCreateBid()
     {
-        string validBidderId = "bidder123";
-        var validBidAmount = new Price(100);
+        var bidAmount = new Price(100);
+        var bid = new Bid("bidder123", bidAmount, _mockTimeService.Object);
 
-        var bid = new Bid(validBidderId, validBidAmount, _mockTimeService.Object);
-
-        Assert.Equal(validBidderId, bid.BidderId);
-        Assert.Equal(validBidAmount, bid.BidAmount);
-        Assert.True(bid.TimeStamp <= DateTime.UtcNow);
+        Assert.Equal("bidder123", bid.BidderId);
+        Assert.Equal(bidAmount, bid.BidAmount);
+        Assert.Equal(_fixedDateTime, bid.TimeStamp);
     }
 
     [Theory]
