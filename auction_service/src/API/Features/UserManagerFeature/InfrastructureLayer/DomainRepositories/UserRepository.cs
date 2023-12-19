@@ -12,8 +12,7 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
     {
         public UserRepository(
             IMongoDbManager dbManager, 
-            ILogger<UserRepository> logger, 
-            IDomainEventDispatcher eventDispatcher) : base(dbManager, eventDispatcher, logger)
+            IDomainEventDispatcher eventDispatcher) : base(dbManager, eventDispatcher)
         {
         }
 
@@ -26,11 +25,9 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
                 var indexOptions = new CreateIndexOptions { Unique = true }; // Assuming email should be unique
                 var indexModel = new CreateIndexModel<User>(indexKeysDefinition, indexOptions);
                 await collection.Indexes.CreateOneAsync(indexModel);
-                _logger.LogInformation("Index created on 'email' field.");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error during index creation: {ex.Message}");
                 throw;
             }
         }
@@ -51,7 +48,6 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error during updating status of user by email {email}: {ex.Message}");
                 throw;
             }
         }
@@ -65,18 +61,15 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
 
                 if (deleteResult.DeletedCount > 0)
                 {
-                    _logger.LogInformation($"User with email {email} deleted successfully.");
                     return true;
                 }
                 else
                 {
-                    _logger.LogInformation($"No user found with email {email} to delete.");
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error during deleting user by email {email}: {ex.Message}");
                 throw;
             }
         }
@@ -108,7 +101,6 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
             catch (Exception ex)
             {
                 var collectionName = nameof(User) + "s";
-                _logger.LogError($"Error retrieving user by email {email} from {collectionName}: {ex.Message}");
                 throw;
             }
         }
@@ -138,7 +130,6 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
             {
                 // If any exception occurs during the transaction, rollback changes.
                 await session.AbortTransactionAsync();
-                _logger.LogError($"Error during user registration: {ex.Message}");
                 throw;
             }
         }
@@ -168,7 +159,6 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
             catch (Exception ex)
             {
                 var collectionName = nameof(User) + "s";
-                _logger.LogError($"Error retrieving user by email {email} from {collectionName}: {ex.Message}");
                 throw;
             }
         }

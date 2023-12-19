@@ -1,6 +1,5 @@
 using CodingPatterns.DomainLayer;
 using Infrastructure.Persistence._Interfaces;
-using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using System.Reflection;
 using MongoDB.Bson.Serialization.Attributes;
@@ -11,14 +10,12 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
 {
     protected string CollectionName => typeof(T).Name + "s";
     protected readonly IMongoDbManager _dbManager;
-    protected readonly ILogger _logger;
     private readonly IDomainEventDispatcher _domainEventDispatcher;
 
-    protected MongoRepository(IMongoDbManager dbManager, IDomainEventDispatcher domainEventDispatcher, ILogger logger)
+    protected MongoRepository(IMongoDbManager dbManager, IDomainEventDispatcher domainEventDispatcher)
     {
         _dbManager = dbManager ?? throw new ArgumentNullException(nameof(dbManager));
         _domainEventDispatcher = domainEventDispatcher ?? throw new ArgumentNullException(nameof(domainEventDispatcher));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     protected IMongoCollection<T> GetCollection() => _dbManager.GetCollection<T>(CollectionName);
