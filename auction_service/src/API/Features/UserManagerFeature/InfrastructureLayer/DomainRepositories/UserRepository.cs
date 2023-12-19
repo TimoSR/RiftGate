@@ -1,6 +1,7 @@
 using API.Features.UserManagerFeature.DomainLayer.Entities;
 using API.Features.UserManagerFeature.DomainLayer.Enums;
 using API.Features.UserManagerFeature.DomainLayer.Repositories;
+using CodingPatterns.DomainLayer;
 using Infrastructure.Persistence._Interfaces;
 using Infrastructure.Persistence.MongoDB;
 using MongoDB.Driver;
@@ -9,8 +10,10 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
 {
     public class UserRepository : MongoRepository<User>, IUserRepository
     {
-        public UserRepository(IMongoDbManager dbManager, ILogger<UserRepository> logger)
-            : base(dbManager, logger)
+        public UserRepository(
+            IMongoDbManager dbManager, 
+            ILogger<UserRepository> logger, 
+            IDomainEventDispatcher eventDispatcher) : base(dbManager, eventDispatcher, logger)
         {
         }
 

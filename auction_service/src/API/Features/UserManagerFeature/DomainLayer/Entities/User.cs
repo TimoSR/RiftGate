@@ -1,16 +1,17 @@
 using API.Features.UserManagerFeature.DomainLayer.Enums;
+using CodingPatterns.DomainLayer;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace API.Features.UserManagerFeature.DomainLayer.Entities;
 
-public class User
+public class User : Entity, IAggregateRoot
 {
     public const int MinPasswordLength = 6;
     
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; }
+    public override string Id { get; }
 
     private string _email;
     [BsonElement("Email")]
