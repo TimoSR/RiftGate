@@ -4,9 +4,9 @@ using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
 using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.DomainService;
 using API.Features.AuctionListing.Domain.AggregateRoots.Events;
 using Moq;
-using UnitTests.AuctionListing.Domain._TestData;
+using UnitTests.AuctionListing.Domain.AggregateRoots.Data;
 
-namespace UnitTests.AuctionListing.Domain;
+namespace UnitTests.AuctionListing.Domain.AggregateRoots;
 
 public class BuyoutAuctionTests
 {
@@ -21,7 +21,7 @@ public class BuyoutAuctionTests
     }
 
     [Theory]
-    [MemberData(nameof(TestDataProvider.InvalidConstructorArguments), MemberType = typeof(TestDataProvider))]
+    [MemberData(nameof(RootDataProvider.InvalidConstructorArguments), MemberType = typeof(RootDataProvider))]
     public void BuyoutAuction_Constructor_WithInvalidArguments_ShouldThrowException(
         string sellerId, Item item, AuctionLength auctionLength, Price buyout, ITimeService timeService)
     {
@@ -47,7 +47,7 @@ public class BuyoutAuctionTests
         auction.StartAuction();
         auction.CompleteAuction();
 
-        Assert.True(auction.IsCompleted);
+        Assert.True(auction.IsActive);
         Assert.Contains(auction.DomainEvents, e => e is AuctionCompletedEvent);
     }
 }

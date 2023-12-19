@@ -19,7 +19,7 @@ public class TraditionalAuction : Auction
 
     public override void PlaceBid(Bid bid)
     {
-        if (DateTime.UtcNow < StartTime || DateTime.UtcNow > EstimatedEndTime || IsCompleted)
+        if (!IsActive)
             throw new InvalidOperationException("The auction is not active.");
 
         var highestBid = GetCurrentHighestBid();
