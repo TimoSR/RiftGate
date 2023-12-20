@@ -51,7 +51,6 @@
     <Folder Include="Features\AFeature\Infrastructure\Repositories\" />
     <Folder Include="Features\AFeature\Infrastructure\Services\" />
     <Folder Include="Features\AuctionListing\Domain\Entities\" />
-    <Folder Include="Features\AuctionListing\Domain\Repositories\" />
     <Folder Include="Features\AuctionTimeObserver\" />
     <Folder Include="Features\Buyout\" />
     <Folder Include="Features\FilterAuctions\" />

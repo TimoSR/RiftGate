@@ -4,9 +4,12 @@ using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Domain
 using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
 using API.Features.AuctionListing.Domain.AggregateRoots.Events;
 using CodingPatterns.DomainLayer;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace API.Features.AuctionListing.Domain.AggregateRoots;
 
+[BsonDiscriminator("auction", RootClass = true)]
+[BsonKnownTypes(typeof(BuyoutAuction), typeof(TraditionalAuction))]
 public abstract class Auction : Entity, IAggregateRoot
 {
     private readonly ITimeService _timeService;
