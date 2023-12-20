@@ -12,6 +12,14 @@ public abstract class Entity : IEntity
     
     public IReadOnlyCollection<INotification>? DomainEvents => _domainEvents?.AsReadOnly();
 
+    public bool IsDeleted { get; private set; }
+    
+    public virtual void MarkAsDeleted<T>() where T : IEntity
+    {
+        IsDeleted = true;
+        AddDomainEvent(new EntitySoftDeletedEvent<T>(Id));
+    }
+    
     public void AddDomainEvent(INotification eventItem)
     {
         _domainEvents?.Add(eventItem);

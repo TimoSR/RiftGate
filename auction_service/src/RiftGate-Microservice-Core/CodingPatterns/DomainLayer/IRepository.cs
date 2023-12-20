@@ -2,9 +2,10 @@ namespace CodingPatterns.DomainLayer;
 
 public interface IRepository<T> where T : IAggregateRoot
 {
-    Task InsertAsync(T data);
+    Task InsertAsync(T entity);
     Task<List<T>> GetAllAsync();
     Task<T?> GetByIdAsync(string id);
-    Task<bool> DeleteAsync(T deletedData);
-    Task UpdateAsync(T updatedData);
+    Task<bool> SoftDeleteAsync(T entity);
+    Task<bool> DeleteAsync(T entity);
+    Task UpdateAsync(T entity);
 }
