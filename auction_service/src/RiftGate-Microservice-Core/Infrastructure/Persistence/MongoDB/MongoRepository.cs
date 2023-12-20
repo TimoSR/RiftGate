@@ -126,11 +126,12 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
         {
             var collection = GetCollection();
             
+            entity.MarkAsDeleted<T>();
+            
             var deleteResult = await collection.DeleteOneAsync(IdFilter(entity.Id));
 
             if (deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0)
             {
-
                 await _domainEventDispatcher.DispatchEventsAsync(entity);
                 return true;
             }
@@ -153,10 +154,13 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
         {
             var collection = GetCollection();
             
+            entity.AddDeleteNotification<T>();
+            
             var deleteResult = await collection.DeleteOneAsync(IdFilter(entity.Id));
 
             if (deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0)
             {
+                await _domainEventDispatcher.DispatchEventsAsync(entity);
                 return true;
             }
 

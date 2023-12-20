@@ -6,20 +6,27 @@ namespace CodingPatterns.DomainLayer;
 
 public abstract class Entity : IEntity
 {
-    [BsonId] [BsonRepresentation(BsonType.ObjectId)] public string Id { get; set; }
-    
-    private readonly List<INotification>? _domainEvents = new ();
-    
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; }
+
+    private readonly List<INotification>? _domainEvents = new();
+
     public IReadOnlyCollection<INotification>? DomainEvents => _domainEvents?.AsReadOnly();
 
     public bool IsDeleted { get; private set; }
-    
+
     public virtual void MarkAsDeleted<T>() where T : IEntity
     {
         IsDeleted = true;
         AddDomainEvent(new EntitySoftDeletedEvent<T>(Id));
     }
-    
+
+    public void AddDeleteNotification<T>() where T : IEntity
+    {
+        AddDomainEvent(new EntityDeletedEvent<T>(Id));
+    }
+
     public void AddDomainEvent(INotification eventItem)
     {
         _domainEvents?.Add(eventItem);
