@@ -154,7 +154,7 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
         {
             var collection = GetCollection();
             
-            entity.AddDeleteNotification<T>();
+            entity.TriggerDeleteNotification<T>();
             
             var deleteResult = await collection.DeleteOneAsync(IdFilter(entity.Id));
 

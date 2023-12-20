@@ -22,7 +22,7 @@ public abstract class Entity : IEntity
         AddDomainEvent(new EntitySoftDeletedEvent<T>(Id));
     }
 
-    public void AddDeleteNotification<T>() where T : IEntity
+    public void TriggerDeleteNotification<T>() where T : IEntity
     {
         AddDomainEvent(new EntityDeletedEvent<T>(Id));
     }
