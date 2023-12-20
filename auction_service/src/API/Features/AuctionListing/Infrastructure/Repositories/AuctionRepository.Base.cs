@@ -1,5 +1,4 @@
 using API.Features.AuctionListing.Domain.AggregateRoots;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
 using API.Features.AuctionListing.Domain.Repositories;
 using CodingPatterns.DomainLayer;
 using Infrastructure.Persistence._Interfaces;
