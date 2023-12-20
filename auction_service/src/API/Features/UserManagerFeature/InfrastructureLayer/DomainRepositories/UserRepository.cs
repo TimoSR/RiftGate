@@ -74,7 +74,7 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
             }
         }
         
-        public Task<User> GetUserByIdAsync(string id)
+        public Task<User?> GetUserByIdAsync(string id)
         {
             return GetByIdAsync(id);
         }
