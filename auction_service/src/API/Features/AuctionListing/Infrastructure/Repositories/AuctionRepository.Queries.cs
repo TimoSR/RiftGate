@@ -1,4 +1,5 @@
 using API.Features.AuctionListing.Domain.AggregateRoots;
+using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
 using MongoDB.Driver;
 
 namespace API.Features.AuctionListing.Infrastructure.Repositories;
@@ -10,7 +11,12 @@ public partial class AuctionRepository
         var collection = GetCollection();
         return await collection.Find(auction => auction.IsActive).ToListAsync();
     }
-    
+
+    public Task<List<Auction>> SearchAuctionsAsync()
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<List<BuyoutAuction>> GetBuyoutAuctionsAsync()
     {
         var collection = GetCollection();
@@ -37,6 +43,21 @@ public partial class AuctionRepository
     }
 
     public Task<List<Auction>> GetAuctionsEndingSoonAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<Bid>> GetAuctionBidsAsync(string auctionId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<Bid>> GetActiveUserAuctionBids(string auctionId, string userId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<Bid>> GetUserBidHistoryAsync(string userId)
     {
         throw new NotImplementedException();
     }

@@ -17,8 +17,8 @@ public abstract class Auction : Entity, IAggregateRoot
     public DateTime EstimatedEndTime { get; private set; }
     protected readonly List<Bid> Bids = new();
     private readonly AuctionLength _auctionLength;
-    private readonly Item _item;
-    private readonly string _sellerId;
+    public Item _item { get; private set; }
+    public string _sellerId { get; private set; }
     public bool IsActive { get; private set; }
 
     protected Auction(

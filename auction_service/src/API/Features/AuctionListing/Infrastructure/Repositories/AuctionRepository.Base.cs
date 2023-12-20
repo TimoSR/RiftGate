@@ -1,4 +1,5 @@
 using API.Features.AuctionListing.Domain.AggregateRoots;
+using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
 using API.Features.AuctionListing.Domain.Repositories;
 using CodingPatterns.DomainLayer;
 using Infrastructure.Persistence._Interfaces;
@@ -8,8 +9,7 @@ namespace API.Features.AuctionListing.Infrastructure.Repositories;
 
 public partial class AuctionRepository: MongoRepository<Auction>, IAuctionRepository
 {
-    protected AuctionRepository(IMongoDbManager dbManager, IDomainEventDispatcher domainEventDispatcher) : base(dbManager, domainEventDispatcher)
+    public AuctionRepository(IMongoDbManager dbManager, IDomainEventDispatcher domainEventDispatcher) : base(dbManager, domainEventDispatcher)
     {
     }
-
 }
