@@ -1,18 +1,10 @@
 using API.Features.AuctionListing.Domain.AggregateRoots;
-using API.Features.AuctionListing.Domain.Repositories;
-using CodingPatterns.DomainLayer;
-using Infrastructure.Persistence._Interfaces;
-using Infrastructure.Persistence.MongoDB;
 using MongoDB.Driver;
 
 namespace API.Features.AuctionListing.Infrastructure.Repositories;
 
-public class AuctionRepository<T> : MongoRepository<Auction>, IAuctionRepository
+public partial class AuctionRepository
 {
-    protected AuctionRepository(IMongoDbManager dbManager, IDomainEventDispatcher domainEventDispatcher) : base(dbManager, domainEventDispatcher)
-    {
-    }
-    
     public async Task<List<Auction>> GetActiveAuctionsAsync()
     {
         var collection = GetCollection();
@@ -37,5 +29,15 @@ public class AuctionRepository<T> : MongoRepository<Auction>, IAuctionRepository
             .ContinueWith(task => task.Result
                 .OfType<TraditionalAuction>()
                 .ToList());
+    }
+
+    public Task<List<Auction>> GetAuctionsBySellerIdAsync(string sellerId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<Auction>> GetAuctionsEndingSoonAsync()
+    {
+        throw new NotImplementedException();
     }
 }
