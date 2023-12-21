@@ -39,7 +39,7 @@ public class BuyoutAuctionTests
         Assert.Equal(_sellerId, auction.SellerId);
         Assert.Equal(_item, auction.Item);
         Assert.Equal(_auctionLength, auction.AuctionLength);
-        Assert.Equal(_buyoutPrice, auction.Buyout);
+        Assert.Equal(_buyoutPrice, auction.BuyoutAmount);
         Assert.False(auction.IsActive);
     }
     
@@ -49,7 +49,7 @@ public class BuyoutAuctionTests
         var auction = new BuyoutAuction(_sellerId, _item, _auctionLength, _buyoutPrice);
         auction.StartAuction(_timeServiceMock.Object);
 
-        auction.PlaceBid(_validBid);
+        auction.Buyout(_validBid);
 
         Assert.Contains(_validBid, auction.Bids);
         Assert.Contains(auction.DomainEvents, e => e is BidPlacedEvent);
@@ -61,11 +61,11 @@ public class BuyoutAuctionTests
         var auction = new BuyoutAuction(_sellerId, _item, _auctionLength, _buyoutPrice);
         auction.StartAuction(_timeServiceMock.Object);
         var highBid = new Bid("bidder2", new Price(60), _timeServiceMock.Object.GetCurrentTime());
-        auction.PlaceBid(highBid);
+        auction.Buyout(highBid);
 
         var lowBid = new Bid("bidder1", new Price(55), _timeServiceMock.Object.GetCurrentTime());
 
-        var exception = Assert.Throws<InvalidOperationException>(() => auction.PlaceBid(lowBid));
+        var exception = Assert.Throws<InvalidOperationException>(() => auction.Buyout(lowBid));
         Assert.Equal("Bid amount of 55 must be higher than the current highest bid of 60.", exception.Message);
     }
 
@@ -76,7 +76,7 @@ public class BuyoutAuctionTests
         auction.StartAuction(_timeServiceMock.Object);
         var bid = new Bid("bidder1", new Price(100), _fixedDateTime);
 
-        auction.PlaceBid(bid);
+        auction.Buyout(bid);
 
         Assert.False(auction.IsActive);
         Assert.Contains(auction.DomainEvents, e => e is AuctionCompletedEvent);
@@ -87,7 +87,7 @@ public class BuyoutAuctionTests
     {
         var auction = new BuyoutAuction(_sellerId, _item, _auctionLength, _buyoutPrice);
 
-        Assert.Throws<ArgumentNullException>(() => auction.PlaceBid(null));
+        Assert.Throws<ArgumentNullException>(() => auction.Buyout(null));
     }
 
     [Fact]
@@ -95,7 +95,7 @@ public class BuyoutAuctionTests
     {
         var auction = new BuyoutAuction(_sellerId, _item, _auctionLength, _buyoutPrice);
 
-        var exception = Assert.Throws<InvalidOperationException>(() => auction.PlaceBid(_validBid));
+        var exception = Assert.Throws<InvalidOperationException>(() => auction.Buyout(_validBid));
         Assert.Equal("Attempted to place a bid on an inactive auction.", exception.Message);
     }
 
@@ -106,7 +106,7 @@ public class BuyoutAuctionTests
         auction.StartAuction(_timeServiceMock.Object);
         var bid = new Bid("bidder1", new Price(80), _fixedDateTime);
 
-        auction.PlaceBid(bid);
+        auction.Buyout(bid);
 
         Assert.Contains(bid, auction.Bids);
     }

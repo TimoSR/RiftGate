@@ -7,7 +7,7 @@ namespace API.Features.AuctionListing.Domain.AuctionAggregates;
 
 public class BuyoutAuction : Auction
 {
-    public Price Buyout { get; }
+    public Price BuyoutAmount { get; }
     
     public BuyoutAuction(
         string sellerId, 
@@ -16,21 +16,26 @@ public class BuyoutAuction : Auction
         Price buyout) 
         : base(sellerId, item, auctionLength)
     {
-        Buyout = buyout ?? throw new ArgumentNullException(nameof(buyout));
+        BuyoutAmount = buyout ?? throw new ArgumentNullException(nameof(buyout));
     }
     
     // Public (Input Should be Validated)
 
-    public override void PlaceBid(Bid bid)
+    public void Buyout(Bid bid)
     {
         ValidateBid(bid);
-        
-        AddDomainEvent(new BidPlacedEvent(Id, bid));
-        
-        HandleBuyoutCondition(bid);
 
-        Bids.Add(bid);
+        if (bid.BidAmount.Value == BuyoutAmount.Value)
+        {
+            CompleteAuction(bid.TimeStamp);
+        }
+        else
+        {
+            Bids.Add(bid);
+            AddDomainEvent(new BidPlacedEvent(Id, bid));
+        }
     }
+
     
     // Private
 
@@ -49,17 +54,9 @@ public class BuyoutAuction : Auction
             throw new InvalidOperationException($"Bid amount of {bid.BidAmount.Value} must be higher than the current highest bid of {highestBid.BidAmount.Value}.");
         }
 
-        if (bid.BidAmount.Value > Buyout.Value)
+        if (bid.BidAmount.Value > BuyoutAmount.Value)
         {
-            throw new InvalidOperationException($"Bid of {bid.BidAmount.Value} exceeds or equals the buyout price of {Buyout.Value}, which is not allowed.");
-        }
-    }
-    
-    private void HandleBuyoutCondition(Bid bid)
-    {
-        if (bid.BidAmount.Value >= Buyout.Value)
-        {
-            CompleteAuction(bid.TimeStamp);
+            throw new InvalidOperationException($"Bid of {bid.BidAmount.Value} exceeds or equals the buyout price of {BuyoutAmount.Value}, which is not allowed.");
         }
     }
 }
