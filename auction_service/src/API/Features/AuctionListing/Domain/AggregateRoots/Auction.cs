@@ -29,7 +29,7 @@ public abstract class Auction : Entity, IAggregateRoot
         Item = item ?? throw new ArgumentNullException();
     }
     
-    // Abstract
+    // Virtual Methods
     public virtual void PlaceBid(Bid bid)
     {
         ValidateBid(bid);
@@ -78,7 +78,7 @@ public abstract class Auction : Entity, IAggregateRoot
     protected void CompleteAuction(DateTime completionTime)
     {
         if (!IsActive)
-            throw new InvalidOperationException("Auction is not active.");
+            throw new InvalidOperationException("Auction is not active.");  
 
         IsActive = false;
         AddDomainEvent(new AuctionCompletedEvent(Id, completionTime));
