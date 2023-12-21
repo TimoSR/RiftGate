@@ -1,11 +1,12 @@
 using API.Features._shared.Domain;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
-using API.Features.AuctionListing.Domain.AggregateRoots.Events;
+using API.Features.AuctionListing.Domain.AuctionAggregates.DomainService;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Events;
+using API.Features.AuctionListing.Domain.AuctionAggregates.ValueObjects;
 using CodingPatterns.DomainLayer;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace API.Features.AuctionListing.Domain.AggregateRoots;
+namespace API.Features.AuctionListing.Domain.AuctionAggregates;
 
 [BsonDiscriminator("auction", RootClass = true)]
 [BsonKnownTypes(typeof(BuyoutAuction), typeof(TraditionalAuction))]
@@ -57,17 +58,24 @@ public abstract class Auction : Entity, IAggregateRoot
     
     // Public
     
-    public void StartAuction(DateTime startTime)
+    public void StartAuction(ITimeService timeService)
     {
-        StartTime = startTime;
-        EstimatedEndTime = startTime.AddHours(AuctionLength.Value);
+        if(timeService == null)
+            throw new ArgumentNullException(nameof(timeService));
+
+        StartTime = timeService.GetCurrentTime();
+        EstimatedEndTime = StartTime.AddHours(AuctionLength.Value);
         IsActive = true;
         AddDomainEvent(new AuctionStartedEvent(Id, StartTime));
     }
     
-    public void CheckAndCompleteAuction(DateTime currentTime)
+    public void CheckAndCompleteAuction(ITimeService timeService)
     {
-        if (IsAuctionExpired(currentTime) && IsActive)
+        if(timeService == null)
+            throw new ArgumentNullException(nameof(timeService));
+
+        var currentTime = timeService.GetCurrentTime();
+        if (IsAuctionExpired(currentTime))
         {
             CompleteAuction(currentTime);
         }
@@ -75,7 +83,7 @@ public abstract class Auction : Entity, IAggregateRoot
     
     // Protected
     
-    protected void CompleteAuction(DateTime completionTime)
+    private protected void CompleteAuction(DateTime completionTime)
     {
         if (!IsActive)
             throw new InvalidOperationException("Auction is not active.");

@@ -1,5 +1,5 @@
-using API.Features.AuctionListing.Domain.AggregateRoots;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
+using API.Features.AuctionListing.Domain.AuctionAggregates;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
 using MongoDB.Driver;
 
 namespace API.Features.AuctionListing.Infrastructure.Repositories;

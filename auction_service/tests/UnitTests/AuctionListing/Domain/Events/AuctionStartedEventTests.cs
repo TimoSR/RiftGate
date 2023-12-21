@@ -1,5 +1,4 @@
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.DomainService;
-using API.Features.AuctionListing.Domain.AggregateRoots.Events;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Events;
 using Moq;
 
 namespace UnitTests.AuctionListing.Domain.Events;

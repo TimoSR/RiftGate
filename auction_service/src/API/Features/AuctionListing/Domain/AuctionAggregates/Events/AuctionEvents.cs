@@ -1,7 +1,7 @@
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
 using CodingPatterns.DomainLayer;
 
-namespace API.Features.AuctionListing.Domain.AggregateRoots.Events;
+namespace API.Features.AuctionListing.Domain.AuctionAggregates.Events;
 
 public record AuctionCompletedEvent(string AuctionId, DateTime CompletionTime) : IDomainEvent
 {

@@ -1,23 +1,30 @@
-using API.Features.AuctionListing.Domain.AggregateRoots;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
 using API.Features._shared.Domain;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
+using API.Features.AuctionListing.Domain.AuctionAggregates;
+using API.Features.AuctionListing.Domain.AuctionAggregates.DomainService;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
+using API.Features.AuctionListing.Domain.AuctionAggregates.ValueObjects;
+using Moq;
 
 namespace UnitTests.AuctionListing.Domain.AggregateRoots;
 
 public class TraditionalAuctionTests
 {
     private readonly TraditionalAuction _auction;
-    private readonly DateTime _startTime;
+    private readonly Mock<ITimeService> _timeServiceMock;
+    private readonly DateTime _fixedDateTime;
     private readonly Bid _validBid;
 
     public TraditionalAuctionTests()
     {
-        _startTime = DateTime.UtcNow;
-        _auction = new TraditionalAuction("seller1", new Item(), new AuctionLength(24));
-        _validBid = new Bid("bidder1", new Price(100), _startTime);
+        _fixedDateTime = new DateTime(2023, 1, 1);
+        _timeServiceMock = new Mock<ITimeService>();
+        _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(_fixedDateTime);
 
-        _auction.StartAuction(_startTime);
+        _auction = new TraditionalAuction("seller1", new Item(), new AuctionLength(24));
+        _validBid = new Bid("bidder1", new Price(100), _fixedDateTime);
+
+        // Use mock ITimeService when starting the auction
+        _auction.StartAuction(_timeServiceMock.Object);
     }
     
     [Fact]
@@ -62,9 +69,9 @@ public class TraditionalAuctionTests
     [Fact]
     public void StartAuction_SetsPropertiesCorrectly()
     {
-        Assert.Equal(_startTime, _auction.StartTime);
+        Assert.Equal(_fixedDateTime, _auction.StartTime);
         Assert.True(_auction.IsActive);
-        Assert.Equal(_startTime.AddHours(24), _auction.EstimatedEndTime);
+        Assert.Equal(_fixedDateTime.AddHours(24), _auction.EstimatedEndTime);
     }
 
     [Fact]
@@ -85,10 +92,18 @@ public class TraditionalAuctionTests
     [Fact]
     public void PlaceBid_WithLowerBidAmount_ThrowsException()
     {
-        var higherBid = new Bid("bidder2", new Price(150), _startTime);
+        // Arrange
+        // Assuming the Auction uses ITimeService to assign timestamps to bids.
+        var higherBidTime = _fixedDateTime.AddMinutes(10);
+        _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(higherBidTime);
+        var higherBid = new Bid("bidder2", new Price(150), _timeServiceMock.Object.GetCurrentTime());
         _auction.PlaceBid(higherBid);
 
-        var lowerBid = new Bid("bidder3", new Price(90), _startTime);
+        var lowerBidTime = _fixedDateTime.AddMinutes(20);
+        _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(lowerBidTime);
+        var lowerBid = new Bid("bidder3", new Price(90), _timeServiceMock.Object.GetCurrentTime());
+
+        // Act & Assert
         var exception = Assert.Throws<InvalidOperationException>(() => _auction.PlaceBid(lowerBid));
         Assert.StartsWith("Bid amount of 90 must be higher than the current highest bid of 150", exception.Message);
     }
@@ -96,7 +111,14 @@ public class TraditionalAuctionTests
     [Fact]
     public void CheckAndCompleteAuction_MarksAuctionAsComplete()
     {
-        _auction.CheckAndCompleteAuction(_startTime.AddHours(25));
+        // Arrange
+        var timeAfterAuctionEnd = _fixedDateTime.AddHours(24);
+        _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(timeAfterAuctionEnd);
+
+        // Act
+        _auction.CheckAndCompleteAuction(_timeServiceMock.Object);
+
+        // Assert
         Assert.False(_auction.IsActive);
     }
 

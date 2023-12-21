@@ -1,9 +1,9 @@
 using API.Features._shared.Domain;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
-using API.Features.AuctionListing.Domain.AggregateRoots.Events;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Events;
+using API.Features.AuctionListing.Domain.AuctionAggregates.ValueObjects;
 
-namespace API.Features.AuctionListing.Domain.AggregateRoots;
+namespace API.Features.AuctionListing.Domain.AuctionAggregates;
 
 public class BuyoutAuction : Auction
 {

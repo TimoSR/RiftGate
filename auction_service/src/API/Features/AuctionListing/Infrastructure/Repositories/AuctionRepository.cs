@@ -1,5 +1,5 @@
-using API.Features.AuctionListing.Domain.AggregateRoots;
-using API.Features.AuctionListing.Domain.Repositories;
+using API.Features.AuctionListing.Domain.AuctionAggregates;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Repositories;
 using CodingPatterns.DomainLayer;
 using Infrastructure.Persistence._Interfaces;
 using Infrastructure.Persistence.MongoDB;

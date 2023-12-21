@@ -1,4 +1,4 @@
-using API.Features.AuctionListing.Domain.AggregateRoots.Events;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Events;
 using MediatR;
 
 namespace API.Features.AuctionListing.Application;

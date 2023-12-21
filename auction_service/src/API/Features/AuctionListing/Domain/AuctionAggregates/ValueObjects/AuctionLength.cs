@@ -1,6 +1,6 @@
 using CodingPatterns.DomainLayer;
 
-namespace API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
+namespace API.Features.AuctionListing.Domain.AuctionAggregates.ValueObjects;
 
 public class AuctionLength : IValueObject
 {

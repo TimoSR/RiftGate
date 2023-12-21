@@ -1,14 +1,17 @@
 using API.Features._shared.Domain;
-using API.Features.AuctionListing.Domain.AggregateRoots;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
-using API.Features.AuctionListing.Domain.AggregateRoots.Events;
+using API.Features.AuctionListing.Domain.AuctionAggregates;
+using API.Features.AuctionListing.Domain.AuctionAggregates.DomainService;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Events;
+using API.Features.AuctionListing.Domain.AuctionAggregates.ValueObjects;
+using Moq;
 
 namespace UnitTests.AuctionListing.Domain.AggregateRoots;
 
 public class BuyoutAuctionTests
 {
     private readonly DateTime _fixedDateTime;
+    private readonly Mock<ITimeService> _timeServiceMock;
     private readonly Price _buyoutPrice;
     private readonly Item _item;
     private readonly AuctionLength _auctionLength;
@@ -18,6 +21,9 @@ public class BuyoutAuctionTests
     public BuyoutAuctionTests()
     {
         _fixedDateTime = new DateTime(2023, 1, 1);
+        _timeServiceMock = new Mock<ITimeService>();
+        _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(_fixedDateTime);
+
         _buyoutPrice = new Price(100);
         _item = new Item();
         _auctionLength = new AuctionLength(24);
@@ -41,7 +47,7 @@ public class BuyoutAuctionTests
     public void PlaceValidBid_ShouldAddBidToList()
     {
         var auction = new BuyoutAuction(_sellerId, _item, _auctionLength, _buyoutPrice);
-        auction.StartAuction(_fixedDateTime);
+        auction.StartAuction(_timeServiceMock.Object);
 
         auction.PlaceBid(_validBid);
 
@@ -53,11 +59,11 @@ public class BuyoutAuctionTests
     public void PlaceBid_LowerThanHighest_ShouldThrowException()
     {
         var auction = new BuyoutAuction(_sellerId, _item, _auctionLength, _buyoutPrice);
-        auction.StartAuction(_fixedDateTime);
-        var highBid = new Bid("bidder2", new Price(60), _fixedDateTime);
+        auction.StartAuction(_timeServiceMock.Object);
+        var highBid = new Bid("bidder2", new Price(60), _timeServiceMock.Object.GetCurrentTime());
         auction.PlaceBid(highBid);
 
-        var lowBid = new Bid("bidder1", new Price(55), _fixedDateTime);
+        var lowBid = new Bid("bidder1", new Price(55), _timeServiceMock.Object.GetCurrentTime());
 
         var exception = Assert.Throws<InvalidOperationException>(() => auction.PlaceBid(lowBid));
         Assert.Equal("Bid amount of 55 must be higher than the current highest bid of 60.", exception.Message);
@@ -67,7 +73,7 @@ public class BuyoutAuctionTests
     public void PlaceBid_MeetsOrExceedsBuyout_ShouldCompleteAuction()
     {
         var auction = new BuyoutAuction(_sellerId, _item, _auctionLength, _buyoutPrice);
-        auction.StartAuction(_fixedDateTime);
+        auction.StartAuction(_timeServiceMock.Object);
         var bid = new Bid("bidder1", new Price(100), _fixedDateTime);
 
         auction.PlaceBid(bid);
@@ -97,7 +103,7 @@ public class BuyoutAuctionTests
     public void PlaceBid_LowerThanBuyoutButHigherThanHighest_AcceptsBid()
     {
         var auction = new BuyoutAuction(_sellerId, _item, _auctionLength, _buyoutPrice);
-        auction.StartAuction(_fixedDateTime);
+        auction.StartAuction(_timeServiceMock.Object);
         var bid = new Bid("bidder1", new Price(80), _fixedDateTime);
 
         auction.PlaceBid(bid);
@@ -109,10 +115,13 @@ public class BuyoutAuctionTests
     public void Auction_ExpiresWithoutBuyout_IsNotActive()
     {
         var auction = new BuyoutAuction(_sellerId, _item, _auctionLength, _buyoutPrice);
-        auction.StartAuction(_fixedDateTime);
-        auction.CheckAndCompleteAuction(_fixedDateTime.AddHours(25));
+        auction.StartAuction(_timeServiceMock.Object);
+
+        var timeAfterAuctionEnd = _fixedDateTime.AddHours(25);
+        _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(timeAfterAuctionEnd);
+
+        auction.CheckAndCompleteAuction(_timeServiceMock.Object);
 
         Assert.False(auction.IsActive);
-        // Assuming CheckAndCompleteAuction is a method that marks the auction as inactive if it's past the estimated end time
     }
 }

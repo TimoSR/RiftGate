@@ -1,7 +1,5 @@
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
-using System;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
-using Xunit;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
+using API.Features.AuctionListing.Domain.AuctionAggregates.ValueObjects;
 
 namespace UnitTests.AuctionListing.Domain;
 

@@ -1,8 +1,7 @@
-using API.Features.AuctionListing.Domain.AggregateRoots;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
 using CodingPatterns.DomainLayer;
 
-namespace API.Features.AuctionListing.Domain.Repositories;
+namespace API.Features.AuctionListing.Domain.AuctionAggregates.Repositories;
 
 public interface IAuctionRepository : IRepository<Auction>
 {

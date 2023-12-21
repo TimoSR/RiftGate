@@ -1,4 +1,4 @@
-using API.Features.AuctionListing.Domain.AggregateRoots.Events;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Events;
 
 namespace UnitTests.AuctionListing.Domain.Events;
 
