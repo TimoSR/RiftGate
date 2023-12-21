@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
 using API.Features.AuctionListing.Domain.AuctionAggregates.Repositories;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
@@ -26,6 +27,15 @@ public class PlaceBid : ICommandHandler<PlaceBidCommand>
 
 // If ever working with more team members introducing Request for the controllers could be an idea.
 // For personal projects I think it is fine going Commands and Queries. 
+
+//R
+public class PlaceBidRequest : IRequest
+{
+    [Required(ErrorMessage = "{0} is required", AllowEmptyStrings = false)]
+    public string AuctionId { get; set; }
+    [Required(ErrorMessage = "{0} is required")]
+    public Bid Bid { get; set; }
+}
 
 public record struct PlaceBidCommand : ICommand
 {
