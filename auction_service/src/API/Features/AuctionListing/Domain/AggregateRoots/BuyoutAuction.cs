@@ -34,7 +34,7 @@ public class BuyoutAuction : Auction
     
     // Private
 
-    private void ValidateBid(Bid bid)
+    protected override void ValidateBid(Bid bid)
     {
         if (bid == null)
             throw new ArgumentNullException(nameof(bid), "Bid cannot be null.");

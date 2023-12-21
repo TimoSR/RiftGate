@@ -29,6 +29,32 @@ public abstract class Auction : Entity, IAggregateRoot
         Item = item ?? throw new ArgumentNullException();
     }
     
+    // Abstract
+    public virtual void PlaceBid(Bid bid)
+    {
+        ValidateBid(bid);
+        
+        Bids.Add(bid);
+
+        AddDomainEvent(new BidPlacedEvent(Id, bid));  
+    }
+
+    protected virtual void ValidateBid(Bid bid)
+    {
+        if (bid == null)
+            throw new ArgumentNullException(nameof(bid), "Bid cannot be null.");
+        
+        if (!IsActive)
+            throw new InvalidOperationException("Attempted to place a bid on an inactive auction.");
+        
+        var highestBid = GetCurrentHighestBid();
+
+        if (highestBid != null && bid.BidAmount.Value <= highestBid.BidAmount.Value)
+        {
+            throw new InvalidOperationException($"Bid amount of {bid.BidAmount.Value} must be higher than the current highest bid of {highestBid.BidAmount.Value}.");
+        }
+    }
+    
     // Public
     
     public void StartAuction(DateTime startTime)
@@ -46,8 +72,6 @@ public abstract class Auction : Entity, IAggregateRoot
             CompleteAuction(currentTime);
         }
     }
-    
-    public abstract void PlaceBid(Bid bid);
     
     // Protected
     
