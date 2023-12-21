@@ -21,7 +21,7 @@ public class BuyoutAuction : Auction
     
     // Public (Input Should be Validated)
 
-    public void Buyout(Bid bid)
+    public override void PlaceBid(Bid bid)
     {
         ValidateBid(bid);
         

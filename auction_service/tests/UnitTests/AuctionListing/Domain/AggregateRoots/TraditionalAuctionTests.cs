@@ -2,6 +2,7 @@ using API.Features._shared.Domain;
 using API.Features.AuctionListing.Domain.AuctionAggregates;
 using API.Features.AuctionListing.Domain.AuctionAggregates.DomainService;
 using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
+using API.Features.AuctionListing.Domain.AuctionAggregates.Events;
 using API.Features.AuctionListing.Domain.AuctionAggregates.ValueObjects;
 using Moq;
 
@@ -79,6 +80,8 @@ public class TraditionalAuctionTests
     {
         _auction.PlaceBid(_validBid);
         Assert.Contains(_validBid, _auction.Bids);
+        Assert.Contains(_auction.DomainEvents, e => e is AuctionStartedEvent);
+        Assert.Contains(_auction.DomainEvents, e => e is BidPlacedEvent);
     }
 
     [Fact]
