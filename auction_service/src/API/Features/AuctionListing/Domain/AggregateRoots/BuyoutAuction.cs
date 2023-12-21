@@ -7,7 +7,7 @@ namespace API.Features.AuctionListing.Domain.AggregateRoots;
 
 public class BuyoutAuction : Auction
 {
-    private Price Buyout { get; }
+    public Price Buyout { get; }
     
     public BuyoutAuction(
         string sellerId, 

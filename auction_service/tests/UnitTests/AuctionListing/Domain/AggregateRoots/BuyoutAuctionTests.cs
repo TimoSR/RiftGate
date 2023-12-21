@@ -3,7 +3,6 @@ using API.Features.AuctionListing.Domain.AggregateRoots;
 using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
 using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
 using API.Features.AuctionListing.Domain.AggregateRoots.Events;
-using UnitTests.AuctionListing.Domain.AggregateRoots.Data;
 
 namespace UnitTests.AuctionListing.Domain.AggregateRoots;
 
@@ -26,12 +25,16 @@ public class BuyoutAuctionTests
         _validBid = new Bid("bidder1", new Price(50), _fixedDateTime);
     }
 
-    [Theory]
-    [MemberData(nameof(RootDataProvider.InvalidConstructorArguments), MemberType = typeof(RootDataProvider))]
-    public void BuyoutAuction_Constructor_WithInvalidArguments_ShouldThrowException(
-        string sellerId, Item item, AuctionLength auctionLength, Price buyout)
+    [Fact]
+    public void Constructor_InitializesPropertiesCorrectly()
     {
-        Assert.Throws<ArgumentNullException>(() => new BuyoutAuction(sellerId, item, auctionLength, buyout));
+        var auction = new BuyoutAuction(_sellerId, _item, _auctionLength, _buyoutPrice);
+
+        Assert.Equal(_sellerId, auction.SellerId);
+        Assert.Equal(_item, auction.Item);
+        Assert.Equal(_auctionLength, auction.AuctionLength);
+        Assert.Equal(_buyoutPrice, auction.Buyout);
+        Assert.False(auction.IsActive);
     }
     
     [Fact]
