@@ -20,12 +20,12 @@ public class TraditionalAuction : Auction
     public override void PlaceBid(Bid bid)
     {
         if (!IsActive)
-            throw new InvalidOperationException("The auction is not active.");
+            throw new InvalidOperationException("Attempted to place a bid on an inactive auction.");
 
         var highestBid = GetCurrentHighestBid();
  
         if (highestBid != null && bid.BidAmount.Value <= highestBid.BidAmount.Value)
-            throw new InvalidOperationException("Bid amount must be higher than the current highest bid.");
+            throw new InvalidOperationException($"Bid amount of {bid.BidAmount.Value} must be higher than the current highest bid of {highestBid.BidAmount.Value}.");
         
         Bids.Add(bid);
 

@@ -24,18 +24,17 @@ public class BuyoutAuction : Auction
     public override void PlaceBid(Bid bid)
     {
         if (!IsActive)
-            throw new InvalidOperationException("The auction is not active.");
+            throw new InvalidOperationException("Attempted to place a bid on an inactive auction.");
 
         var highestBid = GetCurrentHighestBid();
- 
-        if (highestBid != null && bid.BidAmount.Value <= highestBid.BidAmount.Value)
-            throw new InvalidOperationException("Bid amount must be higher than the current highest bid.");
 
-        if (highestBid != null && bid.BidAmount.Value >= Buyout.Value)
-            throw new InvalidOperationException("Bid is higher than buyout price!");
+        if (highestBid != null && bid.BidAmount.Value <= highestBid.BidAmount.Value)
+            throw new InvalidOperationException($"Bid amount of {bid.BidAmount.Value} must be higher than the current highest bid of {highestBid.BidAmount.Value}.");
+
+        if (bid.BidAmount.Value >= Buyout.Value)
+            throw new InvalidOperationException($"Bid of {bid.BidAmount.Value} exceeds or equals the buyout price of {Buyout.Value}, which is not allowed.");
 
         Bids.Add(bid);
-
         AddDomainEvent(new BidPlacedEvent(Id, bid.BidAmount));
     }
 }
