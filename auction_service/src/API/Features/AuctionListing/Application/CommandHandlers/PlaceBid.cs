@@ -25,26 +25,19 @@ public class PlaceBid : ICommandHandler<PlaceBidCommand>
     }
 }
 
-// If ever working with more team members introducing Request for the controllers could be an idea.
-// For personal projects I think it is fine going Commands and Queries. 
+// Requests have the responsibility to fail fast and be the endpoint contract
+// !ModelState.IsValid in Controller
 
-//R
-public class PlaceBidRequest : IRequest
+public record struct PlaceBidRequest : IRequest
 {
+    [Required]
+    public Guid RequestId { get; set; }
     [Required(ErrorMessage = "{0} is required", AllowEmptyStrings = false)]
     public string AuctionId { get; set; }
     [Required(ErrorMessage = "{0} is required")]
     public Bid Bid { get; set; }
 }
 
-public record struct PlaceBidCommand : ICommand
-{
-    public string AuctionId { get; }
-    public Bid Bid { get; }
+// For Internal Concerns
 
-    public PlaceBidCommand(string auctionId, Bid bid)
-    {
-        AuctionId = auctionId;
-        Bid = bid;
-    }
-}
+public record struct PlaceBidCommand(Guid RequestId, string AuctionId, Bid Bid) : ICommand;
