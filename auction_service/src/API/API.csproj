@@ -13,6 +13,8 @@
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="DotNetEnv" Version="2.5.0" />
+    <PackageReference Include="FluentValidation" Version="11.8.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.1" />
     <PackageReference Include="Google.Cloud.PubSub.V1" Version="3.6.0" />
     <PackageReference Include="Google.Protobuf" Version="3.23.4" />
     <PackageReference Include="GraphQL.Client.Serializer.Newtonsoft" Version="6.0.0" />
@@ -45,8 +47,10 @@
     <Folder Include="Features\AFeature\Application\Controllers\V1\Webhooks\" />
     <Folder Include="Features\AFeature\Application\Controllers\V2\" />
     <Folder Include="Features\AFeature\Domain\AggregateRoots\" />
+    <Folder Include="Features\AFeature\Domain\Repositories\1RepositoryPrAggregateRoot\" />
     <Folder Include="Features\AFeature\Infrastructure\Repositories\" />
     <Folder Include="Features\AFeature\Infrastructure\Services\" />
+    <Folder Include="Features\AuctionListing\Domain\Entities\" />
     <Folder Include="Features\AuctionTimeObserver\" />
     <Folder Include="Features\Buyout\" />
     <Folder Include="Features\FilterAuctions\" />
@@ -54,9 +58,8 @@
     <Folder Include="Features\Notifications\" />
     <Folder Include="Features\ItemCatalogManagement\" />
     <Folder Include="Features\TransactionHistory\" />
-    <Folder Include="Features\_SharedKernel\Domain\" />
-    <Folder Include="Features\_SharedKernel\Infrastructure\" />
-    <Folder Include="Features\_SharedKernel\Utilities\" />
+    <Folder Include="Features\_shared\Infrastructure\" />
+    <Folder Include="Features\_shared\Utilities\" />
   </ItemGroup>
 
 </Project>

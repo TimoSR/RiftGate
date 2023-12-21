@@ -137,7 +137,6 @@ public class UserManagerService : IUserService
             return ServiceResult.Failure("An unexpected error occurred during deletion.");
         }
     }
-
     
     public async Task<ServiceResult> UpdateUserStatusByEmailAsync(UserAuthDetailsSetSuccessEvent @event, UserStatus status)
     {

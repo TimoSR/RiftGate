@@ -14,7 +14,7 @@ public static class RepositoryRegister
         //Registering IRepositories
         var types = Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract && t.GetInterfaces()
-                .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(Infrastructure.Persistence._Interfaces.IRepository<>)))
+                .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRepository<>)))
             .ToList();
     
         if (!types.Any())
