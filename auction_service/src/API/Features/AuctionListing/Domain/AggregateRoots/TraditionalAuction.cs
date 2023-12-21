@@ -1,6 +1,5 @@
 using API.Features._shared.Domain;
 using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.DomainService;
 using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
 using API.Features.AuctionListing.Domain.AggregateRoots.Events;
 
@@ -11,9 +10,8 @@ public class TraditionalAuction : Auction
     public TraditionalAuction(
         string sellerId, 
         Item item, 
-        AuctionLength auctionLength,
-        ITimeService timeService) 
-        : base(sellerId, item, auctionLength, timeService)
+        AuctionLength auctionLength) 
+        : base(sellerId, item, auctionLength)
     {
     }
 

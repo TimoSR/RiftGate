@@ -11,35 +11,19 @@ namespace UnitTests.AuctionListing.Domain.AggregateRoots;
 
 public class TraditionalAuctionTests
 {
-    private readonly Mock<ITimeService> _mockTimeService;
-    private readonly DateTime _fixedDateTime;
+    private readonly DateTime _fixedDateTime = new(2023, 1, 1);
 
-    public TraditionalAuctionTests()
-    {
-        _fixedDateTime = new DateTime(2023, 1, 1);
-        _mockTimeService = new Mock<ITimeService>();
-        _mockTimeService.Setup(service => service.GetCurrentTime()).Returns(_fixedDateTime);
-    }
-    
     private TraditionalAuction CreateAuction()
     {
-        return new TraditionalAuction("seller123", new Item(), new AuctionLength(24), _mockTimeService.Object);
-    }
-    
-    [Theory]
-    [MemberData(nameof(RootDataProvider.InvalidConstructorArguments), MemberType = typeof(RootDataProvider))]
-    public void TraditionalAuction_Constructor_WithInvalidArguments_ShouldThrowException(
-        string sellerId, Item item, AuctionLength auctionLength, Price buyout, ITimeService timeService)
-    {
-        Assert.Throws<ArgumentNullException>(() => new BuyoutAuction(sellerId, item, auctionLength, buyout, timeService));
+        return new TraditionalAuction("seller123", new Item(), new AuctionLength(24));
     }
     
     [Fact]
     public void PlaceBid_ValidBid_ShouldRaiseBidPlacedEvent()
     {
         var auction = CreateAuction();
-        auction.StartAuction();
-        var bid = new Bid("bidder123", new Price(100), _mockTimeService.Object);
+        auction.StartAuction(_fixedDateTime);
+        var bid = new Bid("bidder123", new Price(100),_fixedDateTime);
 
         auction.PlaceBid(bid);
 
