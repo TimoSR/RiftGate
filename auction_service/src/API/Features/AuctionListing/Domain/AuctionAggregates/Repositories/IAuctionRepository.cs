@@ -18,8 +18,8 @@ public interface IAuctionRepository : IRepository<Auction>
     // Commands
     Task CreateAuctionAsync(Auction auction);
     Task UpdateAuctionAsync(Auction auction);
-    Task<bool> SoftDeleteAuctionAsync(string auctionId);
-    Task<bool> DeleteAuctionAsync(string auctionId);
-    Task<bool> PlaceBidOnAuctionAsync(string auctionId, Bid bid);
-    Task<bool> CloseAuctionAsync(string auctionId);
+    Task SoftDeleteAuctionAsync(string auctionId);
+    Task DeleteAuctionAsync(string auctionId);
+    Task PlaceBidOnAuctionAsync(string auctionId, Bid bid);
+    Task CloseAuctionAsync(string auctionId);
 }

@@ -120,7 +120,7 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
         return updateDefinition;
     }
 
-    public virtual async Task<bool> SoftDeleteAsync(T entity)
+    public virtual async Task SoftDeleteAsync(T entity)
     {
         try
         {
@@ -133,10 +133,7 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
             if (deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0)
             {
                 await _domainEventDispatcher.DispatchEventsAsync(entity);
-                return true;
             }
-
-            return false;
         }
         catch (MongoException ex)
         {
@@ -148,7 +145,7 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
         }
     }
     
-    public virtual async Task<bool> DeleteAsync(T entity)
+    public virtual async Task DeleteAsync(T entity)
     {
         try
         {
@@ -161,10 +158,7 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
             if (deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0)
             {
                 await _domainEventDispatcher.DispatchEventsAsync(entity);
-                return true;
             }
-
-            return false;
         }
         catch (MongoException ex)
         {

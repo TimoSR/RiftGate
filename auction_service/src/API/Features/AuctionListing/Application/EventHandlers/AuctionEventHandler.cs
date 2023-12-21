@@ -1,7 +1,7 @@
 using API.Features.AuctionListing.Domain.AuctionAggregates.Events;
 using MediatR;
 
-namespace API.Features.AuctionListing.Application;
+namespace API.Features.AuctionListing.Application.EventHandlers;
 
 public class AuctionEventHandler : 
     INotificationHandler<AuctionStartedEvent>,

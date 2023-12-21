@@ -1,37 +1,64 @@
 using API.Features.AuctionListing.Domain.AuctionAggregates;
+using API.Features.AuctionListing.Domain.AuctionAggregates.DomainService;
 using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
 
 namespace API.Features.AuctionListing.Infrastructure.Repositories;
 
 public partial class AuctionRepository
 {
-    public Task CreateAuctionAsync(Auction auction)
+    public async Task CreateAuctionAsync(Auction auction)
     {
-        throw new NotImplementedException();
+        await InsertAsync(auction);
     }
 
-    public Task UpdateAuctionAsync(Auction auction)
+    public async Task UpdateAuctionAsync(Auction auction)
     {
-        throw new NotImplementedException();
+        await UpdateAsync(auction);
     }
 
-    public Task<bool> SoftDeleteAuctionAsync(string auctionId)
+    public async Task SoftDeleteAuctionAsync(string auctionId)
     {
-        throw new NotImplementedException();
+        var auction = await GetByIdAsync(auctionId);
+        if (auction == null)
+        {
+            throw new KeyNotFoundException($"Auction with ID {auctionId} not found.");
+        }
+
+        await SoftDeleteAsync(auction);
     }
 
-    public Task<bool> DeleteAuctionAsync(string auctionId)
+    public async Task DeleteAuctionAsync(string auctionId)
     {
-        throw new NotImplementedException();
+        var auction = await GetByIdAsync(auctionId);
+        if (auction == null)
+        {
+            throw new KeyNotFoundException($"Auction with ID {auctionId} not found.");
+        }
+        
+        await DeleteAsync(auction);
     }
 
-    public Task<bool> PlaceBidOnAuctionAsync(string auctionId, Bid bid)
+    public async Task PlaceBidOnAuctionAsync(string auctionId, Bid bid)
     {
-        throw new NotImplementedException();
+        var auction = await GetByIdAsync(auctionId);
+        if (auction == null)
+        {
+            throw new KeyNotFoundException($"Auction with ID {auctionId} not found.");
+        }
+
+        auction.PlaceBid(bid);
+        await UpdateAsync(auction);
     }
 
-    public Task<bool> CloseAuctionAsync(string auctionId)
+    public async Task CloseAuctionAsync(string auctionId, ITimeService timeService)
     {
-        throw new NotImplementedException();
+        var auction = await GetByIdAsync(auctionId);
+        if (auction == null)
+        {
+            throw new KeyNotFoundException($"Auction with ID {auctionId} not found.");
+        }
+
+        auction.CheckAndCompleteAuction(timeService); // Assuming timeService is available
+        await UpdateAsync(auction);
     }
 }
