@@ -17,7 +17,7 @@ public abstract class Auction : Entity, IAggregateRoot
     public AuctionLength AuctionLength { get; private set; }
     public Item Item { get; private set; }
     public string SellerId { get; private set; }
-    public bool IsActive { get; private set; }
+    public bool IsActive { get;  set; }
 
     protected Auction(
         string sellerId, 
@@ -84,7 +84,7 @@ public abstract class Auction : Entity, IAggregateRoot
         AddDomainEvent(new AuctionCompletedEvent(Id, completionTime));
     }
     
-    protected Bid? GetCurrentHighestBid()
+    public Bid? GetCurrentHighestBid()
     {
         return Bids.MaxBy(b => b.BidAmount.Value);
     }
