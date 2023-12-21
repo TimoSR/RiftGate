@@ -26,6 +26,15 @@ public class BuyoutAuction : Auction
         if (!IsActive)
             throw new InvalidOperationException("Attempted to place a bid on an inactive auction.");
 
+        ValidateBid(bid);
+        HandleBuyoutCondition(bid);
+
+        Bids.Add(bid);
+        AddDomainEvent(new BidPlacedEvent(Id, bid.BidAmount));
+    }
+
+    private void ValidateBid(Bid bid)
+    {
         var highestBid = GetCurrentHighestBid();
 
         if (highestBid != null && bid.BidAmount.Value <= highestBid.BidAmount.Value)
@@ -37,9 +46,6 @@ public class BuyoutAuction : Auction
         {
             throw new InvalidOperationException($"Bid of {bid.BidAmount.Value} exceeds or equals the buyout price of {Buyout.Value}, which is not allowed.");
         }
-
-        Bids.Add(bid);
-        AddDomainEvent(new BidPlacedEvent(Id, bid.BidAmount));
     }
     
     private void HandleBuyoutCondition(Bid bid)
