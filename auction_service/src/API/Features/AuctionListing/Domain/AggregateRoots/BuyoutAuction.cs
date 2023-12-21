@@ -27,10 +27,13 @@ public class BuyoutAuction : Auction
             throw new InvalidOperationException("Attempted to place a bid on an inactive auction.");
 
         ValidateBid(bid);
+        
+        AddDomainEvent(new BidPlacedEvent(Id, bid));
+        
         HandleBuyoutCondition(bid);
 
         Bids.Add(bid);
-        AddDomainEvent(new BidPlacedEvent(Id, bid.BidAmount));
+        
     }
 
     private void ValidateBid(Bid bid)
