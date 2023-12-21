@@ -72,14 +72,18 @@ public class BuyoutAuctionTests
     [Fact]
     public void PlaceBid_MeetsOrExceedsBuyout_ShouldCompleteAuction()
     {
+        // Arrange
         var auction = new BuyoutAuction(_sellerId, _item, _auctionLength, _buyoutPrice);
         auction.StartAuction(_timeServiceMock.Object);
-        var bid = new Bid("bidder1", new Price(100), _fixedDateTime);
+        var bid = new Bid("bidder1", _buyoutPrice, _fixedDateTime.AddHours(2));
 
+        // Act
         auction.Buyout(bid);
 
+        // Assert
         Assert.False(auction.IsActive);
-        Assert.Contains(auction.DomainEvents, e => e is AuctionCompletedEvent);
+        Assert.Contains(auction.DomainEvents, e => e is BidPlacedEvent);
+        Assert.Contains(auction.DomainEvents, e => e is AuctionSoldEvent);
     }
     
     [Fact]
@@ -104,7 +108,7 @@ public class BuyoutAuctionTests
     {
         var auction = new BuyoutAuction(_sellerId, _item, _auctionLength, _buyoutPrice);
         auction.StartAuction(_timeServiceMock.Object);
-        var bid = new Bid("bidder1", new Price(80), _fixedDateTime);
+        var bid = new Bid("bidder1", new Price(80), _fixedDateTime.AddHours(24));
 
         auction.Buyout(bid);
 

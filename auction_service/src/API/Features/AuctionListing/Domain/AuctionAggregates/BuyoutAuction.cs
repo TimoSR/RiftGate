@@ -24,15 +24,14 @@ public class BuyoutAuction : Auction
     public void Buyout(Bid bid)
     {
         ValidateBid(bid);
+        
+        Bids.Add(bid);
+        
+        AddDomainEvent(new BidPlacedEvent(Id, bid));
 
         if (bid.BidAmount.Value == BuyoutAmount.Value)
         {
             CompleteAuction(bid.TimeStamp);
-        }
-        else
-        {
-            Bids.Add(bid);
-            AddDomainEvent(new BidPlacedEvent(Id, bid));
         }
     }
 
