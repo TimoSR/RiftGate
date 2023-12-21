@@ -29,6 +29,6 @@ public class TraditionalAuction : Auction
         
         Bids.Add(bid);
 
-        AddDomainEvent(new BidPlacedEvent(Id, bid.BidAmount));
+        AddDomainEvent(new BidPlacedEvent(Id, bid));
     }
 }
