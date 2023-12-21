@@ -13,11 +13,11 @@ public abstract class Auction : Entity, IAggregateRoot
 {   
     public DateTime StartTime { get; private set; }
     public DateTime EstimatedEndTime { get; private set; }
-    public List<Bid> Bids { get; protected set; } = new();
-    public AuctionLength AuctionLength { get; private set; }
+    public List<Bid> Bids { get; } = new();
+    public AuctionLength AuctionLength { get; }
     public Item Item { get; private set; }
     public string SellerId { get; private set; }
-    public bool IsActive { get;  set; }
+    public bool IsActive { get; private set; }
 
     protected Auction(
         string sellerId, 
@@ -78,10 +78,21 @@ public abstract class Auction : Entity, IAggregateRoot
     protected void CompleteAuction(DateTime completionTime)
     {
         if (!IsActive)
-            throw new InvalidOperationException("Auction is not active.");  
+            throw new InvalidOperationException("Auction is not active.");
 
         IsActive = false;
-        AddDomainEvent(new AuctionCompletedEvent(Id, completionTime));
+        var highestBid = GetCurrentHighestBid();
+
+        if (highestBid != null)
+        {
+            // Auction is completed with a sale.
+            AddDomainEvent(new AuctionSoldEvent(Id, highestBid, completionTime));
+        }
+        else
+        {
+            // Auction is expired without any bids.
+            AddDomainEvent(new AuctionExpiredEvent(Id, completionTime));
+        }
     }
     
     public Bid? GetCurrentHighestBid()
