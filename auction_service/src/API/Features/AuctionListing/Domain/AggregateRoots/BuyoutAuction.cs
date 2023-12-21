@@ -20,7 +20,7 @@ public class BuyoutAuction : Auction
     {
         Buyout = buyout ?? throw new ArgumentNullException(nameof(buyout));
     }
-    
+
     public override void PlaceBid(Bid bid)
     {
         if (!IsActive)
@@ -29,12 +29,26 @@ public class BuyoutAuction : Auction
         var highestBid = GetCurrentHighestBid();
 
         if (highestBid != null && bid.BidAmount.Value <= highestBid.BidAmount.Value)
+        {
             throw new InvalidOperationException($"Bid amount of {bid.BidAmount.Value} must be higher than the current highest bid of {highestBid.BidAmount.Value}.");
+        }
 
         if (bid.BidAmount.Value >= Buyout.Value)
+        {
             throw new InvalidOperationException($"Bid of {bid.BidAmount.Value} exceeds or equals the buyout price of {Buyout.Value}, which is not allowed.");
+        }
 
         Bids.Add(bid);
         AddDomainEvent(new BidPlacedEvent(Id, bid.BidAmount));
+    }
+    
+    private void HandleBuyoutCondition(Bid bid)
+    {
+        if (bid.BidAmount.Value >= Buyout.Value)
+        {
+            IsActive = false;
+            var completionTime = _timeService.GetCurrentTime();
+            AddDomainEvent(new AuctionCompletedEvent(Id, completionTime));
+        }
     }
 }

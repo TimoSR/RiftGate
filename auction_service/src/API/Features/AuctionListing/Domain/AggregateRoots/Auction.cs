@@ -12,14 +12,14 @@ namespace API.Features.AuctionListing.Domain.AggregateRoots;
 [BsonKnownTypes(typeof(BuyoutAuction), typeof(TraditionalAuction))]
 public abstract class Auction : Entity, IAggregateRoot
 {
-    private readonly ITimeService _timeService;
+    protected readonly ITimeService _timeService;
     public DateTime StartTime { get; private set; }
     public DateTime EstimatedEndTime { get; private set; }
     protected readonly List<Bid> Bids = new();
     private readonly AuctionLength _auctionLength;
     public Item _item { get; private set; }
     public string _sellerId { get; private set; }
-    public bool IsActive { get; private set; }
+    protected bool IsActive { get;  set; }
 
     protected Auction(
         string sellerId, 
