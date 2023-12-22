@@ -1,3 +1,4 @@
+using API.Features.AuctionListing.Application.DTO;
 using API.Features.AuctionListing.Domain.AuctionAggregates.Repositories;
 using AutoMapper;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
@@ -5,18 +6,18 @@ using CodingPatterns.ApplicationLayer.ServiceResultPattern;
 
 namespace API.Features.AuctionListing.Application.QueryHandlers;
 
-public class GetActiveAuctions : IQueryHandler<GetActiveAuctionsQuery, ServiceResult<List<AuctionDto>>>
+public class GetAllActiveAuctions : IQueryHandler<GetAllActiveAuctionsQuery, ServiceResult<List<AuctionDto>>>
 {
     private readonly IAuctionRepository _auctionRepository;
     private readonly IMapper _mapper;
 
-    public GetActiveAuctions(IAuctionRepository auctionRepository, IMapper mapper)
+    public GetAllActiveAuctions(IAuctionRepository auctionRepository, IMapper mapper)
     {
         _auctionRepository = auctionRepository;
         _mapper = mapper;
     }
 
-    public async Task<ServiceResult<List<AuctionDto>>> Handle(GetActiveAuctionsQuery query)
+    public async Task<ServiceResult<List<AuctionDto>>> Handle(GetAllActiveAuctionsQuery query)
     {
         try
         {
@@ -32,13 +33,7 @@ public class GetActiveAuctions : IQueryHandler<GetActiveAuctionsQuery, ServiceRe
     }
 }
 
-public class AuctionDto
-{
-    public string AuctionId { get; set; }
-    public string Title { get; set; }
-}
-
-public class GetActiveAuctionsQuery : IQuery<ServiceResult<List<AuctionDto>>>
+public class GetAllActiveAuctionsQuery : IQuery<ServiceResult<List<AuctionDto>>>
 {
     // Currently no properties, but it's here to represent a specific querying intention
 }

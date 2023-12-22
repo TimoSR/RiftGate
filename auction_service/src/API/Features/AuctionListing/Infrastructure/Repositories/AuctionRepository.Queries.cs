@@ -1,5 +1,6 @@
 using API.Features.AuctionListing.Domain.AuctionAggregates;
 using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace API.Features.AuctionListing.Infrastructure.Repositories;
@@ -28,10 +29,27 @@ public partial class AuctionRepository
         return auctions;
     }
 
-    public Task<List<Auction>> SearchAuctionsAsync()
+    public async Task<List<Auction>> SearchAuctionsAsync(string? name, string? category, string? group, string? type, string? rarity)
     {
-        throw new NotImplementedException();
+        var collection = GetCollection();
+        var filterBuilder = Builders<Auction>.Filter;
+        var filter = filterBuilder.Empty;
+
+        // Apply filters based on item properties
+        if (!string.IsNullOrWhiteSpace(name))
+        {
+            filter &= filterBuilder.Regex("Item.Name", new BsonRegularExpression(name, "i"));
+        }
+        if (!string.IsNullOrWhiteSpace(category))
+        {
+            filter &= filterBuilder.Eq("Item.Category", category);
+        }
+        // Add similar filters for Group, Type, Rarity
+
+        var auctions = await collection.Find(filter).ToListAsync();
+        return auctions;
     }
+
 
     public async Task<List<BuyoutAuction>> GetBuyoutAuctionsAsync()
     {
