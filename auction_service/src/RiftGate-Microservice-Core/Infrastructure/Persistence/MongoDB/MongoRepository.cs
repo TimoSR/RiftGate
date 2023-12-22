@@ -98,19 +98,19 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
             throw new MongoRepositoryException($"Error updating entity by id {entity.Id} in {CollectionName}. Details: {ex.Message}", ex);
         }
     }
-
-    private UpdateDefinition<T> CreateUpdateDefinition(T entity)
+ 
+    private UpdateDefinition<T>? CreateUpdateDefinition(T entity)
     {
         var updateProps = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
         var updateDefinitionBuilder = Builders<T>.Update;
-        UpdateDefinition<T> updateDefinition = null;
+        UpdateDefinition<T>? updateDefinition = null;
 
         foreach (var prop in updateProps)
         {
             if (Attribute.IsDefined(prop, typeof(BsonElementAttribute)))
             {
                 var bsonElementAttribute = Attribute.GetCustomAttribute(prop, typeof(BsonElementAttribute)) as BsonElementAttribute;
-                var propName = bsonElementAttribute.ElementName;
+                var propName = bsonElementAttribute?.ElementName;
                 var propValue = prop.GetValue(entity);
                 var update = updateDefinitionBuilder.Set(propName, propValue);
                 updateDefinition = updateDefinition == null ? update : Builders<T>.Update.Combine(updateDefinition, update);

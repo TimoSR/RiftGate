@@ -145,7 +145,6 @@ public class Program
     }
 }
 
-
     // if (environment.Equals("Development")) {
     //
     //     // Insert initial data into the MongoDB collections

@@ -1,3 +1,4 @@
+using API.Features.AuctionListing.Domain.AuctionAggregates.DomainService;
 using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
 using CodingPatterns.DomainLayer;
 
@@ -6,6 +7,8 @@ namespace API.Features.AuctionListing.Domain.AuctionAggregates.Repositories;
 public interface IAuctionRepository : IRepository<Auction>
 {
     // Queries
+    Task<List<Auction>> GetAllActiveAuctionsAsync();
+    Task<List<Auction>> GetActiveAuctionsAsync(int pageNumber, int pageSize);
     Task<List<Auction>> SearchAuctionsAsync();
     Task<List<BuyoutAuction>> GetBuyoutAuctionsAsync();
     Task<List<TraditionalAuction>> GetTraditionalAuctionsAsync();
@@ -14,12 +17,4 @@ public interface IAuctionRepository : IRepository<Auction>
     Task<List<Bid>> GetAuctionBidsAsync(string auctionId);
     Task<List<Bid>> GetActiveUserAuctionBids(string auctionId, string userId);
     Task<List<Bid>> GetUserBidHistoryAsync(string userId);
-    
-    // Commands
-    Task CreateAuctionAsync(Auction auction);
-    Task UpdateAuctionAsync(Auction auction);
-    Task SoftDeleteAuctionAsync(string auctionId);
-    Task DeleteAuctionAsync(string auctionId);
-    Task PlaceBidOnAuctionAsync(string auctionId, Bid bid);
-    Task CloseAuctionAsync(string auctionId);
 }

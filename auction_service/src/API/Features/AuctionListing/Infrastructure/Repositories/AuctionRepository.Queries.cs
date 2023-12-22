@@ -6,10 +6,26 @@ namespace API.Features.AuctionListing.Infrastructure.Repositories;
 
 public partial class AuctionRepository
 {
-    public async Task<List<Auction>> GetActiveAuctionsAsync()
+    public async Task<List<Auction>> GetAllActiveAuctionsAsync()
     {
         var collection = GetCollection();
         return await collection.Find(auction => auction.IsActive).ToListAsync();
+    }
+
+    public async Task<List<Auction>> GetActiveAuctionsAsync(int pageNumber, int pageSize)
+    {
+        var collection = GetCollection();
+
+        // Calculate the number of documents to skip
+        int skip = (pageNumber - 1) * pageSize;
+
+        // Retrieve the subset of active auctions
+        var auctions = await collection.Find(auction => auction.IsActive)
+            .Skip(skip)
+            .Limit(pageSize)
+            .ToListAsync();
+
+        return auctions;
     }
 
     public Task<List<Auction>> SearchAuctionsAsync()
