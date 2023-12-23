@@ -25,7 +25,7 @@ public static class RepositoryRegister
         foreach (var type in types)
         {
             var serviceType = type.GetInterfaces().FirstOrDefault(i => i.Name == "I" + type.Name);
-            services.AddTransient(serviceType, type);
+            services.AddScoped(serviceType, type);
             Console.WriteLine($"Registered repository: {type.Name} for {serviceType.Name}");
         }
 

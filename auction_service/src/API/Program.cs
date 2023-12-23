@@ -81,8 +81,8 @@ public class Program
         //Adding the Controllers
         builder.Services.AddControllers();
         
+        //Adding Mediator
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
-        builder.Services.AddSingleton<IMediator, Mediator>();
         
         //Adding Automapper
         builder.Services.AddAutoMapper(typeof(Program));
