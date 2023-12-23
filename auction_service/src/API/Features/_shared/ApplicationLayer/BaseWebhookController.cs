@@ -2,7 +2,7 @@ using CodingPatterns.InfrastructureLayer.IntegrationEvents;
 using Infrastructure.Persistence._Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Features._Common
+namespace API.Features._shared.ApplicationLayer
 {
     public abstract class BaseWebhookController : ControllerBase
     {

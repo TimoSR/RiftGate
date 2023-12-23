@@ -53,8 +53,7 @@
     <Folder Include="Features\AFeature\Infrastructure\Services\" />
     <Folder Include="Features\AuctionManagement\API\Controllers\" />
     <Folder Include="Features\AuctionManagement\Application\IntegrationEvnets\" />
-    <Folder Include="Features\_shared\Infrastructure\" />
-    <Folder Include="Features\_shared\Utilities\" />
+    <Folder Include="Features\_shared\InfrastructureLayer\Utilities\" />
   </ItemGroup>
 
 </Project>

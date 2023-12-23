@@ -1,8 +1,8 @@
 using API.Features.AuctionManagement.Domain.Entities;
 
-namespace API.Features.UserAuctionManagement.Domain;
+namespace API.Features.UserTradingActivity.Domain.Repositories;
 
-public interface IUserAuctionsRepository
+public interface IUserAuctionBidsRepository
 {
     Task<List<Bid>> GetUserBidsOnActiveAuctions(string auctionId, string userId);
     Task<List<Bid>> GetUserBidHistoryAsync(string userId);
