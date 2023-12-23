@@ -84,12 +84,7 @@ public partial class AuctionRepository: MongoRepository<Auction>, IAuctionReposi
         var filter = Builders<Auction>.Filter.Eq(auction => auction.SellerId, sellerId);
         return await collection.Find(filter).ToListAsync();
     }
-
-    public Task<List<Auction>> GetAuctionsEndingSoonAsync()
-    {
-        throw new NotImplementedException();
-    }
-
+    
     public async Task<List<Bid>> GetAuctionBidsAsync(string auctionId)
     {
         var collection = GetCollection();
