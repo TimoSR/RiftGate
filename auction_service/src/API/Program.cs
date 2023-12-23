@@ -1,8 +1,8 @@
 using API._DIRegister;
+using API.Features.AuctionOperations.Infrastructure.SchedulesTasks;
 using AspNetCoreRateLimit;
 using Infrastructure._DIRegister;
 using Infrastructure.Configuration;
-using Infrastructure.Middleware;
 using Infrastructure.Persistence.Google_PubSub;
 using Infrastructure.Persistence.MongoDB;
 using Infrastructure.Persistence.Redis;
@@ -66,7 +66,12 @@ public class Program
 
         // Hosting to make sure it dependencies connect on Program startup
         builder.Services.AddHostedService<StartPersistenceConnections>();
-
+        
+        // Implemented but should not be enabled by default
+        // Currently the checks runs each minute, but could be modified with env var. 
+        // so could be enabled in environment or feature flags
+        builder.Services.AddHostedService<AuctionExpiryBackgroundService>();
+        
         // Adding Database Repositories
         builder.Services.AddApplicationRepositories();
 
@@ -74,15 +79,19 @@ public class Program
         builder.Services.AddDomainServices();
         builder.Services.AddCommandHandlers();
         builder.Services.AddQueryHandlers();
-        builder.Services.AddHostedServices();
+        
+        //Security
 
+        //builder.Services.AddAuthentication();
+        //builder.Services.AddAuthorization();
+        
         // Add / Disable GraphQL (MapGraphQL should be out-commented too)
         //builder.Services.AddGraphQlServices();
         
         //Adding the Controllers
         builder.Services.AddControllers();
         
-        //Mediator
+        //Adding Mediator
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
         
         //Adding Automapper
@@ -125,15 +134,15 @@ public class Program
         
         // Enable this for Https only
         //app.UseHttpsRedirection();
+        
+        //app.UseRouting();
     
         // Controller Middlewares
         app.UseCors("MyCorsPolicy");
         //app.UseMiddleware<RequestLoggingMiddleware>();
-        //app.UseMiddleware<ExceptionHandlingMiddleware>();
         //app.UseIpRateLimiting();
-        // Jwt Authentication
-        //app.UseMiddleware<JwtMiddleware>();
         
+        app.UseAuthentication();
         //app.UseAuthorization();
 
         app.MapControllers();
