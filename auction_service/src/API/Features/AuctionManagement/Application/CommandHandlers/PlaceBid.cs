@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
 using API.Features.AuctionListing.Domain.AuctionAggregates.Repositories;
+using API.Features.AuctionManagement.Domain.Entities;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 
 namespace API.Features.AuctionListing.Application.CommandHandlers;

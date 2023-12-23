@@ -1,6 +1,6 @@
 using API.Features.AuctionListing.Domain.AuctionAggregates;
-using API.Features.AuctionListing.Domain.AuctionAggregates.DomainService;
-using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
+using API.Features.AuctionManagement.Domain.Entities;
+using API.Features.AuctionManagement.Domain.Services;
 
 namespace API.Features.AuctionListing.Infrastructure.Repositories;
 

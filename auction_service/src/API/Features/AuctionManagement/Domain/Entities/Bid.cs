@@ -1,7 +1,7 @@
 using API.Features.AuctionListing.Domain.AuctionAggregates.ValueObjects;
 using CodingPatterns.DomainLayer;
 
-namespace API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
+namespace API.Features.AuctionManagement.Domain.Entities;
 
 public class Bid : Entity
 {

@@ -1,4 +1,4 @@
-using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
+using API.Features.AuctionManagement.Domain.Entities;
 using CodingPatterns.DomainLayer;
 
 namespace API.Features.AuctionListing.Domain.AuctionAggregates.Repositories;

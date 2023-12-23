@@ -1,4 +1,4 @@
-namespace API.Features.AuctionListing.Domain.AuctionAggregates.DomainService;
+namespace API.Features.AuctionManagement.Domain.Services;
 
 public class TimeService : ITimeService
 {

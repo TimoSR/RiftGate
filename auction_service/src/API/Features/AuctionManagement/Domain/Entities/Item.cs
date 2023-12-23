@@ -1,6 +1,6 @@
 using CodingPatterns.DomainLayer;
 
-namespace API.Features._shared.Domain;
+namespace API.Features.AuctionManagement.Domain.Entities;
 
 // Modified Item class
 public class Item : Entity

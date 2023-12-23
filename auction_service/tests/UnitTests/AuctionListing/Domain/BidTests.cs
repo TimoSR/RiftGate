@@ -1,5 +1,5 @@
-using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
 using API.Features.AuctionListing.Domain.AuctionAggregates.ValueObjects;
+using API.Features.AuctionManagement.Domain.Entities;
 
 namespace UnitTests.AuctionListing.Domain;
 

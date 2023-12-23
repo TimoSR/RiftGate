@@ -1,8 +1,7 @@
-using API.Features._shared.Domain;
-using API.Features.AuctionListing.Domain.AuctionAggregates.DomainService;
-using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
 using API.Features.AuctionListing.Domain.AuctionAggregates.Events;
 using API.Features.AuctionListing.Domain.AuctionAggregates.ValueObjects;
+using API.Features.AuctionManagement.Domain.Entities;
+using API.Features.AuctionManagement.Domain.Services;
 using CodingPatterns.DomainLayer;
 using MongoDB.Bson.Serialization.Attributes;
 
