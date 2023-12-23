@@ -22,8 +22,13 @@ public static class CommandHandlerRegister
 
             foreach (var interfaceType in interfaceTypes)
             {
-                services.AddScoped(interfaceType, handler);
-                Console.WriteLine($"Registered command handler: {handler.Name} for {interfaceType.Name}");
+                var genericArguments = interfaceType.GetGenericArguments();
+                if (genericArguments.Length == 1)
+                {
+                    var commandType = genericArguments[0].Name;
+                    services.AddScoped(interfaceType, handler);
+                    Console.WriteLine($"Registered command handler: {handler.Name} for ICommandHandler<{commandType}>");
+                }
             }
         }
 

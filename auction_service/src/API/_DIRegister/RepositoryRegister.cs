@@ -9,7 +9,7 @@ public static class RepositoryRegister
     public static IServiceCollection AddApplicationRepositories(this IServiceCollection services)
     {
         // Register DomainEventDispatcher
-        services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+        services.AddTransient<IDomainEventDispatcher, DomainEventDispatcher>();
         
         // Registering IRepositories
         var types = Assembly.GetExecutingAssembly().GetTypes()
@@ -25,8 +25,8 @@ public static class RepositoryRegister
         foreach (var type in types)
         {
             var serviceType = type.GetInterfaces().FirstOrDefault(i => i.Name == "I" + type.Name);
-            services.AddScoped(serviceType, type);
-            Console.WriteLine($"Registered repository: {serviceType.Name} for {type.Name}");
+            services.AddTransient(serviceType, type);
+            Console.WriteLine($"Registered repository: {type.Name} for {serviceType.Name}");
         }
 
         return services;

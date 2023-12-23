@@ -47,7 +47,7 @@ public static class PubSubRegistration {
         });
         
         services.AddScoped<IIntegrationEventHandler, IntegrationEventHandler>();
-        services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+        services.AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
             
         return services;
     }

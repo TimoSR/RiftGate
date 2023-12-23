@@ -1,4 +1,5 @@
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace API._DIRegister;
 
@@ -13,10 +14,7 @@ public static class HostedServiceRegister
 
         foreach (var serviceType in hostedServices)
         {
-            services.AddSingleton(serviceType, serviceProvider => 
-            {
-                return ActivatorUtilities.CreateInstance(serviceProvider, serviceType);
-            });
+            services.TryAddEnumerable(ServiceDescriptor.Singleton(hostedServiceType, serviceType));
             Console.WriteLine($"Registered hosted service: {serviceType.Name}");
         }
 

@@ -1,4 +1,5 @@
 using API._DIRegister;
+using API.Features.AuctionOperations.Infrastructure.SchedulesTasks;
 using AspNetCoreRateLimit;
 using Infrastructure._DIRegister;
 using Infrastructure.Configuration;
@@ -7,6 +8,7 @@ using Infrastructure.Persistence.Google_PubSub;
 using Infrastructure.Persistence.MongoDB;
 using Infrastructure.Persistence.Redis;
 using Infrastructure.Swagger;
+using MediatR;
 
 namespace API;
 
@@ -64,9 +66,6 @@ public class Program
         builder.Services.AddSingleton<SubTopicsRegister>();
         builder.Services.AddSingleton<PubTopicsRegister>();
 
-        // Hosting to make sure it dependencies connect on Program startup
-        builder.Services.AddHostedService<StartPersistenceConnections>();
-
         // Adding Database Repositories
         builder.Services.AddApplicationRepositories();
 
@@ -82,8 +81,8 @@ public class Program
         //Adding the Controllers
         builder.Services.AddControllers();
         
-        //Mediator
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
+        builder.Services.AddSingleton<IMediator, Mediator>();
         
         //Adding Automapper
         builder.Services.AddAutoMapper(typeof(Program));

@@ -16,7 +16,7 @@ public static class ServiceRegistrationExtensions
 
             if (serviceType != null)
             {
-                services.AddScoped(serviceType, type);
+                services.AddTransient(serviceType, type);
                 Console.WriteLine($"Registered domain service: {type.Name} for {serviceType.Name}");
             }
         }
