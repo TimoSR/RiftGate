@@ -15,10 +15,14 @@ public class AuctionExpiryBackgroundService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        
+        Console.WriteLine("\nStarting Expiry Background Service.\n");
+        
         while (!stoppingToken.IsCancellationRequested)
         {
             using (var scope = _serviceProvider.CreateScope())
             {
+                Console.WriteLine("Starting new CheckAndCompleted Expired Auctions");
                 var auctionExpiryChecker = scope.ServiceProvider.GetRequiredService<IAuctionExpiryChecker>();
                 await auctionExpiryChecker.CheckAndCompleteExpiredAuctions();
             }
