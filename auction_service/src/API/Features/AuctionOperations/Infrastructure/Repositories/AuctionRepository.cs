@@ -7,7 +7,7 @@ using Infrastructure.Persistence.MongoDB;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace API.Features.AuctionOperations.Infrastructure;
+namespace API.Features.AuctionOperations.Infrastructure.Repositories;
 
 public partial class AuctionRepository: MongoRepository<Auction>, IAuctionRepository
 {
