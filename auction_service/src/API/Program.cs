@@ -1,4 +1,5 @@
 using API._DIRegister;
+using API.Features.AuctionOperations.Infrastructure.SchedulesTasks;
 using AspNetCoreRateLimit;
 using Infrastructure._DIRegister;
 using Infrastructure.Configuration;
@@ -63,6 +64,14 @@ public class Program
         builder.Services.AddSingleton<SubTopicsRegister>();
         builder.Services.AddSingleton<PubTopicsRegister>();
 
+        // Hosting to make sure it dependencies connect on Program startup
+        builder.Services.AddHostedService<StartPersistenceConnections>();
+        
+        // Implemented but should not be enabled by default
+        // Currently the checks runs each minute, but could be modified with env var. 
+        // so could be enabled in environment or feature flags
+        builder.Services.AddHostedService<AuctionExpiryBackgroundService>();
+        
         // Adding Database Repositories
         builder.Services.AddApplicationRepositories();
 
@@ -70,7 +79,6 @@ public class Program
         builder.Services.AddDomainServices();
         builder.Services.AddCommandHandlers();
         builder.Services.AddQueryHandlers();
-        builder.Services.AddHostedServices();
         
         //Security
 
