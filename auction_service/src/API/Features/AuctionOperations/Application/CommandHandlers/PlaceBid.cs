@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Repositories;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
+using CodingPatterns.ApplicationLayer.ServiceResultPattern;
 
 namespace API.Features.AuctionOperations.Application.CommandHandlers;
 
@@ -14,14 +15,28 @@ public class PlaceBid : ICommandHandler<PlaceBidCommand>
         _auctionRepository = auctionRepository;
     }
 
-    public async Task Handle(PlaceBidCommand command)
+    public async Task<ServiceResult> Handle(PlaceBidCommand command)
     {
-        var auction = await _auctionRepository.GetByIdAsync(command.AuctionId);
-        if (auction == null)
-            throw new KeyNotFoundException($"Auction with ID {command.AuctionId} not found.");
+        try
+        {
+            var auction = await _auctionRepository.GetByIdAsync(command.AuctionId);
+            if (auction == null)
+                return ServiceResult.Failure($"Auction with ID {command.AuctionId} not found.");
 
-        auction.PlaceBid(command.Bid);
-        await _auctionRepository.UpdateAsync(auction);
+            // Additional logic can be implemented to check if the bid can be placed
+            // For example, checking if the bid amount is higher than the current highest bid
+            // and whether the auction is still active.
+
+            auction.PlaceBid(command.Bid);
+            await _auctionRepository.UpdateAsync(auction);
+
+            return ServiceResult.Success("Bid placed successfully.");
+        }
+        catch (Exception ex)
+        {
+            // Log the exception if necessary
+            return ServiceResult.Failure("Failed to place bid due to an unexpected error.");
+        }
     }
 }
 
