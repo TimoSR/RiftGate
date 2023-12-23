@@ -51,7 +51,6 @@
     <Folder Include="Features\AFeature\Domain\Repositories\1RepositoryPrAggregateRoot\" />
     <Folder Include="Features\AFeature\Infrastructure\Repositories\" />
     <Folder Include="Features\AFeature\Infrastructure\Services\" />
-    <Folder Include="Features\AuctionOperations\Infrastructure\SchedulesTasks\" />
     <Folder Include="Features\AuctionOrchestrator\" />
     <Folder Include="Features\AuctionOperations\API\Controllers\" />
     <Folder Include="Features\AuctionOperations\Application\IntegrationEvents\" />
