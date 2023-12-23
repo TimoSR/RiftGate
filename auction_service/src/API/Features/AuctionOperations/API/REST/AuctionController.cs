@@ -3,12 +3,9 @@ using CodingPatterns.ApplicationLayer.ApplicationServices;
 using Infrastructure.Swagger;
 using Infrastructure.Swagger.Attributes;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Features.AuctionOperations.API.REST;
-
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 [ApiController]
 [Route("api/v1/[controller]")]
@@ -18,12 +15,10 @@ using Microsoft.Extensions.Logging;
 public class AuctionController : ControllerBase
 {
     private readonly ICommandHandler<CompleteAuctionCommand> _completeAuctionHandler;
-    private readonly ILogger<AuctionController> _logger;
     
-    public AuctionController(ICommandHandler<CompleteAuctionCommand> completeAuctionHandler, ILogger<AuctionController> logger)
+    public AuctionController(ICommandHandler<CompleteAuctionCommand> completeAuctionHandler)
     {
         _completeAuctionHandler = completeAuctionHandler;
-        _logger = logger;
     }
 
     [AllowAnonymous]
@@ -36,10 +31,7 @@ public class AuctionController : ControllerBase
         {
             return Ok(result.Messages);
         }
-        else
-        {
-            _logger.LogError(result.Messages.ToString());
-            return BadRequest(result.Messages);
-        }
+
+        return BadRequest(result.Messages);
     }
 }
