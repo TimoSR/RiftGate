@@ -1,11 +1,13 @@
 using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Events;
 using API.Features.AuctionOperations.Domain.ValueObjects;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace API.Features.AuctionOperations.Domain;
 
 public class BuyoutAuction : Auction
 {
+    [BsonElement("buyoutAmount")]
     public Price BuyoutAmount { get; }
     
     public BuyoutAuction(
