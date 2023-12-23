@@ -10,7 +10,7 @@ public static class ServiceRegistration
     {   
         
         // Fetch all types that are classes and implement the IUtilityTool interface.
-        var types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.GetInterfaces().Contains(typeof(IFrastructureService)));
+        var types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.GetInterfaces().Contains(typeof(IInfrastructureService)));
 
         foreach (var type in types)
         {

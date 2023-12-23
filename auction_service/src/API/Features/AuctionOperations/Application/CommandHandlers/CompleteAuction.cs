@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations;
 using API.Features.AuctionOperations.Domain.Repositories;
 using API.Features.AuctionOperations.Domain.Services;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
+using Infrastructure.ValidationAttributes;
 
 namespace API.Features.AuctionOperations.Application.CommandHandlers;
 
@@ -49,12 +51,11 @@ public class CompleteAuction : ICommandHandler<CompleteAuctionCommand>
     }
 }
 
-public class CompleteAuctionCommand : ICommand
+public record struct CompleteAuctionRequest : IRequest
 {
-    public string AuctionId { get; }
-
-    public CompleteAuctionCommand(string auctionId)
-    {
-        AuctionId = auctionId;
-    }
+    [Required]
+    [HexString(24)]
+    public string AuctionId { get; set; }
 }
+
+public record struct CompleteAuctionCommand(string AuctionId) : ICommand;

@@ -3,6 +3,7 @@ using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Repositories;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
+using Infrastructure.ValidationAttributes;
 
 namespace API.Features.AuctionOperations.Application.CommandHandlers;
 
@@ -49,9 +50,10 @@ public record struct PlaceBidRequest : IRequest
 {
     [Required]
     public Guid RequestId { get; set; }
-    [Required(ErrorMessage = "{0} is required", AllowEmptyStrings = false)]
+    [Required(ErrorMessage = "The {0} field is required", AllowEmptyStrings = false)]
+    [HexString(24)]
     public string AuctionId { get; set; }
-    [Required(ErrorMessage = "{0} is required")]
+    [Required(ErrorMessage = "The {0} field is required")]
     public Bid Bid { get; set; }
 }
 

@@ -23,8 +23,10 @@ public class AuctionController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("CompleteAuction")]
-    public async Task<IActionResult> CompleteAuction([FromBody] CompleteAuctionCommand command)
+    public async Task<IActionResult> CompleteAuction([FromBody] CompleteAuctionRequest request)
     {
+        var command = new CompleteAuctionCommand(request.AuctionId);
+        
         var result = await _completeAuctionHandler.Handle(command);
 
         if (result.IsSuccess)
