@@ -71,7 +71,8 @@ public class Program
         builder.Services.AddApplicationRepositories();
 
         // Add this after all project dependencies to register all the services.
-        builder.Services.AddApplicationServices();
+        builder.Services.AddCommandHandlers();
+        builder.Services.AddQueryHandlers();
         builder.Services.AddDomainServices();
 
         // Add / Disable GraphQL (MapGraphQL should be out-commented too)
