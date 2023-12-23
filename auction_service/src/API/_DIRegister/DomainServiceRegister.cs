@@ -7,20 +7,17 @@ public static class ServiceRegistrationExtensions
 {
     public static IServiceCollection AddDomainServices(this IServiceCollection services)
     {
-        var domainServiceType = typeof(IDomainService);
-        var domainServiceImplementations = Assembly.GetAssembly(domainServiceType)
-            ?.GetTypes()
-            .Where(t => t.IsClass && !t.IsAbstract && domainServiceType.IsAssignableFrom(t))
-            .ToList();
+        var types = Assembly.GetExecutingAssembly().GetTypes()
+            .Where(t => t.IsClass && !t.IsAbstract && typeof(IDomainService).IsAssignableFrom(t));
 
-        if (domainServiceImplementations == null) return services;
-        foreach (var implementation in domainServiceImplementations)
+        foreach (var type in types)
         {
-            var interfaceType = implementation.GetInterfaces()
-                .FirstOrDefault(i => domainServiceType.IsAssignableFrom(i));
-            if (interfaceType != null)
+            var serviceType = type.GetInterfaces().Except(new[] { typeof(IDomainService) }).FirstOrDefault();
+
+            if (serviceType != null)
             {
-                services.AddScoped(interfaceType, implementation);
+                services.AddScoped(serviceType, type);
+                Console.WriteLine($"Registered domain service: {type.Name} for {serviceType.Name}");
             }
         }
 

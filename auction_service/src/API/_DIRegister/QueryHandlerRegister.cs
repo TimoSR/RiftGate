@@ -8,22 +8,19 @@ public static class QueryHandlerRegister
     public static IServiceCollection AddQueryHandlers(this IServiceCollection services)
     {
         var queryHandlerType = typeof(IQueryHandler<,>);
-        var types = Assembly.GetAssembly(queryHandlerType)?.GetTypes();
-
-        if (types == null) return services;
-        
-        var handlers = types
+        var types = Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == queryHandlerType))
             .ToList();
 
-        foreach (var handler in handlers)
+        foreach (var handler in types)
         {
-            foreach (var interfaceType in handler.GetInterfaces())
+            var interfaceTypes = handler.GetInterfaces()
+                .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == queryHandlerType);
+
+            foreach (var interfaceType in interfaceTypes)
             {
-                if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == queryHandlerType)
-                {
-                    services.AddScoped(interfaceType, handler);
-                }
+                services.AddScoped(interfaceType, handler);
+                Console.WriteLine($"Registered query handler: {handler.Name} for {interfaceType.Name}");
             }
         }
 

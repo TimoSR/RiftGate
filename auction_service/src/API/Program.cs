@@ -71,9 +71,10 @@ public class Program
         builder.Services.AddApplicationRepositories();
 
         // Add this after all project dependencies to register all the services.
+        builder.Services.AddDomainServices();
         builder.Services.AddCommandHandlers();
         builder.Services.AddQueryHandlers();
-        builder.Services.AddDomainServices();
+        builder.Services.AddHostedServices();
 
         // Add / Disable GraphQL (MapGraphQL should be out-commented too)
         //builder.Services.AddGraphQlServices();
@@ -127,13 +128,13 @@ public class Program
     
         // Controller Middlewares
         app.UseCors("MyCorsPolicy");
-        app.UseMiddleware<RequestLoggingMiddleware>();
-        app.UseMiddleware<ExceptionHandlingMiddleware>();
-        app.UseIpRateLimiting();
+        //app.UseMiddleware<RequestLoggingMiddleware>();
+        //app.UseMiddleware<ExceptionHandlingMiddleware>();
+        //app.UseIpRateLimiting();
         // Jwt Authentication
-        app.UseMiddleware<JwtMiddleware>();
+        //app.UseMiddleware<JwtMiddleware>();
         
-        app.UseAuthorization();
+        //app.UseAuthorization();
 
         app.MapControllers();
 

@@ -2,7 +2,7 @@ using CodingPatterns.DomainLayer;
 
 namespace API.Features.AuctionOperations.Domain.Services;
 
-public interface ITimeService : IDomainService
+public interface ITimeService
 {
     DateTime GetCurrentTime();
 }

@@ -3,30 +3,30 @@ using CodingPatterns.ApplicationLayer.ApplicationServices;
 
 namespace API._DIRegister;
 
+
+// Error was fixes by using executing assembly instead of assembly.
 public static class CommandHandlerRegister
 {
     public static IServiceCollection AddCommandHandlers(this IServiceCollection services)
     {
         var commandHandlerType = typeof(ICommandHandler<>);
-        var types = Assembly.GetAssembly(commandHandlerType)?.GetTypes();
-
-        if (types == null) return services;
-        
-        var handlers = types
-            .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == commandHandlerType))
+        var types = Assembly.GetExecutingAssembly().GetTypes()
+            .Where(t => t.GetInterfaces()
+                .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == commandHandlerType))
             .ToList();
 
-        foreach (var handler in handlers)
+        foreach (var handler in types)
         {
-            foreach (var interfaceType in handler.GetInterfaces())
+            var interfaceTypes = handler.GetInterfaces()
+                .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == commandHandlerType);
+
+            foreach (var interfaceType in interfaceTypes)
             {
-                if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == commandHandlerType)
-                {
-                    services.AddScoped(interfaceType, handler);
-                }
+                services.AddScoped(interfaceType, handler);
+                Console.WriteLine($"Registered command handler: {handler.Name} for {interfaceType.Name}");
             }
         }
 
         return services;
-    } 
+    }
 }
