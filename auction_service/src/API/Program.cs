@@ -1,14 +1,11 @@
 using API._DIRegister;
-using API.Features.AuctionOperations.Infrastructure.SchedulesTasks;
 using AspNetCoreRateLimit;
 using Infrastructure._DIRegister;
 using Infrastructure.Configuration;
-using Infrastructure.Middleware;
 using Infrastructure.Persistence.Google_PubSub;
 using Infrastructure.Persistence.MongoDB;
 using Infrastructure.Persistence.Redis;
 using Infrastructure.Swagger;
-using MediatR;
 
 namespace API;
 
@@ -74,7 +71,12 @@ public class Program
         builder.Services.AddCommandHandlers();
         builder.Services.AddQueryHandlers();
         builder.Services.AddHostedServices();
+        
+        //Security
 
+        //builder.Services.AddAuthentication();
+        //builder.Services.AddAuthorization();
+        
         // Add / Disable GraphQL (MapGraphQL should be out-commented too)
         //builder.Services.AddGraphQlServices();
         
@@ -124,15 +126,15 @@ public class Program
         
         // Enable this for Https only
         //app.UseHttpsRedirection();
+        
+        //app.UseRouting();
     
         // Controller Middlewares
         app.UseCors("MyCorsPolicy");
         //app.UseMiddleware<RequestLoggingMiddleware>();
-        //app.UseMiddleware<ExceptionHandlingMiddleware>();
         //app.UseIpRateLimiting();
-        // Jwt Authentication
-        //app.UseMiddleware<JwtMiddleware>();
         
+        app.UseAuthentication();
         //app.UseAuthorization();
 
         app.MapControllers();

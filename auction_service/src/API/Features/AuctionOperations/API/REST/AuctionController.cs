@@ -1,8 +1,8 @@
 using API.Features.AuctionOperations.Application.CommandHandlers;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
-using HotChocolate.Authorization;
 using Infrastructure.Swagger;
 using Infrastructure.Swagger.Attributes;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Features.AuctionOperations.API.REST;
 
@@ -19,7 +19,7 @@ public class AuctionController : ControllerBase
 {
     private readonly ICommandHandler<CompleteAuctionCommand> _completeAuctionHandler;
     private readonly ILogger<AuctionController> _logger;
-
+    
     public AuctionController(ICommandHandler<CompleteAuctionCommand> completeAuctionHandler, ILogger<AuctionController> logger)
     {
         _completeAuctionHandler = completeAuctionHandler;
