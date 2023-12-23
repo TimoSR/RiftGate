@@ -11,6 +11,7 @@ public static class CommandHandlerRegister
         var types = Assembly.GetAssembly(commandHandlerType)?.GetTypes();
 
         if (types == null) return services;
+        
         var handlers = types
             .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == commandHandlerType))
             .ToList();
