@@ -9,13 +9,15 @@ public static class ServiceRegistrationExtensions
     {
         var domainServiceType = typeof(IDomainService);
         var domainServiceImplementations = Assembly.GetAssembly(domainServiceType)
-            .GetTypes()
+            ?.GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract && domainServiceType.IsAssignableFrom(t))
             .ToList();
 
+        if (domainServiceImplementations == null) return services;
         foreach (var implementation in domainServiceImplementations)
         {
-            var interfaceType = implementation.GetInterfaces().FirstOrDefault(i => domainServiceType.IsAssignableFrom(i));
+            var interfaceType = implementation.GetInterfaces()
+                .FirstOrDefault(i => domainServiceType.IsAssignableFrom(i));
             if (interfaceType != null)
             {
                 services.AddScoped(interfaceType, implementation);

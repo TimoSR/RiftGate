@@ -8,8 +8,9 @@ public static class CommandHandlerRegister
     public static IServiceCollection AddCommandHandlers(this IServiceCollection services)
     {
         var commandHandlerType = typeof(ICommandHandler<>);
-        var types = Assembly.GetAssembly(commandHandlerType).GetTypes();
+        var types = Assembly.GetAssembly(commandHandlerType)?.GetTypes();
 
+        if (types == null) return services;
         var handlers = types
             .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == commandHandlerType))
             .ToList();
