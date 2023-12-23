@@ -12,7 +12,10 @@
     <PackageReference Include="AspNetCoreRateLimit" Version="5.0.0" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.2.2" />
     <PackageReference Include="DotNetEnv" Version="2.5.0" />
+    <PackageReference Include="FluentValidation" Version="11.8.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.1" />
     <PackageReference Include="Google.Cloud.PubSub.V1" Version="3.6.0" />
     <PackageReference Include="Google.Protobuf" Version="3.23.4" />
     <PackageReference Include="GraphQL.Client.Serializer.Newtonsoft" Version="6.0.0" />
@@ -41,8 +44,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\AFeature\InfrastructureLayer\Repositories\" />
-    <Folder Include="Features\AFeature\InfrastructureLayer\UtilityServices\" />
+    <Folder Include="Features\AFeature\Application\Controllers\V1\REST\" />
+    <Folder Include="Features\AFeature\Application\Controllers\V1\Webhooks\" />
+    <Folder Include="Features\AFeature\Application\Controllers\V2\" />
+    <Folder Include="Features\AFeature\Domain\AggregateRoots\" />
+    <Folder Include="Features\AFeature\Domain\Repositories\1RepositoryPrAggregateRoot\" />
+    <Folder Include="Features\AFeature\Infrastructure\Repositories\" />
+    <Folder Include="Features\AFeature\Infrastructure\Services\" />
+    <Folder Include="Features\AuctionOrchestrator\" />
+    <Folder Include="Features\AuctionOperations\API\Controllers\" />
+    <Folder Include="Features\AuctionOperations\Application\IntegrationEvents\" />
+    <Folder Include="Features\_shared\InfrastructureLayer\Utilities\" />
   </ItemGroup>
 
 </Project>

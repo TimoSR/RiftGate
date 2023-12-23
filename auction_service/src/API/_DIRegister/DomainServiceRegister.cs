@@ -3,7 +3,7 @@ using CodingPatterns.DomainLayer;
 
 namespace API._DIRegister;
 
-public static class DomainServiceRegister
+public static class ServiceRegistrationExtensions
 {
     public static IServiceCollection AddDomainServices(this IServiceCollection services)
     {
@@ -12,18 +12,12 @@ public static class DomainServiceRegister
 
         foreach (var type in types)
         {
-            // Find the first interface that the class implements, excluding the IDomainService interface
-            var serviceType = type.GetInterfaces().Except(new[] {typeof(IDomainService)}).FirstOrDefault();
+            var serviceType = type.GetInterfaces().Except(new[] { typeof(IDomainService) }).FirstOrDefault();
 
             if (serviceType != null)
             {
-                // Register the class with its corresponding interface
                 services.AddScoped(serviceType, type);
-            }
-            else
-            {
-                // Optionally handle cases where no other interface is implemented
-                // For example, register the type directly, log a warning, etc.
+                Console.WriteLine($"Registered domain service: {type.Name} for {serviceType.Name}");
             }
         }
 

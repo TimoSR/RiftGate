@@ -1,15 +1,12 @@
-using API.Features._DIRegister;
+using API._DIRegister;
 using AspNetCoreRateLimit;
-using Infrastructure._Registration.Utilities;
+using Infrastructure._DIRegister;
+using Infrastructure.Configuration;
 using Infrastructure.Middleware;
 using Infrastructure.Persistence.Google_PubSub;
 using Infrastructure.Persistence.MongoDB;
 using Infrastructure.Persistence.Redis;
 using Infrastructure.Swagger;
-using Infrastructure.UtilityServices;
-using Infrastructure.UtilityServices._Interfaces;
-using Infrastructure.UtilityServices.Containers;
-using x_serviceAPI;
 
 namespace API;
 
@@ -52,7 +49,7 @@ public class Program
         Console.WriteLine($"\n{serviceName}");
 
         // Custom Tools written tools to simplify development
-        builder.Services.RegisterUtilityServices();
+        builder.Services.RegisterInfrastructureServices();
         
         // Add / Disable MongoDB
         builder.Services.AddMongoDbServices(config);
@@ -69,9 +66,6 @@ public class Program
 
         // Hosting to make sure it dependencies connect on Program startup
         builder.Services.AddHostedService<StartPersistenceConnections>();
-
-        // Adding Dependencies to Service Dependency Container
-        builder.Services.AddScoped<IServiceDependencies, ServiceDependencies>();
 
         // Adding Database Repositories
         builder.Services.AddApplicationRepositories();
@@ -121,8 +115,6 @@ public class Program
 
         var app = builder.Build();
 
-        
-
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
@@ -152,7 +144,6 @@ public class Program
         await app.RunAsync();
     }
 }
-
 
     // if (environment.Equals("Development")) {
     //

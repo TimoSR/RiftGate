@@ -9,13 +9,15 @@ public class CompleteAuction : ICommandHandler<CompleteAuctionCommand>
 {
     private readonly IAuctionRepository _auctionRepository;
     private readonly ITimeService _timeService;
-    private readonly ILogger<CompleteAuction> _logger; 
+    private readonly ILogger<CompleteAuction> _logger;
+    private readonly IAuctionExpiryChecker _test;
 
-    public CompleteAuction(IAuctionRepository auctionRepository, ITimeService timeService, ILogger<CompleteAuction> logger)
+    public CompleteAuction(IAuctionRepository auctionRepository, ITimeService timeService, ILogger<CompleteAuction> logger, IAuctionExpiryChecker test)
     {
         _auctionRepository = auctionRepository;
         _timeService = timeService;
         _logger = logger;
+        _test = test;
     }
 
     public async Task<ServiceResult> Handle(CompleteAuctionCommand command)

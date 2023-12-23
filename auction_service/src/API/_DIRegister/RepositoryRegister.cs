@@ -11,7 +11,7 @@ public static class RepositoryRegister
         // Register DomainEventDispatcher
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
         
-        //Registering IRepositories
+        // Registering IRepositories
         var types = Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract && t.GetInterfaces()
                 .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRepository<>)))
@@ -25,8 +25,8 @@ public static class RepositoryRegister
         foreach (var type in types)
         {
             var serviceType = type.GetInterfaces().FirstOrDefault(i => i.Name == "I" + type.Name);
-            
             services.AddScoped(serviceType, type);
+            Console.WriteLine($"Registered repository: {serviceType.Name} for {type.Name}");
         }
 
         return services;

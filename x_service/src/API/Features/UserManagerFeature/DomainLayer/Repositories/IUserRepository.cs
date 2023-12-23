@@ -1,12 +1,13 @@
 using API.Features.UserManagerFeature.DomainLayer.Entities;
 using API.Features.UserManagerFeature.DomainLayer.Enums;
+using CodingPatterns.DomainLayer;
 
 namespace API.Features.UserManagerFeature.DomainLayer.Repositories;
 
-public interface IUserRepository
+public interface IUserRepository : IRepository<User>
 {   
     // Read Operations
-    Task<User> GetUserByIdAsync(string id);
+    Task<User?> GetUserByIdAsync(string id);
     Task<IEnumerable<User>> GetAllUsersAsync();
     Task<User> GetUserByEmailAsync(string email);
 
@@ -20,6 +21,5 @@ public interface IUserRepository
     Task<bool> UpdateUserStatusByEmailAsync(string email, UserStatus newStatus);
 
     // Delete Operation
-    Task<bool> DeleteUserAsync(string id);
     Task<bool> DeleteUserByEmailAsync(string email);
 }
