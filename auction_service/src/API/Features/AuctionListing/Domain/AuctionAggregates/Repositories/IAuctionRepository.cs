@@ -1,4 +1,3 @@
-using API.Features.AuctionListing.Domain.AuctionAggregates.DomainService;
 using API.Features.AuctionListing.Domain.AuctionAggregates.Entities;
 using CodingPatterns.DomainLayer;
 
@@ -9,7 +8,6 @@ public interface IAuctionRepository : IRepository<Auction>
     // Queries
     Task<List<Auction>> GetAllActiveAuctionsAsync();
     Task<List<Auction>> GetActiveAuctionsAsync(int pageNumber, int pageSize);
-
     Task<List<Auction>> SearchAuctionsAsync(string? name, string? category, string? group, string? type,
         string? rarity);
     Task<List<BuyoutAuction>> GetBuyoutAuctionsAsync();
@@ -17,6 +15,4 @@ public interface IAuctionRepository : IRepository<Auction>
     Task<List<Auction>> GetAuctionsBySellerIdAsync(string sellerId);
     Task<List<Auction>> GetAuctionsEndingSoonAsync();
     Task<List<Bid>> GetAuctionBidsAsync(string auctionId);
-    Task<List<Bid>> GetActiveUserAuctionBids(string auctionId, string userId);
-    Task<List<Bid>> GetUserBidHistoryAsync(string userId);
 }

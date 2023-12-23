@@ -71,9 +71,11 @@ public partial class AuctionRepository
                 .ToList());
     }
 
-    public Task<List<Auction>> GetAuctionsBySellerIdAsync(string sellerId)
+    public async Task<List<Auction>> GetAuctionsBySellerIdAsync(string sellerId)
     {
-        throw new NotImplementedException();
+        var collection = GetCollection();
+        var filter = Builders<Auction>.Filter.Eq(auction => auction.SellerId, sellerId);
+        return await collection.Find(filter).ToListAsync();
     }
 
     public Task<List<Auction>> GetAuctionsEndingSoonAsync()
@@ -81,18 +83,11 @@ public partial class AuctionRepository
         throw new NotImplementedException();
     }
 
-    public Task<List<Bid>> GetAuctionBidsAsync(string auctionId)
+    public async Task<List<Bid>> GetAuctionBidsAsync(string auctionId)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<List<Bid>> GetActiveUserAuctionBids(string auctionId, string userId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<List<Bid>> GetUserBidHistoryAsync(string userId)
-    {
-        throw new NotImplementedException();
+        var collection = GetCollection();
+        var filter = Builders<Auction>.Filter.Eq("_id", auctionId);
+        var auction = await collection.Find(filter).FirstOrDefaultAsync();
+        return auction?.Bids ?? new List<Bid>();
     }
 }
