@@ -9,10 +9,12 @@ namespace API.Features.AuctionOperations.Application.CommandHandlers;
 public class PlaceBid : ICommandHandler<PlaceBidCommand>
 {
     private readonly IAuctionRepository _auctionRepository;
+    private readonly ILogger<PlaceBid> _logger;
 
-    public PlaceBid(IAuctionRepository auctionRepository)
+    public PlaceBid(IAuctionRepository auctionRepository, ILogger<PlaceBid> logger)
     {
         _auctionRepository = auctionRepository;
+        _logger = logger;
     }
 
     public async Task<ServiceResult> Handle(PlaceBidCommand command)
@@ -21,20 +23,20 @@ public class PlaceBid : ICommandHandler<PlaceBidCommand>
         {
             var auction = await _auctionRepository.GetByIdAsync(command.AuctionId);
             if (auction == null)
+            {
+                _logger.LogWarning("Auction with ID {AuctionId} not found.", command.AuctionId);
                 return ServiceResult.Failure($"Auction with ID {command.AuctionId} not found.");
-
-            // Additional logic can be implemented to check if the bid can be placed
-            // For example, checking if the bid amount is higher than the current highest bid
-            // and whether the auction is still active.
+            }
 
             auction.PlaceBid(command.Bid);
             await _auctionRepository.UpdateAsync(auction);
 
+            _logger.LogInformation("Bid placed successfully for Auction ID {AuctionId}.", command.AuctionId);
             return ServiceResult.Success("Bid placed successfully.");
         }
         catch (Exception ex)
         {
-            // Log the exception if necessary
+            _logger.LogError(ex, "Failed to place bid on auction with ID {AuctionId}.", command.AuctionId);
             return ServiceResult.Failure("Failed to place bid due to an unexpected error.");
         }
     }
