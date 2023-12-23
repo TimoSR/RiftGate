@@ -30,8 +30,12 @@ public class CompleteAuction : ICommandHandler<CompleteAuctionCommand>
             }
 
             auction.CheckAndCompleteAuction(_timeService);
-            await _auctionRepository.UpdateAsync(auction);
 
+            if (!auction.IsActive)
+            {
+                await _auctionRepository.UpdateAsync(auction);
+            }
+            
             _logger.LogInformation("Auction with ID {AuctionId} completed successfully.", command.AuctionId);
             return ServiceResult.Success("Auction completed successfully.");
         }

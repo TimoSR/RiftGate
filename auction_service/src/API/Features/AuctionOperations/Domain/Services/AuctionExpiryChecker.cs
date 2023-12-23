@@ -2,7 +2,7 @@ using API.Features.AuctionOperations.Domain.Repositories;
 
 namespace API.Features.AuctionOperations.Domain.Services;
 
-public class AuctionExpiryChecker
+public class AuctionExpiryChecker : IAuctionExpiryChecker
 {
     private readonly IAuctionRepository _auctionRepository;
     private readonly ITimeService _timeService;
