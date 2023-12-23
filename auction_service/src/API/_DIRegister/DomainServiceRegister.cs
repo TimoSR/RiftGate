@@ -3,27 +3,22 @@ using CodingPatterns.DomainLayer;
 
 namespace API._DIRegister;
 
-public static class DomainServiceRegister
+public static class ServiceRegistrationExtensions
 {
     public static IServiceCollection AddDomainServices(this IServiceCollection services)
     {
-        var types = Assembly.GetExecutingAssembly().GetTypes()
-            .Where(t => t.IsClass && !t.IsAbstract && typeof(IDomainService).IsAssignableFrom(t));
+        var domainServiceType = typeof(IDomainService);
+        var domainServiceImplementations = Assembly.GetAssembly(domainServiceType)
+            .GetTypes()
+            .Where(t => t.IsClass && !t.IsAbstract && domainServiceType.IsAssignableFrom(t))
+            .ToList();
 
-        foreach (var type in types)
+        foreach (var implementation in domainServiceImplementations)
         {
-            // Find the first interface that the class implements, excluding the IDomainService interface
-            var serviceType = type.GetInterfaces().Except(new[] {typeof(IDomainService)}).FirstOrDefault();
-
-            if (serviceType != null)
+            var interfaceType = implementation.GetInterfaces().FirstOrDefault(i => domainServiceType.IsAssignableFrom(i));
+            if (interfaceType != null)
             {
-                // Register the class with its corresponding interface
-                services.AddScoped(serviceType, type);
-            }
-            else
-            {
-                // Optionally handle cases where no other interface is implemented
-                // For example, register the type directly, log a warning, etc.
+                services.AddScoped(interfaceType, implementation);
             }
         }
 
