@@ -5,16 +5,17 @@ WORKDIR /app
 # Copy the solution file
 COPY ["x_service.NoTest.sln", "./"]
 
-# Copy the main API project and its dependencies
-COPY ["src/API/API.csproj", "src/API/"]
-COPY ["src/RiftGate-Microservice-Core/CodingPatterns/CodingPatterns.csproj", "src/RiftGate-Microservice-Core/CodingPatterns/"]
-COPY ["src/RiftGate-Microservice-Core/Infrastructure/Infrastructure.csproj", "src/RiftGate-Microservice-Core/Infrastructure/"]
+# Copy the source code
+COPY ["src/", "src/"]
+
+# Incase of the need to optimize imports we can copy pr. project, but this dosent make sense since the src should be optimized for the docker build
+# # Copy the main API project and its dependencies
+# COPY ["src/API/API.csproj", "src/API/"]
+# COPY ["src/RiftGate-Microservice-Core/CodingPatterns/CodingPatterns.csproj", "src/RiftGate-Microservice-Core/CodingPatterns/"]
+# COPY ["src/RiftGate-Microservice-Core/Infrastructure/Infrastructure.csproj", "src/RiftGate-Microservice-Core/Infrastructure/"]
 
 # Restore the packages
 RUN dotnet restore "x_service.NoTest.sln"
-
-# Copy the source code
-COPY ["src/", "src/"]
 
 RUN dotnet publish "src/API/API.csproj" -c Release -o out
 

@@ -1,4 +1,4 @@
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
+using API.Features.AuctionOperations.Domain.ValueObjects;
 using UnitTests.AuctionListing.Domain._TestData;
 
 namespace UnitTests.AuctionListing.Domain;

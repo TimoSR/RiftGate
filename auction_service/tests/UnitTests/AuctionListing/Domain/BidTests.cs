@@ -1,58 +1,50 @@
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.DomainService;
-using API.Features.AuctionListing.Domain.AggregateRoots.AuctionAggregates.Entities;
-using Moq;
-using UnitTests.AuctionListing.Domain._TestData;
+using API.Features.AuctionOperations.Domain.Entities;
+using API.Features.AuctionOperations.Domain.ValueObjects;
 
 namespace UnitTests.AuctionListing.Domain;
 
 public class BidTests
 {
-    private readonly Mock<ITimeService> _mockTimeService;
-    private readonly DateTime _fixedDateTime;
-
-    public BidTests()
-    {
-        _fixedDateTime = new DateTime(2023, 1, 1);
-        _mockTimeService = new Mock<ITimeService>();
-        _mockTimeService.Setup(service => service.GetCurrentTime()).Returns(_fixedDateTime);
-    }
-
     [Fact]
-    public void Constructor_ShouldSetTimeStampFromTimeService()
+    public void Constructor_WithValidInputs_ShouldCreateBid()
     {
         // Arrange
         string validBidderId = "bidder123";
         var validBidAmount = new Price(100);
+        var validTimeStamp = new DateTime(2023, 1, 1);
 
         // Act
-        var bid = new Bid(validBidderId, validBidAmount, _mockTimeService.Object);
+        var bid = new Bid(validBidderId, validBidAmount, validTimeStamp);
 
         // Assert
-        Assert.Equal(_fixedDateTime, bid.TimeStamp);
-    }
-    
-    [Fact]
-    public void Constructor_WithValidInputs_ShouldCreateBid()
-    {
-        var bidAmount = new Price(100);
-        var bid = new Bid("bidder123", bidAmount, _mockTimeService.Object);
-
-        Assert.Equal("bidder123", bid.BidderId);
-        Assert.Equal(bidAmount, bid.BidAmount);
-        Assert.Equal(_fixedDateTime, bid.TimeStamp);
+        Assert.Equal(validBidderId, bid.BidderId);
+        Assert.Equal(validBidAmount, bid.BidAmount);
+        Assert.Equal(validTimeStamp, bid.TimeStamp);
     }
 
     [Theory]
-    [MemberData(nameof(TestDataProvider.ConstructorTestCases), MemberType = typeof(TestDataProvider))]
-    public void Constructor_WithInvalidArguments_ShouldThrowException(
-        string bidderId, Type expectedException, string scenario = "")
+    [InlineData(null, typeof(ArgumentException))]
+    [InlineData("", typeof(ArgumentException))]
+    [InlineData("   ", typeof(ArgumentException))]
+    public void Constructor_WithInvalidBidderId_ShouldThrowException(string bidderId, Type expectedException)
     {
         var validBidAmount = new Price(100);
-        ITimeService timeService = scenario == "nullTimeService" ? null : _mockTimeService.Object;
-        Price bidAmount = scenario == "nullBidAmount" ? null : validBidAmount;
+        var validTimeStamp = new DateTime(2023, 1, 1);
 
-        // Assert that the expected exception is thrown
-        Assert.Throws(expectedException, () => new Bid(bidderId, bidAmount, timeService));
+        // Assert
+        var exception = Assert.Throws(expectedException, () => new Bid(bidderId, validBidAmount, validTimeStamp));
+        Assert.Contains("Bidder ID cannot be null or whitespace", exception.Message);
+    }
+
+    [Fact]
+    public void Constructor_WithNullBidAmount_ShouldThrowArgumentNullException()
+    {
+        // Arrange
+        string validBidderId = "bidder123";
+        var validTimeStamp = new DateTime(2023, 1, 1);
+
+        // Act & Assert
+        var exception = Assert.Throws<ArgumentNullException>(() => new Bid(validBidderId, null, validTimeStamp));
+        Assert.Equal("bidAmount", exception.ParamName);
     }
 }
