@@ -1,6 +1,6 @@
-using API.Features.AuctionListing.Domain.AuctionAggregates.Events;
-using API.Features.AuctionListing.Domain.AuctionAggregates.ValueObjects;
-using API.Features.AuctionManagement.Domain.Entities;
+using API.Features.AuctionOperations.Domain.Entities;
+using API.Features.AuctionOperations.Domain.Events;
+using API.Features.AuctionOperations.Domain.ValueObjects;
 
 namespace UnitTests.AuctionListing.Domain.Events;
 

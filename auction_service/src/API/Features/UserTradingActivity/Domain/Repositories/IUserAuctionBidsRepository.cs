@@ -1,4 +1,4 @@
-using API.Features.AuctionManagement.Domain.Entities;
+using API.Features.AuctionOperations.Domain.Entities;
 
 namespace API.Features.UserTradingActivity.Domain.Repositories;
 

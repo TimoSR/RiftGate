@@ -51,8 +51,8 @@
     <Folder Include="Features\AFeature\Domain\Repositories\1RepositoryPrAggregateRoot\" />
     <Folder Include="Features\AFeature\Infrastructure\Repositories\" />
     <Folder Include="Features\AFeature\Infrastructure\Services\" />
-    <Folder Include="Features\AuctionManagement\API\Controllers\" />
-    <Folder Include="Features\AuctionManagement\Application\IntegrationEvnets\" />
+    <Folder Include="Features\AuctionOperations\API\Controllers\" />
+    <Folder Include="Features\AuctionOperations\Application\IntegrationEvnets\" />
     <Folder Include="Features\_shared\InfrastructureLayer\Utilities\" />
   </ItemGroup>
 
