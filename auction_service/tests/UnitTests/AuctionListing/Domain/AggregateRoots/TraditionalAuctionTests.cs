@@ -1,4 +1,3 @@
-using API.Features.AuctionListing.Domain.AuctionAggregates;
 using API.Features.AuctionOperations.Domain;
 using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Events;

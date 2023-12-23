@@ -1,12 +1,20 @@
 using API.Features.AuctionOperations.Domain;
 using API.Features.AuctionOperations.Domain.Entities;
+using API.Features.AuctionOperations.Domain.Repositories;
+using CodingPatterns.DomainLayer;
+using Infrastructure.Persistence._Interfaces;
+using Infrastructure.Persistence.MongoDB;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace API.Features.AuctionOperations.Infrastructure.Repositories;
+namespace API.Features.AuctionOperations.Infrastructure;
 
-public partial class AuctionRepository
+public partial class AuctionRepository: MongoRepository<Auction>, IAuctionRepository
 {
+    public AuctionRepository(IMongoDbManager dbManager, IDomainEventDispatcher domainEventDispatcher) : base(dbManager, domainEventDispatcher)
+    {
+    }
+    
     public async Task<List<Auction>> GetAllActiveAuctionsAsync()
     {
         var collection = GetCollection();
@@ -49,7 +57,6 @@ public partial class AuctionRepository
         var auctions = await collection.Find(filter).ToListAsync();
         return auctions;
     }
-
 
     public async Task<List<BuyoutAuction>> GetBuyoutAuctionsAsync()
     {
