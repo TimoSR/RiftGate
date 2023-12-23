@@ -54,7 +54,7 @@
     <Folder Include="Features\AuctionOperations\Infrastructure\SchedulesTasks\" />
     <Folder Include="Features\AuctionOrchestrator\" />
     <Folder Include="Features\AuctionOperations\API\Controllers\" />
-    <Folder Include="Features\AuctionOperations\Application\IntegrationEvnets\" />
+    <Folder Include="Features\AuctionOperations\Application\IntegrationEvents\" />
     <Folder Include="Features\_shared\InfrastructureLayer\Utilities\" />
   </ItemGroup>
 
