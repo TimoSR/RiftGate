@@ -11,12 +11,25 @@ namespace API.Features.AuctionOperations.Domain;
 [BsonKnownTypes(typeof(BuyoutAuction), typeof(TraditionalAuction))]
 public abstract class Auction : Entity, IAggregateRoot
 {   
+    [BsonElement("startTime")]
     public DateTime StartTime { get; private set; }
+
+    [BsonElement("estimatedEndTime")]
     public DateTime EstimatedEndTime { get; private set; }
+
+    [BsonElement("bids")]
     public List<Bid> Bids { get; } = new();
+
+    [BsonElement("auctionLength")]
     public AuctionLength AuctionLength { get; }
+
+    [BsonElement("item")]
     public Item Item { get; private set; }
+
+    [BsonElement("sellerId")]
     public string SellerId { get; private set; }
+
+    [BsonElement("isActive")]
     public bool IsActive { get; private set; }
 
     protected  Auction(
