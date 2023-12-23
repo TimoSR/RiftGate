@@ -1,6 +1,7 @@
 using CodingPatterns.DomainLayer;
 using Google.Cloud.PubSub.V1;
 using Grpc.Core;
+using Infrastructure.Configuration;
 using Infrastructure.Persistence._Interfaces;
 using Infrastructure.Persistence.EventHandlers;
 using Infrastructure.UtilityServices._Interfaces;

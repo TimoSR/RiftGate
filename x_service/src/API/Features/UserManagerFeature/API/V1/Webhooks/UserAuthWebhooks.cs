@@ -1,5 +1,5 @@
 using _SharedKernel.Patterns.IntegrationEvents.GooglePubSub._Attributes;
-using API.Features._Common;
+using API.Features._shared.ApplicationLayer;
 using API.Features.UserManagerFeature.ApplicationLayer.AppServices._Interfaces;
 using API.Features.UserManagerFeature.ApplicationLayer.Events.Subscribed.UserAuthentication;
 using API.Features.UserManagerFeature.ApplicationLayer.Events.Topics.UserManagement;

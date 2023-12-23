@@ -1,6 +1,7 @@
 using API.Features.UserManagerFeature.DomainLayer.Entities;
 using API.Features.UserManagerFeature.DomainLayer.Enums;
 using API.Features.UserManagerFeature.DomainLayer.Repositories;
+using CodingPatterns.DomainLayer;
 using Infrastructure.Persistence._Interfaces;
 using Infrastructure.Persistence.MongoDB;
 using MongoDB.Driver;
@@ -9,8 +10,9 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
 {
     public class UserRepository : MongoRepository<User>, IUserRepository
     {
-        public UserRepository(IMongoDbManager dbManager, ILogger<UserRepository> logger)
-            : base(dbManager, logger)
+        public UserRepository(
+            IMongoDbManager dbManager, 
+            IDomainEventDispatcher eventDispatcher) : base(dbManager, eventDispatcher)
         {
         }
 
@@ -23,11 +25,9 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
                 var indexOptions = new CreateIndexOptions { Unique = true }; // Assuming email should be unique
                 var indexModel = new CreateIndexModel<User>(indexKeysDefinition, indexOptions);
                 await collection.Indexes.CreateOneAsync(indexModel);
-                _logger.LogInformation("Index created on 'email' field.");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error during index creation: {ex.Message}");
                 throw;
             }
         }
@@ -48,11 +48,10 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error during updating status of user by email {email}: {ex.Message}");
                 throw;
             }
         }
-        
+
         public async Task<bool> DeleteUserByEmailAsync(string email)
         {
             try
@@ -62,23 +61,20 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
 
                 if (deleteResult.DeletedCount > 0)
                 {
-                    _logger.LogInformation($"User with email {email} deleted successfully.");
                     return true;
                 }
                 else
                 {
-                    _logger.LogInformation($"No user found with email {email} to delete.");
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error during deleting user by email {email}: {ex.Message}");
                 throw;
             }
         }
         
-        public Task<User> GetUserByIdAsync(string id)
+        public Task<User?> GetUserByIdAsync(string id)
         {
             return GetByIdAsync(id);
         }
@@ -105,7 +101,6 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
             catch (Exception ex)
             {
                 var collectionName = nameof(User) + "s";
-                _logger.LogError($"Error retrieving user by email {email} from {collectionName}: {ex.Message}");
                 throw;
             }
         }
@@ -135,7 +130,6 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
             {
                 // If any exception occurs during the transaction, rollback changes.
                 await session.AbortTransactionAsync();
-                _logger.LogError($"Error during user registration: {ex.Message}");
                 throw;
             }
         }
@@ -165,14 +159,8 @@ namespace API.Features.UserManagerFeature.InfrastructureLayer.DomainRepositories
             catch (Exception ex)
             {
                 var collectionName = nameof(User) + "s";
-                _logger.LogError($"Error retrieving user by email {email} from {collectionName}: {ex.Message}");
                 throw;
             }
-        }
-
-        public async Task<bool> DeleteUserAsync(string id)
-        {
-            return await DeleteAsync(id);
         }
     }
 }
