@@ -69,6 +69,7 @@ public class AuctionController : ControllerBase
         return BadRequest(result.Messages);
     }
     
+    [AllowAnonymous]
     [HttpGet("all-active-auctions")]
     public async Task<IActionResult> GetAllActiveAuctions()
     {
