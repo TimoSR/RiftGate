@@ -43,8 +43,11 @@ public class PlaceBid : ICommandHandler<PlaceBidCommand>
     }
 }
 
+// For Internal Concerns
+
+public record struct PlaceBidCommand(Guid RequestId, string AuctionId, Bid Bid) : ICommand;
+
 // Requests have the responsibility to fail fast and be the endpoint contract
-// !ModelState.IsValid in Controller
 
 public record struct PlaceBidRequest : IRequest
 {
@@ -56,7 +59,3 @@ public record struct PlaceBidRequest : IRequest
     [Required(ErrorMessage = "The {0} field is required")]
     public Bid Bid { get; set; }
 }
-
-// For Internal Concerns
-
-public record struct PlaceBidCommand(Guid RequestId, string AuctionId, Bid Bid) : ICommand;
