@@ -35,7 +35,6 @@ public class BuyoutAuction : Auction
             CompleteAuction(bid.TimeStamp);
         }
     }
-
     
     // Private
 

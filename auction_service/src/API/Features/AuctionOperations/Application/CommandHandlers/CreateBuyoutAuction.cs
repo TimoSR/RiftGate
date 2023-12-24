@@ -8,41 +8,45 @@ using CodingPatterns.ApplicationLayer.ServiceResultPattern;
 
 namespace API.Features.AuctionOperations.Application.CommandHandlers;
 
-public class CreateTraditionalAuction : ICommandHandler<CreateTradAuctionCommand>
+public class CreateBuyoutAuction : ICommandHandler<CreateBuyoutAuctionCommand>
 {
     private readonly IAuctionRepository _auctionRepository;
-    private readonly ILogger<CreateTraditionalAuction> _logger;
+    private readonly ILogger<CreateBuyoutAuction> _logger;
 
-    public CreateTraditionalAuction(IAuctionRepository auctionRepository, ILogger<CreateTraditionalAuction> logger)
+    public CreateBuyoutAuction(IAuctionRepository auctionRepository, ILogger<CreateBuyoutAuction> logger)
     {
         _auctionRepository = auctionRepository ?? throw new ArgumentNullException(nameof(auctionRepository));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public async Task<ServiceResult> Handle(CreateTradAuctionCommand command)
+    public async Task<ServiceResult> Handle(CreateBuyoutAuctionCommand command)
     {
         try
         {
-            // Create a new traditional auction
-            var traditionalAuction = new TraditionalAuction(command.SellerId, command.Item, command.AuctionLength);
+            // Create a new buyout auction
+            var buyoutAuction = new BuyoutAuction(
+                command.SellerId, 
+                command.Item, 
+                command.AuctionLength, 
+                command.BuyoutAmount);
 
             // Persist the new auction to the repository
-            await _auctionRepository.InsertAsync(traditionalAuction);
+            await _auctionRepository.InsertAsync(buyoutAuction);
 
-            _logger.LogInformation("Created a new traditional auction with ID {AuctionId}", traditionalAuction.Id);
-            return ServiceResult.Success("Traditional auction created successfully.");
+            _logger.LogInformation("Created a new buyout auction with ID {AuctionId}", buyoutAuction.Id);
+            return ServiceResult.Success("Buyout auction created successfully.");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error creating traditional auction");
-            return ServiceResult.Failure("Failed to create traditional auction.");
+            _logger.LogError(ex, "Error creating buyout auction");
+            return ServiceResult.Failure("Failed to create buyout auction.");
         }
     }
 }
 
-public record struct CreateTradAuctionCommand(string SellerId, Item Item, AuctionLength AuctionLength) : ICommand;
+public record struct CreateBuyoutAuctionCommand(string SellerId, Item Item, AuctionLength AuctionLength, Price BuyoutAmount) : ICommand;
 
-public record struct CreateTraditionalAuctionRequest : IRequest
+public record struct CreateBuyoutAuctionRequest : IRequest
 {
     [Required(ErrorMessage = "Seller ID is required.")]
     [StringLength(24, ErrorMessage = "Seller ID must be a 24-character string.", MinimumLength = 24)]
@@ -53,4 +57,9 @@ public record struct CreateTraditionalAuctionRequest : IRequest
 
     [Required(ErrorMessage = "Auction length is required.")]
     public AuctionLength AuctionLength { get; set; }
+
+    [Required(ErrorMessage = "Buyout amount is required.")]
+    public Price BuyoutAmount { get; set; }
 }
+
+
