@@ -9,9 +9,10 @@ public abstract class Entity : IEntity
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
-
+   
     private readonly List<INotification>? _domainEvents = new();
 
+    [BsonIgnore]
     public IReadOnlyCollection<INotification>? DomainEvents => _domainEvents?.AsReadOnly();
 
     public bool IsDeleted { get; private set; }
@@ -41,6 +42,4 @@ public abstract class Entity : IEntity
     {
         _domainEvents?.Clear();
     }
-    
-    //... Additional code such as equality checks and other entity-related operations
 }

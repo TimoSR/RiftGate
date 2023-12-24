@@ -1,6 +1,7 @@
-using API.Features.AuctionListing.Application.DTO;
 using API.Features.AuctionOperations.Application.CommandHandlers;
 using API.Features.AuctionOperations.Application.QueryHandlers;
+using API.Features.AuctionOperations.Domain;
+using AutoMapper;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
 using Infrastructure.Swagger;
@@ -17,30 +18,30 @@ namespace API.Features.AuctionOperations.API.REST;
 [Authorize]
 public class AuctionController : ControllerBase
 {
+    private readonly IMapper _mapper; 
     private readonly ICommandHandler<CompleteAuctionCommand> _completeAuctionHandler;
     private readonly ICommandHandler<CreateBuyoutAuctionCommand> _createBuyoutAuctionHandler;
-    private readonly IQueryHandler<GetAllActiveAuctionsQuery, ServiceResult<List<AuctionDto>>> _getAllActiveAuctionsHandler;
+    private readonly IQueryHandler<GetAllActiveAuctionsQuery, ServiceResult<List<Auction>>> _getAllActiveAuctionsHandler;
     
     public AuctionController(
+        IMapper mapper,
         ICommandHandler<CompleteAuctionCommand> completeAuctionHandler,
         ICommandHandler<CreateBuyoutAuctionCommand> createBuyoutAuctionHandler,
-        IQueryHandler<GetAllActiveAuctionsQuery, ServiceResult<List<AuctionDto>>> getAllActiveAuctionsHandler)
+        IQueryHandler<GetAllActiveAuctionsQuery, ServiceResult<List<Auction>>> getAllActiveAuctionsHandler)
     {
+        _mapper = mapper;
         _completeAuctionHandler = completeAuctionHandler;
         _createBuyoutAuctionHandler = createBuyoutAuctionHandler;
         _getAllActiveAuctionsHandler = getAllActiveAuctionsHandler;
     }
     
+    
     [AllowAnonymous]
     [HttpPost("create-buyout-auction")]
     public async Task<IActionResult> CreateBuyoutAuction([FromBody] CreateBuyoutAuctionRequest request)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
+        var command = _mapper.Map<CreateBuyoutAuctionCommand>(request);
 
-        var command = new CreateBuyoutAuctionCommand(request.SellerId, request.Item, request.AuctionLength, request.BuyoutAmount);
         var result = await _createBuyoutAuctionHandler.Handle(command);
 
         if (result.IsSuccess)
