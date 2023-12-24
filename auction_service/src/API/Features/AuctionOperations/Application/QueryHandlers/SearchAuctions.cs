@@ -35,7 +35,7 @@ public class SearchAuctions : IQueryHandler<SearchAuctionsQuery, ServiceResult<L
     }
 }
 
-public class SearchAuctionsQuery : IQuery<ServiceResult<List<AuctionDto>>>
+public record struct SearchAuctionsQuery : IQuery<ServiceResult<List<AuctionDto>>>
 {
     public string? Name { get; set; }
     public string? Category { get; set; }

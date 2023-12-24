@@ -33,7 +33,7 @@ public class GetAllActiveAuctions : IQueryHandler<GetAllActiveAuctionsQuery, Ser
     }
 }
 
-public class GetAllActiveAuctionsQuery : IQuery<ServiceResult<List<AuctionDto>>>
+public record struct GetAllActiveAuctionsQuery : IQuery<ServiceResult<List<AuctionDto>>>
 {
     // Currently no properties, but it's here to represent a specific querying intention
 }
