@@ -21,13 +21,13 @@ public class AuctionController : ControllerBase
     private readonly IMapper _mapper; 
     private readonly ICommandHandler<CompleteAuctionCommand> _completeAuctionHandler;
     private readonly ICommandHandler<CreateBuyoutAuctionCommand> _createBuyoutAuctionHandler;
-    private readonly IQueryHandler<GetAllActiveAuctionsQuery, ServiceResult<List<Auction>>> _getAllActiveAuctionsHandler;
+    private readonly IQueryHandler<GetAllActiveAuctionsQuery, ServiceResult<List<AuctionDTO>>> _getAllActiveAuctionsHandler;
     
     public AuctionController(
         IMapper mapper,
         ICommandHandler<CompleteAuctionCommand> completeAuctionHandler,
         ICommandHandler<CreateBuyoutAuctionCommand> createBuyoutAuctionHandler,
-        IQueryHandler<GetAllActiveAuctionsQuery, ServiceResult<List<Auction>>> getAllActiveAuctionsHandler)
+        IQueryHandler<GetAllActiveAuctionsQuery, ServiceResult<List<AuctionDTO>>> getAllActiveAuctionsHandler)
     {
         _mapper = mapper;
         _completeAuctionHandler = completeAuctionHandler;

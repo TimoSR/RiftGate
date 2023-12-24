@@ -15,6 +15,11 @@ public class AuctionRepository: MongoRepository<Auction>, IAuctionRepository
         IMongoDbManager dbManager, 
         IDomainEventDispatcher domainEventDispatcher) : base(dbManager, domainEventDispatcher) {}
     
+    public IMongoCollection<Auction> GetAuctionCollection()
+    {
+        return GetCollection();
+    }
+    
     public async Task<List<Auction>> GetAllActiveAuctionsAsync()
     {
         var collection = GetCollection();

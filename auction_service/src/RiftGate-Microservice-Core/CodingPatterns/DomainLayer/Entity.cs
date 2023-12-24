@@ -1,11 +1,23 @@
 using MediatR;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace CodingPatterns.DomainLayer;
 
 public abstract class Entity : IEntity
 {
+    static Entity()
+    {
+        BsonClassMap.RegisterClassMap<Entity>(cm =>
+        {
+            cm.AutoMap();
+            cm.SetIgnoreExtraElements(true);
+            cm.MapIdMember(c => c.Id);
+            cm.UnmapMember(c => c.DomainEvents); // Ignore the DomainEvents
+        });
+    }
+    
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
