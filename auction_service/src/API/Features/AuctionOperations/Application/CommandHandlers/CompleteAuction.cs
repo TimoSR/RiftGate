@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations;
 using API.Features.AuctionOperations.Domain.Repositories;
 using API.Features.AuctionOperations.Domain.Services;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
+using Infrastructure.ValidationAttributes;
 
 namespace API.Features.AuctionOperations.Application.CommandHandlers;
 
@@ -10,14 +12,12 @@ public class CompleteAuction : ICommandHandler<CompleteAuctionCommand>
     private readonly IAuctionRepository _auctionRepository;
     private readonly ITimeService _timeService;
     private readonly ILogger<CompleteAuction> _logger;
-    private readonly IAuctionExpiryChecker _test;
 
-    public CompleteAuction(IAuctionRepository auctionRepository, ITimeService timeService, ILogger<CompleteAuction> logger, IAuctionExpiryChecker test)
+    public CompleteAuction(IAuctionRepository auctionRepository, ITimeService timeService, ILogger<CompleteAuction> logger)
     {
         _auctionRepository = auctionRepository;
         _timeService = timeService;
         _logger = logger;
-        _test = test;
     }
 
     public async Task<ServiceResult> Handle(CompleteAuctionCommand command)
@@ -49,12 +49,11 @@ public class CompleteAuction : ICommandHandler<CompleteAuctionCommand>
     }
 }
 
-public class CompleteAuctionCommand : ICommand
+public record struct CompleteAuctionRequest : IRequest
 {
-    public string AuctionId { get; }
-
-    public CompleteAuctionCommand(string auctionId)
-    {
-        AuctionId = auctionId;
-    }
+    [Required]
+    [HexString(24)]
+    public string AuctionId { get; set; }
 }
+
+public record struct CompleteAuctionCommand(string AuctionId) : ICommand;

@@ -3,6 +3,7 @@ using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Repositories;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
+using Infrastructure.ValidationAttributes;
 
 namespace API.Features.AuctionOperations.Application.CommandHandlers;
 
@@ -42,19 +43,19 @@ public class PlaceBid : ICommandHandler<PlaceBidCommand>
     }
 }
 
+// For Internal Concerns
+
+public record struct PlaceBidCommand(Guid RequestId, string AuctionId, Bid Bid) : ICommand;
+
 // Requests have the responsibility to fail fast and be the endpoint contract
-// !ModelState.IsValid in Controller
 
 public record struct PlaceBidRequest : IRequest
 {
     [Required]
     public Guid RequestId { get; set; }
-    [Required(ErrorMessage = "{0} is required", AllowEmptyStrings = false)]
+    [Required(ErrorMessage = "The {0} field is required", AllowEmptyStrings = false)]
+    [HexString(24)]
     public string AuctionId { get; set; }
-    [Required(ErrorMessage = "{0} is required")]
+    [Required(ErrorMessage = "The {0} field is required")]
     public Bid Bid { get; set; }
 }
-
-// For Internal Concerns
-
-public record struct PlaceBidCommand(Guid RequestId, string AuctionId, Bid Bid) : ICommand;

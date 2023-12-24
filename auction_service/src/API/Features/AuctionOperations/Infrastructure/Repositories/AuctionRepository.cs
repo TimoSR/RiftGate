@@ -9,11 +9,11 @@ using MongoDB.Driver;
 
 namespace API.Features.AuctionOperations.Infrastructure.Repositories;
 
-public partial class AuctionRepository: MongoRepository<Auction>, IAuctionRepository
+public class AuctionRepository: MongoRepository<Auction>, IAuctionRepository
 {
-    public AuctionRepository(IMongoDbManager dbManager, IDomainEventDispatcher domainEventDispatcher) : base(dbManager, domainEventDispatcher)
-    {
-    }
+    public AuctionRepository(
+        IMongoDbManager dbManager, 
+        IDomainEventDispatcher domainEventDispatcher) : base(dbManager, domainEventDispatcher) {}
     
     public async Task<List<Auction>> GetAllActiveAuctionsAsync()
     {

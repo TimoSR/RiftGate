@@ -96,6 +96,7 @@ public class Program
         
         //Adding Automapper
         builder.Services.AddAutoMapper(typeof(Program));
+        AutoMapperRegister.RegisterAutoMapperProfiles();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
