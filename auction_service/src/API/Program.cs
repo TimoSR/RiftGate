@@ -70,7 +70,7 @@ public class Program
         // Implemented but should not be enabled by default
         // Currently the checks runs each minute, but could be modified with env var. 
         // so could be enabled in environment or feature flags
-        builder.Services.AddHostedService<AuctionExpiryBackgroundService>();
+        //builder.Services.AddHostedService<AuctionExpiryBackgroundService>();
         
         // Adding Database Repositories
         builder.Services.AddApplicationRepositories();

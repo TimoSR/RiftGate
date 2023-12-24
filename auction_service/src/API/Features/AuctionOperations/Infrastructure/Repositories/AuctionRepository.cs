@@ -15,10 +15,19 @@ public class AuctionRepository: MongoRepository<Auction>, IAuctionRepository
         IMongoDbManager dbManager, 
         IDomainEventDispatcher domainEventDispatcher) : base(dbManager, domainEventDispatcher) {}
     
+    public IMongoCollection<Auction> GetAuctionCollection()
+    {
+        return GetCollection();
+    }
+    
     public async Task<List<Auction>> GetAllActiveAuctionsAsync()
     {
         var collection = GetCollection();
-        return await collection.Find(auction => auction.IsActive).ToListAsync();
+
+        // Filter by IsActive
+        var filter = Builders<Auction>.Filter.Eq(a => a.IsActive, true);
+
+        return await collection.Find(filter).ToListAsync();
     }
 
     public async Task<List<Auction>> GetActiveAuctionsAsync(int pageNumber, int pageSize)
