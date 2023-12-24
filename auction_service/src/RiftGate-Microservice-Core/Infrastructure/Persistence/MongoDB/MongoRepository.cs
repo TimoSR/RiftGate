@@ -9,7 +9,7 @@ namespace Infrastructure.Persistence.MongoDB;
 public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAggregateRoot
 {
     private string CollectionName => typeof(T).Name + "s";
-    protected readonly IMongoDbManager _dbManager;
+    private readonly IMongoDbManager _dbManager;
     private readonly IDomainEventDispatcher _domainEventDispatcher;
 
     protected MongoRepository(IMongoDbManager dbManager, IDomainEventDispatcher domainEventDispatcher)
