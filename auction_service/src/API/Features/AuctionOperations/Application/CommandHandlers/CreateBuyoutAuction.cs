@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using API.Features.AuctionOperations.Domain;
-using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Repositories;
 using API.Features.AuctionOperations.Domain.Services;
 using API.Features.AuctionOperations.Domain.ValueObjects;
@@ -36,7 +35,7 @@ public class CreateBuyoutAuction : ICommandHandler<CreateBuyoutAuctionCommand>
         {
             // Use AutoMapper to map the command to domain entities
             var item = _mapper.Map<Item>(command);
-            var auctionLength = new AuctionLength(command.AuctionLengthHours);
+            var auctionLength = new AuctionLength(command.AuctionLength);
             var price = new Price(command.BuyoutAmount);
 
             // Create a new buyout auction
@@ -85,7 +84,7 @@ public record struct CreateBuyoutAuctionCommand(
     string ItemType, 
     string ItemRarity, 
     int ItemQuantity,
-    int AuctionLengthHours, 
+    int AuctionLength, 
     decimal BuyoutAmount
 ) : ICommand;
 
@@ -123,8 +122,8 @@ public record struct CreateBuyoutAuctionRequest : IRequest
 
     // Auction length in hours
     [Required(ErrorMessage = "Auction length is required.")]
-    [Range(1, 168, ErrorMessage = "Auction length must be between 1 and 168 hours.")]
-    public int AuctionLengthHours { get; set; }
+    [Range(12, 48, ErrorMessage = "Auction length must be 12, 24, or 48 hours.")]
+    public int AuctionLength { get; set; }
 
     // Price properties
     [Required(ErrorMessage = "Buyout amount is required.")]

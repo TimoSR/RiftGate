@@ -9,7 +9,8 @@ public abstract class Entity : IEntity
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
-   
+    
+    [BsonIgnore]
     private readonly List<INotification>? _domainEvents = new();
 
     [BsonIgnore]

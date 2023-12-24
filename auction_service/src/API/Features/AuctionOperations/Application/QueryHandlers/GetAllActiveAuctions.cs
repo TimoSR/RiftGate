@@ -32,6 +32,8 @@ public class GetAllActiveAuctions : IQueryHandler<GetAllActiveAuctionsQuery, Ser
     }
 }
 
+
+
 public record struct GetAllActiveAuctionsQuery : IQuery<ServiceResult<List<Auction>>>
 {
     // Currently no properties, but it's here to represent a specific querying intention
