@@ -35,7 +35,6 @@ public class AuctionController : ControllerBase
         _getAllActiveAuctionsHandler = getAllActiveAuctionsHandler;
     }
     
-    
     [AllowAnonymous]
     [HttpPost("create-buyout-auction")]
     public async Task<IActionResult> CreateBuyoutAuction([FromBody] CreateBuyoutAuctionRequest request)
