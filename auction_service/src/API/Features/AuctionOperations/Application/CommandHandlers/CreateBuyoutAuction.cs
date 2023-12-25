@@ -56,9 +56,9 @@ public class CreateBuyoutAuction : ICommandHandler<CreateBuyoutAuctionCommand>
     }
 }
 
-public class CreateBuyoutAuctionMappingProfiles : Profile
+public class CreateBuyoutProfile : Profile
 {
-    public CreateBuyoutAuctionMappingProfiles()
+    public CreateBuyoutProfile()
     {
         CreateMap<CreateBuyoutAuctionRequest, CreateBuyoutAuctionCommand>();
 
