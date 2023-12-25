@@ -135,8 +135,6 @@ public class Program
         
         // Enable this for Https only
         //app.UseHttpsRedirection();
-        
-        //app.UseRouting();
     
         // Controller Middlewares
         app.UseCors("MyCorsPolicy");

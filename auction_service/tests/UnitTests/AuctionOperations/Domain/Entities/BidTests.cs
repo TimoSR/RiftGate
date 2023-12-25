@@ -1,7 +1,7 @@
 using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.ValueObjects;
 
-namespace UnitTests.AuctionListing.Domain;
+namespace UnitTests.AuctionOperations.Domain.Entities;
 
 public class BidTests
 {

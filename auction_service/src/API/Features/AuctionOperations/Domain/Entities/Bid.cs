@@ -1,3 +1,4 @@
+using API.Features.AuctionOperations.Domain.Services;
 using API.Features.AuctionOperations.Domain.ValueObjects;
 using CodingPatterns.DomainLayer;
 using MongoDB.Bson.Serialization.Attributes;
@@ -16,12 +17,13 @@ public class Bid : Entity
     [BsonElement("timeStamp")]
     public DateTime TimeStamp { get; private set; }
 
-    public Bid(string bidderId, Price bidAmount, DateTime timeStamp)
+    public Bid(string id, string bidderId, Price bidAmount, ITimeService timeService)
     {
         Validate(bidderId, bidAmount);
+        Id = id;
         BidderId = bidderId;
         BidAmount = bidAmount;
-        TimeStamp = timeStamp;
+        TimeStamp = timeService.GetCurrentTime();
     }
 
     private static void Validate(string bidderId, Price bidAmount)

@@ -5,7 +5,7 @@ using API.Features.AuctionOperations.Domain.Services;
 using API.Features.AuctionOperations.Domain.ValueObjects;
 using Moq;
 
-namespace UnitTests.AuctionListing.Domain.AggregateRoots;
+namespace UnitTests.AuctionOperations.Domain;
 
 public class BuyoutAuctionTests
 {
@@ -24,7 +24,17 @@ public class BuyoutAuctionTests
         _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(_fixedDateTime);
 
         _buyoutPrice = new Price(100);
-        _item = new Item();
+        
+        _item = new Item(
+            itemId: "default-item-id",
+            name: "Default Item Name",
+            category: "Default Category",
+            group: "Default Group",
+            type: "Default Type",
+            rarity: "Common",
+            quantity: 10
+        );
+        
         _auctionLength = new AuctionLength(24);
         _sellerId = "seller123";
         _validBid = new Bid("bidder1", new Price(50), _fixedDateTime);
@@ -37,7 +47,7 @@ public class BuyoutAuctionTests
 
         Assert.Equal(_sellerId, auction.SellerId);
         Assert.Equal(_item, auction.Item);
-        Assert.Equal(_auctionLength, auction.AuctionLength);
+        Assert.Equal(_auctionLength, auction.AuctionLengthHours);
         Assert.Equal(_buyoutPrice, auction.BuyoutAmount);
         Assert.False(auction.IsActive);
     }

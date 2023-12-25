@@ -29,7 +29,7 @@ public class CreateTraditionalAuction : ICommandHandler<CreateTradAuctionCommand
             // Persist the new auction to the repository
             await _auctionRepository.InsertAsync(traditionalAuction);
 
-            _logger.LogInformation("Created a new traditional auction with ID {AuctionId}", traditionalAuction.Id);
+            _logger.LogInformation("Created a new traditional auction with ID {AuctionID}", traditionalAuction.Id);
             return ServiceResult.Success("Traditional auction created successfully.");
         }
         catch (Exception ex)
@@ -40,10 +40,15 @@ public class CreateTraditionalAuction : ICommandHandler<CreateTradAuctionCommand
     }
 }
 
-public record struct CreateTradAuctionCommand(string SellerId, Item Item, AuctionLength AuctionLength) : ICommand;
+public record struct CreateTradAuctionCommand(
+    Guid RequestId, 
+    string SellerId, 
+    Item Item, 
+    AuctionLength AuctionLength) : ICommand;
 
 public record struct CreateTraditionalAuctionRequest : IRequest
 {
+    public Guid RequestId { get; set; }
     [Required(ErrorMessage = "Seller ID is required.")]
     [StringLength(24, ErrorMessage = "Seller ID must be a 24-character string.", MinimumLength = 24)]
     public string SellerId { get; set; }
@@ -52,5 +57,5 @@ public record struct CreateTraditionalAuctionRequest : IRequest
     public Item Item { get; set; }
 
     [Required(ErrorMessage = "Auction length is required.")]
-    public AuctionLength AuctionLength { get; set; }
+    public AuctionLength AuctionLength { get; set; }    
 }

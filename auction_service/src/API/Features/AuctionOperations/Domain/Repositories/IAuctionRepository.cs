@@ -6,7 +6,6 @@ namespace API.Features.AuctionOperations.Domain.Repositories;
 
 public interface IAuctionRepository : IRepository<Auction>
 {
-    IMongoCollection<Auction> GetAuctionCollection();
     // Queries
     Task<List<Auction>> GetAllActiveAuctionsAsync();
     Task<List<Auction>> GetActiveAuctionsAsync(int pageNumber, int pageSize);
