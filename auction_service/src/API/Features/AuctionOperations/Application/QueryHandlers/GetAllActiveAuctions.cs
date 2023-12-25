@@ -8,7 +8,7 @@ using MongoDB.Driver;
 
 namespace API.Features.AuctionOperations.Application.QueryHandlers;
 
-public class GetAllActiveAuctions : IQueryHandler<GetAllActiveAuctionsQuery, ServiceResult<List<Auction>>>
+public class GetAllActiveAuctions : IQueryHandler<GetAllActiveAuctionsQuery, ServiceResult<List<AuctionDTO>>>
 {
     private readonly IAuctionRepository _auctionRepository;
     private readonly IMapper _mapper;
@@ -19,20 +19,36 @@ public class GetAllActiveAuctions : IQueryHandler<GetAllActiveAuctionsQuery, Ser
         _mapper = mapper;
     }
 
-    public async Task<ServiceResult<List<Auction>>> Handle(GetAllActiveAuctionsQuery query)
+    public async Task<ServiceResult<List<AuctionDTO>>> Handle(GetAllActiveAuctionsQuery query)
     {
         try
         {
             var collection = _auctionRepository.GetAuctionCollection();
+            
+            // Build your filter based on the Auction fields
             var filter = Builders<Auction>.Filter.Eq(a => a.IsActive, true);
-            var auctions = await collection.Find(filter).ToListAsync();
+            
+            // Project the Auction fields directly to AuctionDTO
+            var auctionDTOs = await collection
+                .Find(filter)
+                .Project(auction => new AuctionDTO
+                {
+                    Id = auction.Id.ToString(), // Assuming Id is an ObjectId
+                    StartTime = auction.StartTime,
+                    EstimatedEndTime = auction.EstimatedEndTime,
+                    IsActive = auction.IsActive,
+                    BuyoutAmount = auction.BuyoutAmount != null ? auction.BuyoutAmount.Value : 0
+                })
+                .ToListAsync();
+            
+            
             //var auctionDTOs = _mapper.Map<List<AuctionDTO>>(auctions);
-            return ServiceResult<List<Auction>>.Success(auctions);
+            return ServiceResult<List<AuctionDTO>>.Success(auctionDTOs);
         }
         catch (Exception ex)
         {
             // Log the exception details and handle the error
-            return ServiceResult<List<Auction>>.Failure("Failed to retrieve active auctions.");
+            return ServiceResult<List<AuctionDTO>>.Failure("Failed to retrieve active auctions.");
         }
     }
 }
@@ -60,7 +76,7 @@ public record struct AuctionDTO
     public Decimal BuyoutAmount { get; init; } // Assuming Price is a custom type
 }
 
-public record struct GetAllActiveAuctionsQuery : IQuery<ServiceResult<List<Auction>>>
+public record struct GetAllActiveAuctionsQuery : IQuery<ServiceResult<List<AuctionDTO>>>
 {
     // Currently no properties, but it's here to represent a specific querying intention
 }
