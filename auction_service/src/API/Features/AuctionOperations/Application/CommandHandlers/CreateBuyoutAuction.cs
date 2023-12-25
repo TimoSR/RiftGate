@@ -56,25 +56,6 @@ public class CreateBuyoutAuction : ICommandHandler<CreateBuyoutAuctionCommand>
     }
 }
 
-public class CreateBuyoutProfile : Profile
-{
-    public CreateBuyoutProfile()
-    {
-        CreateMap<CreateBuyoutAuctionRequest, CreateBuyoutAuctionCommand>();
-
-        CreateMap<CreateBuyoutAuctionCommand, Item>()
-            .ConstructUsing(src => 
-                new Item(
-                    src.ItemId, 
-                    src.ItemName, 
-                    src.ItemCategory, 
-                    src.ItemGroup, 
-                    src.ItemType, 
-                    src.ItemRarity, 
-                    src.ItemQuantity));
-    }
-}
-
 public record struct CreateBuyoutAuctionCommand(
     string SellerId, 
     string ItemId, 
@@ -131,5 +112,23 @@ public record struct CreateBuyoutAuctionRequest : IRequest
     public decimal BuyoutAmount { get; set; }
 }
 
+public class CreateBuyoutProfile : Profile
+{
+    public CreateBuyoutProfile()
+    {
+        CreateMap<CreateBuyoutAuctionRequest, CreateBuyoutAuctionCommand>();
+
+        CreateMap<CreateBuyoutAuctionCommand, Item>()
+            .ConstructUsing(src => 
+                new Item(
+                    src.ItemId, 
+                    src.ItemName, 
+                    src.ItemCategory, 
+                    src.ItemGroup, 
+                    src.ItemType, 
+                    src.ItemRarity, 
+                    src.ItemQuantity));
+    }
+}
 
 
