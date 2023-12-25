@@ -27,7 +27,7 @@ public class CompleteAuction : ICommandHandler<CompleteAuctionCommand>
             var auction = await _auctionRepository.GetByIdAsync(command.AuctionId);
             if (auction == null)
             {
-                _logger.LogWarning("Auction with ID {AuctionId} not found for completion.", command.AuctionId);
+                _logger.LogWarning("Auction with ID {AuctionID} not found for completion.", command.AuctionId);
                 return ServiceResult.Failure($"Auction with ID {command.AuctionId} not found.");
             }
 
@@ -38,21 +38,21 @@ public class CompleteAuction : ICommandHandler<CompleteAuctionCommand>
                 await _auctionRepository.UpdateAsync(auction);
             }
             
-            _logger.LogInformation("Auction with ID {AuctionId} completed successfully.", command.AuctionId);
+            _logger.LogInformation("Auction with ID {AuctionID} completed successfully.", command.AuctionId);
             return ServiceResult.Success("Auction completed successfully.");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to complete auction with ID {AuctionId} due to an unexpected error.", command.AuctionId);
+            _logger.LogError(ex, "Failed to complete auction with ID {AuctionID} due to an unexpected error.", command.AuctionId);
             return ServiceResult.Failure("Failed to complete the auction due to an unexpected error.");
         }
     }
 }
 
-public record struct CompleteAuctionCommand(Guid? RequestID, string AuctionId) : ICommand;
+public record struct CompleteAuctionCommand(Guid RequestId, string AuctionId) : ICommand;
 
 public record struct CompleteAuctionRequest : IRequest
 {
-    public Guid? RequestID { get; set; }
+    public Guid RequestId { get; set; }
     [Required] [HexString(24)] public string AuctionId { get; set; }
 }

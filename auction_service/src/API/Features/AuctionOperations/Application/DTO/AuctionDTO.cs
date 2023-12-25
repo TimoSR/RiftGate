@@ -19,8 +19,8 @@ public record struct AuctionDTO(
 
 public record struct BidDTO(
     string Id,
-    decimal BidAmount,
     string BidderId,
+    decimal BidAmount,
     DateTime TimeStamp
 );
 

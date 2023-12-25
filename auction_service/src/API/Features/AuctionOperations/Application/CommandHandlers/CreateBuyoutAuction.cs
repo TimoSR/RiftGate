@@ -45,7 +45,7 @@ public class CreateBuyoutAuction : ICommandHandler<CreateBuyoutAuctionCommand>
             // Persist the new auction to the repository
             await _auctionRepository.InsertAsync(buyoutAuction);
 
-            _logger.LogInformation("Created a new buyout auction with ID {AuctionId}", buyoutAuction.Id);
+            _logger.LogInformation("Created a new buyout auction with ID {AuctionID}", buyoutAuction.Id);
             return ServiceResult.Success("Buyout auction created successfully.");
         }
         catch (Exception ex)
@@ -57,7 +57,7 @@ public class CreateBuyoutAuction : ICommandHandler<CreateBuyoutAuctionCommand>
 }
 
 public record struct CreateBuyoutAuctionCommand(
-    Guid? RequestID,
+    Guid RequestId,
     string SellerId, 
     string ItemId, 
     string ItemName, 
@@ -72,7 +72,7 @@ public record struct CreateBuyoutAuctionCommand(
 
 public record struct CreateBuyoutAuctionRequest : IRequest
 {
-    public Guid? RequestID { get; set; }
+    public Guid RequestId { get; set; }
     [Required(ErrorMessage = $"{nameof(SellerId)} is required.")]
     //[StringLength(24, ErrorMessage = $"{nameof(SellerId)} must be a 24-character string.", MinimumLength = 24)]
     [HexString(24)]
