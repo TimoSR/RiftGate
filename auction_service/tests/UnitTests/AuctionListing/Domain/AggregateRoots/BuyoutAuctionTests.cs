@@ -24,7 +24,17 @@ public class BuyoutAuctionTests
         _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(_fixedDateTime);
 
         _buyoutPrice = new Price(100);
-        _item = new Item();
+        
+        _item = new Item(
+            itemId: "default-item-id",
+            name: "Default Item Name",
+            category: "Default Category",
+            group: "Default Group",
+            type: "Default Type",
+            rarity: "Common",
+            quantity: 10
+        );
+        
         _auctionLength = new AuctionLength(24);
         _sellerId = "seller123";
         _validBid = new Bid("bidder1", new Price(50), _fixedDateTime);

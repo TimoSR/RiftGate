@@ -13,6 +13,7 @@ public class TraditionalAuctionTests
     private readonly Mock<ITimeService> _timeServiceMock;
     private readonly DateTime _fixedDateTime;
     private readonly Bid _validBid;
+    private readonly Item _defaultItem;
 
     public TraditionalAuctionTests()
     {
@@ -20,7 +21,17 @@ public class TraditionalAuctionTests
         _timeServiceMock = new Mock<ITimeService>();
         _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(_fixedDateTime);
 
-        _auction = new TraditionalAuction("seller1", new Item(), new AuctionLength(24));
+        _defaultItem = new Item(
+            itemId: "default-item-id",
+            name: "Default Item",
+            category: "Default Category",
+            group: "Default Group",
+            type: "Default Type",
+            rarity: "Common",
+            quantity: 5
+        );
+
+        _auction = new TraditionalAuction("seller1", _defaultItem, new AuctionLength(24));
         _validBid = new Bid("bidder1", new Price(100), _fixedDateTime);
 
         // Use mock ITimeService when starting the auction
@@ -30,7 +41,7 @@ public class TraditionalAuctionTests
     [Fact]
     public void Constructor_WithNullSellerId_ThrowsArgumentNullException()
     {
-        var exception = Record.Exception(() => new TraditionalAuction(null, new Item(), new AuctionLength(24)));
+        var exception = Record.Exception(() => new TraditionalAuction(null, _defaultItem, new AuctionLength(24)));
 
         Assert.NotNull(exception);
         Assert.IsType<ArgumentNullException>(exception);
@@ -51,7 +62,7 @@ public class TraditionalAuctionTests
     // Add more cases that you consider invalid for AuctionLength
     public void Constructor_WithInvalidAuctionLength_ThrowsArgumentException(int invalidLength)
     {
-        var exception = Record.Exception(() => new TraditionalAuction("seller1", new Item(), new AuctionLength(invalidLength)));
+        var exception = Record.Exception(() => new TraditionalAuction("seller1", _defaultItem, new AuctionLength(invalidLength)));
 
         Assert.NotNull(exception);
         Assert.IsType<ArgumentException>(exception);
@@ -86,10 +97,14 @@ public class TraditionalAuctionTests
     [Fact]
     public void PlaceBid_OnInactiveAuction_ThrowsException()
     {
-        var auction = new TraditionalAuction("seller1", new Item(), new AuctionLength(24));
-        var exception = Assert.Throws<InvalidOperationException>(() => auction.PlaceBid(_validBid));
+        // Arrange
+        var inactiveAuction = new TraditionalAuction("seller1", _defaultItem, new AuctionLength(24));
+
+        // Act & Assert
+        var exception = Assert.Throws<InvalidOperationException>(() => inactiveAuction.PlaceBid(_validBid));
         Assert.Equal("Attempted to place a bid on an inactive auction.", exception.Message);
     }
+
 
     [Fact]
     public void PlaceBid_WithLowerBidAmount_ThrowsException()
