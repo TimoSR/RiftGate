@@ -37,7 +37,9 @@ public class PlaceBid : ICommandHandler<PlaceBidCommand>
             var Id = ObjectId.GenerateNewId().ToString();
             var price = new Price(command.BidAmount);
             var bid = new Bid(Id, command.BidderId, price, _timeService);
+            
             auction.PlaceBid(bid);
+            
             await _auctionRepository.UpdateAsync(auction);
 
             _logger.LogInformation("Bid placed successfully for Auction ID {AuctionID}.", command.AuctionId);
