@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using API.Features.AuctionOperations.Domain.Repositories;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
+using Infrastructure.ValidationAttributes;
 
 namespace API.Features.AuctionOperations.Application.CommandHandlers;
 
@@ -40,11 +41,12 @@ public class DeleteAuction : ICommandHandler<DeleteAuctionCommand>
     }
 }
 
-public record struct DeleteAuctionCommand(string AuctionId) : ICommand;
+public record struct DeleteAuctionCommand(Guid? RequestID, string AuctionId) : ICommand;
 
 public record struct DeleteAuctionRequest : IRequest
 {
+    public Guid? RequestID { get; set; }
     [Required(ErrorMessage = "Auction ID is required.")]
-    [StringLength(24, ErrorMessage = "Auction ID must be a 24-character string.", MinimumLength = 24)]
+    [HexString(24)]
     public string AuctionId { get; set; }
 }

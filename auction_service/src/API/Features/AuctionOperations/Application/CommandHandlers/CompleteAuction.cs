@@ -49,11 +49,10 @@ public class CompleteAuction : ICommandHandler<CompleteAuctionCommand>
     }
 }
 
+public record struct CompleteAuctionCommand(Guid? RequestID, string AuctionId) : ICommand;
+
 public record struct CompleteAuctionRequest : IRequest
 {
-    [Required]
-    [HexString(24)]
-    public string AuctionId { get; set; }
+    public Guid? RequestID { get; set; }
+    [Required] [HexString(24)] public string AuctionId { get; set; }
 }
-
-public record struct CompleteAuctionCommand(string AuctionId) : ICommand;

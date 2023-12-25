@@ -57,6 +57,7 @@ public class CreateBuyoutAuction : ICommandHandler<CreateBuyoutAuctionCommand>
 }
 
 public record struct CreateBuyoutAuctionCommand(
+    Guid? RequestID,
     string SellerId, 
     string ItemId, 
     string ItemName, 
@@ -71,6 +72,7 @@ public record struct CreateBuyoutAuctionCommand(
 
 public record struct CreateBuyoutAuctionRequest : IRequest
 {
+    public Guid? RequestID { get; set; }
     [Required(ErrorMessage = $"{nameof(SellerId)} is required.")]
     //[StringLength(24, ErrorMessage = $"{nameof(SellerId)} must be a 24-character string.", MinimumLength = 24)]
     [HexString(24)]

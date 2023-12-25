@@ -45,12 +45,13 @@ public class PlaceBid : ICommandHandler<PlaceBidCommand>
 
 // For Internal Concerns
 
-public record struct PlaceBidCommand(Guid RequestId, string AuctionId, Bid Bid) : ICommand;
+public record struct PlaceBidCommand(Guid? RequestID, string AuctionId, Bid Bid) : ICommand;
 
 // Requests have the responsibility to fail fast and be the endpoint contract
 
 public record struct PlaceBidRequest : IRequest
 {
+    public Guid? RequestID { get; set; }
     [Required]
     public Guid RequestId { get; set; }
     [Required(ErrorMessage = "The {0} field is required", AllowEmptyStrings = false)]

@@ -40,10 +40,15 @@ public class CreateTraditionalAuction : ICommandHandler<CreateTradAuctionCommand
     }
 }
 
-public record struct CreateTradAuctionCommand(string SellerId, Item Item, AuctionLength AuctionLength) : ICommand;
+public record struct CreateTradAuctionCommand(
+    Guid? RequestID, 
+    string SellerId, 
+    Item Item, 
+    AuctionLength AuctionLength) : ICommand;
 
 public record struct CreateTraditionalAuctionRequest : IRequest
 {
+    public Guid? RequestID { get; set; }
     [Required(ErrorMessage = "Seller ID is required.")]
     [StringLength(24, ErrorMessage = "Seller ID must be a 24-character string.", MinimumLength = 24)]
     public string SellerId { get; set; }
@@ -52,5 +57,5 @@ public record struct CreateTraditionalAuctionRequest : IRequest
     public Item Item { get; set; }
 
     [Required(ErrorMessage = "Auction length is required.")]
-    public AuctionLength AuctionLength { get; set; }
+    public AuctionLength AuctionLength { get; set; }    
 }

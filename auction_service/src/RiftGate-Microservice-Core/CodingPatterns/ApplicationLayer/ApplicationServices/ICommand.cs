@@ -1,6 +1,3 @@
 namespace CodingPatterns.ApplicationLayer.ApplicationServices;
 
-public interface ICommand
-{
-    
-}
+public interface ICommand : IIdempotency;
