@@ -7,6 +7,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace API.Features.AuctionOperations.Domain;
 
+// Private Set is needed in Entities and AggregateRoots so MongoDB Driver can map the data.
+
 [BsonDiscriminator("auction", RootClass = true)]
 [BsonKnownTypes(typeof(BuyoutAuction), typeof(TraditionalAuction))]
 public abstract class Auction : Entity, IAggregateRoot
