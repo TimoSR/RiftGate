@@ -59,7 +59,7 @@ public class TraditionalAuctionTests
     [Theory]
     [InlineData(0)]
     [InlineData(-1)]
-    // Add more cases that you consider invalid for AuctionLength
+    // Add more cases that you consider invalid for AuctionLengthHours
     public void Constructor_WithInvalidAuctionLength_ThrowsArgumentException(int invalidLength)
     {
         var exception = Record.Exception(() => new TraditionalAuction("seller1", _defaultItem, new AuctionLength(invalidLength)));
@@ -73,7 +73,7 @@ public class TraditionalAuctionTests
     {
         Assert.Equal("seller1", _auction.SellerId);
         Assert.NotNull(_auction.Item);
-        Assert.Equal(24, _auction.AuctionLength.Value);
+        Assert.Equal(24, _auction.AuctionLengthHours.Value);
         Assert.True(_auction.IsActive);
     }
 

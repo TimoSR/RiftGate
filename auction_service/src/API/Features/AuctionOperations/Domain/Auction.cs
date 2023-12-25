@@ -26,7 +26,7 @@ public abstract class Auction : Entity, IAggregateRoot
     public List<Bid> Bids { get; private set; } = new();
 
     [BsonElement("auctionLength")]
-    public AuctionLength AuctionLength { get; private set; }
+    public AuctionLength AuctionLengthHours { get; private set; }
 
     [BsonElement("item")]
     public Item Item { get; private set; }
@@ -44,7 +44,7 @@ public abstract class Auction : Entity, IAggregateRoot
         Price? buyout)
     {
         SellerId = sellerId ?? throw new ArgumentNullException(nameof(sellerId));
-        AuctionLength = auctionLength ?? throw new ArgumentNullException(nameof(auctionLength));
+        AuctionLengthHours = auctionLength ?? throw new ArgumentNullException(nameof(auctionLength));
         Item = item ?? throw new ArgumentNullException();
         BuyoutAmount = buyout;
     }
@@ -83,7 +83,7 @@ public abstract class Auction : Entity, IAggregateRoot
             throw new ArgumentNullException(nameof(timeService));
 
         StartTime = timeService.GetCurrentTime();
-        EstimatedEndTime = StartTime.AddHours(AuctionLength.Value);
+        EstimatedEndTime = StartTime.AddHours(AuctionLengthHours.Value);
         IsActive = true;
         AddDomainEvent(new AuctionStartedEvent(Id, StartTime));
     }

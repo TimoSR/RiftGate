@@ -1,10 +1,8 @@
 using API.Features.AuctionOperations.Application.DTO;
-using API.Features.AuctionOperations.Domain;
 using API.Features.AuctionOperations.Domain.Repositories;
 using AutoMapper;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
-using MongoDB.Driver;
 
 namespace API.Features.AuctionOperations.Application.QueryHandlers;
 

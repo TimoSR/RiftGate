@@ -47,7 +47,7 @@ public class BuyoutAuctionTests
 
         Assert.Equal(_sellerId, auction.SellerId);
         Assert.Equal(_item, auction.Item);
-        Assert.Equal(_auctionLength, auction.AuctionLength);
+        Assert.Equal(_auctionLength, auction.AuctionLengthHours);
         Assert.Equal(_buyoutPrice, auction.BuyoutAmount);
         Assert.False(auction.IsActive);
     }
