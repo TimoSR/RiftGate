@@ -6,7 +6,7 @@ namespace API.Features.AuctionOperations.Domain.ValueObjects;
 public class AuctionLength : IValueObject
 {
     [BsonElement("value")]
-    public int Value { get; }
+    public int Value { get; private set; }
     private readonly int[] _allowedValues = { 12, 24, 48 };
 
     public AuctionLength(int value)

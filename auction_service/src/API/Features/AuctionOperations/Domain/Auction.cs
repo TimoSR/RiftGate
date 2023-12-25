@@ -7,6 +7,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace API.Features.AuctionOperations.Domain;
 
+// Private Set is needed in Entities and AggregateRoots so MongoDB Driver can map the data.
+
 [BsonDiscriminator("auction", RootClass = true)]
 [BsonKnownTypes(typeof(BuyoutAuction), typeof(TraditionalAuction))]
 public abstract class Auction : Entity, IAggregateRoot
@@ -16,12 +18,15 @@ public abstract class Auction : Entity, IAggregateRoot
 
     [BsonElement("estimatedEndTime")]
     public DateTime EstimatedEndTime { get; private set; }
+    
+    [BsonElement("buyoutAmount")]
+    public Price? BuyoutAmount { get; private set; }
 
     [BsonElement("bids")]
-    public List<Bid> Bids { get; } = new();
+    public List<Bid> Bids { get; private set; } = new();
 
     [BsonElement("auctionLength")]
-    public AuctionLength AuctionLength { get; }
+    public AuctionLength AuctionLength { get; private set; }
 
     [BsonElement("item")]
     public Item Item { get; private set; }
@@ -35,11 +40,13 @@ public abstract class Auction : Entity, IAggregateRoot
     protected  Auction(
         string sellerId, 
         Item item, 
-        AuctionLength auctionLength)
+        AuctionLength auctionLength,
+        Price? buyout)
     {
         SellerId = sellerId ?? throw new ArgumentNullException(nameof(sellerId));
         AuctionLength = auctionLength ?? throw new ArgumentNullException(nameof(auctionLength));
         Item = item ?? throw new ArgumentNullException();
+        BuyoutAmount = buyout;
     }
     
     // Virtual Methods

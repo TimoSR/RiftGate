@@ -1,6 +1,6 @@
 using API.Features.AuctionOperations.Application.CommandHandlers;
+using API.Features.AuctionOperations.Application.DTO;
 using API.Features.AuctionOperations.Application.QueryHandlers;
-using API.Features.AuctionOperations.Domain;
 using AutoMapper;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
@@ -79,7 +79,7 @@ public class AuctionController : ControllerBase
 
         if (result.IsSuccess)
         {
-            return Ok(result.Data);  // Assuming ServiceResult<T> has a Data property
+            return Ok(result.Data);
         }
         else
         {

@@ -9,7 +9,7 @@ namespace API.Features.AuctionOperations.Domain;
             string sellerId, 
             Item item, 
             AuctionLength auctionLength) 
-            : base(sellerId, item, auctionLength)
+            : base(sellerId, item, auctionLength, default)
         {
         }
     }
