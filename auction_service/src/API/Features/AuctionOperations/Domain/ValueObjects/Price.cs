@@ -13,6 +13,6 @@ public record Price : IValueObject
     {
         if (amount <= 0) throw new ArgumentException("BidAmount cannot be negative or zero.");
 
-        Value = decimal.Round(amount, 2, MidpointRounding.AwayFromZero);
+        Value = decimal.Round(amount, 2);
     }
 }
