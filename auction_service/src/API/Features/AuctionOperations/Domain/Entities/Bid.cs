@@ -7,14 +7,14 @@ namespace API.Features.AuctionOperations.Domain.Entities;
 public class Bid : Entity
 {
     [BsonElement("bidAmount")]
-    public Price BidAmount { get; }
+    public Price BidAmount { get; private set; }
 
     [BsonElement("bidderId")]
-    public string BidderId { get; }
+    public string BidderId { get; private set; }
 
     [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
     [BsonElement("timeStamp")]
-    public DateTime TimeStamp { get; }
+    public DateTime TimeStamp { get; private set; }
 
     public Bid(string bidderId, Price bidAmount, DateTime timeStamp)
     {

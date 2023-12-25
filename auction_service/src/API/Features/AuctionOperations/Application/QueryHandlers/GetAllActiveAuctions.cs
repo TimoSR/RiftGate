@@ -1,3 +1,4 @@
+using System.Globalization;
 using API.Features.AuctionOperations.Domain;
 using API.Features.AuctionOperations.Domain.Repositories;
 using AutoMapper;
@@ -7,7 +8,7 @@ using MongoDB.Driver;
 
 namespace API.Features.AuctionOperations.Application.QueryHandlers;
 
-public class GetAllActiveAuctions : IQueryHandler<GetAllActiveAuctionsQuery, ServiceResult<List<AuctionDTO>>>
+public class GetAllActiveAuctions : IQueryHandler<GetAllActiveAuctionsQuery, ServiceResult<List<Auction>>>
 {
     private readonly IAuctionRepository _auctionRepository;
     private readonly IMapper _mapper;
@@ -18,20 +19,20 @@ public class GetAllActiveAuctions : IQueryHandler<GetAllActiveAuctionsQuery, Ser
         _mapper = mapper;
     }
 
-    public async Task<ServiceResult<List<AuctionDTO>>> Handle(GetAllActiveAuctionsQuery query)
+    public async Task<ServiceResult<List<Auction>>> Handle(GetAllActiveAuctionsQuery query)
     {
         try
         {
             var collection = _auctionRepository.GetAuctionCollection();
             var filter = Builders<Auction>.Filter.Eq(a => a.IsActive, true);
             var auctions = await collection.Find(filter).ToListAsync();
-            var auctionDTOs = _mapper.Map<List<AuctionDTO>>(auctions);
-            return ServiceResult<List<AuctionDTO>>.Success(auctionDTOs);
+            //var auctionDTOs = _mapper.Map<List<AuctionDTO>>(auctions);
+            return ServiceResult<List<Auction>>.Success(auctions);
         }
         catch (Exception ex)
         {
             // Log the exception details and handle the error
-            return ServiceResult<List<AuctionDTO>>.Failure("Failed to retrieve active auctions.");
+            return ServiceResult<List<Auction>>.Failure("Failed to retrieve active auctions.");
         }
     }
 }
@@ -40,27 +41,26 @@ public class ActiveAuctionsMappingProfile : Profile
 {
     public ActiveAuctionsMappingProfile()
     {
-        // Add mapping for Auction to AuctionDTO
         CreateMap<Auction, AuctionDTO>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => src.StartTime))
             .ForMember(dest => dest.EstimatedEndTime, opt => opt.MapFrom(src => src.EstimatedEndTime))
-            .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive));
-        // Add other mappings for remaining properties as needed
+            .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive))
+            .ForMember(dest => dest.BuyoutAmount, opt => opt.MapFrom(src => src.BuyoutAmount.Value));
     }
 }
 
 
-public class AuctionDTO
+public record struct AuctionDTO
 {
-    public string Id { get; set; }
-    public DateTime StartTime { get; set; }
-    public DateTime EstimatedEndTime { get; set; }
-    public bool IsActive { get; set; }
-    // Add other properties that you need in your DTO
+    public string Id { get; init; }
+    public DateTime StartTime { get; init; }
+    public DateTime EstimatedEndTime { get; init; }
+    public bool IsActive { get; init; }
+    public Decimal BuyoutAmount { get; init; } // Assuming Price is a custom type
 }
 
-public record struct GetAllActiveAuctionsQuery : IQuery<ServiceResult<List<AuctionDTO>>>
+public record struct GetAllActiveAuctionsQuery : IQuery<ServiceResult<List<Auction>>>
 {
     // Currently no properties, but it's here to represent a specific querying intention
 }

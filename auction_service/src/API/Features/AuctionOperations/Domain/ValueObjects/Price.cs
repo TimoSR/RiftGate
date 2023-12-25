@@ -1,12 +1,13 @@
 using CodingPatterns.DomainLayer;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace API.Features.AuctionOperations.Domain.ValueObjects;
 
 public record Price : IValueObject
 {
-    [BsonElement("value")]
-    public decimal Value { get; }
+    [BsonRepresentation(BsonType.Decimal128)]
+    public decimal Value { get; private set; }
 
     public Price(decimal amount)
     {

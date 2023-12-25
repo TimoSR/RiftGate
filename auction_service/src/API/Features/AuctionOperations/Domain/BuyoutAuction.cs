@@ -7,17 +7,18 @@ namespace API.Features.AuctionOperations.Domain;
 
 public class BuyoutAuction : Auction
 {
-    [BsonElement("buyoutAmount")]
-    public Price BuyoutAmount { get; }
     
     public BuyoutAuction(
         string sellerId, 
         Item item, 
         AuctionLength auctionLength, 
         Price buyout) 
-        : base(sellerId, item, auctionLength)
+        : base(sellerId, item, auctionLength, buyout)
     {
-        BuyoutAmount = buyout ?? throw new ArgumentNullException(nameof(buyout));
+        if (buyout == null)
+        {
+            throw new ArgumentNullException(nameof(buyout));
+        }              
     }
     
     // Public (Input Should be Validated)
