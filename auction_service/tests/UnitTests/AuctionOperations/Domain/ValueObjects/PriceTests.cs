@@ -1,6 +1,6 @@
 using API.Features.AuctionOperations.Domain.ValueObjects;
 
-namespace UnitTests.AuctionListing.Domain;
+namespace UnitTests.AuctionOperations.Domain.ValueObjects;
 
 public class PriceTests
 {

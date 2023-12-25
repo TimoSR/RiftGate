@@ -2,7 +2,7 @@ using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Events;
 using API.Features.AuctionOperations.Domain.ValueObjects;
 
-namespace UnitTests.AuctionListing.Domain.Events;
+namespace UnitTests.AuctionOperations.Domain.Events;
 
 public class AuctionEventsTests
 {

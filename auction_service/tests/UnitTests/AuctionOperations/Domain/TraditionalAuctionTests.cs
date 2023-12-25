@@ -5,7 +5,7 @@ using API.Features.AuctionOperations.Domain.Services;
 using API.Features.AuctionOperations.Domain.ValueObjects;
 using Moq;
 
-namespace UnitTests.AuctionListing.Domain.AggregateRoots;
+namespace UnitTests.AuctionOperations.Domain;
 
 public class TraditionalAuctionTests
 {

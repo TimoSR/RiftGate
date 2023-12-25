@@ -1,7 +1,7 @@
 using API.Features.AuctionOperations.Domain.ValueObjects;
 using UnitTests.AuctionListing.Domain._TestData;
 
-namespace UnitTests.AuctionListing.Domain;
+namespace UnitTests.AuctionOperations.Domain.ValueObjects;
 
 public class AuctionLengthTests
 {
