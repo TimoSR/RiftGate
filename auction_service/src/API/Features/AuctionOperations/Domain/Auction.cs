@@ -62,7 +62,7 @@ public abstract class Auction : Entity, IAggregateRoot
     protected virtual void ValidateBid(Bid bid)
     {
         if (bid == null)
-            throw new ArgumentNullException(nameof(bid), "Bid cannot be null.");
+            throw new ArgumentNullException(nameof(bid), "bid cannot be null.");
         
         if (!IsActive)
             throw new InvalidOperationException("Attempted to place a bid on an inactive auction.");
@@ -71,7 +71,7 @@ public abstract class Auction : Entity, IAggregateRoot
 
         if (highestBid != null && bid.BidAmount.Value <= highestBid.BidAmount.Value)
         {
-            throw new InvalidOperationException($"Bid amount of {bid.BidAmount.Value} must be higher than the current highest bid of {highestBid.BidAmount.Value}.");
+            throw new InvalidOperationException($"bid amount of {bid.BidAmount.Value} must be higher than the current highest bid of {highestBid.BidAmount.Value}.");
         }
     }
     

@@ -55,13 +55,8 @@ public class ExceptionHandlingMiddleware
             MongoRepositoryConnectionException _ => 
                 (StatusCodes.Status503ServiceUnavailable, "There was an issue connecting to the database."),
 
-            MongoRepositoryException mongoEx when mongoEx.InnerException is TimeoutException =>
-                (StatusCodes.Status408RequestTimeout, "The database operation timed out."),
-
             MongoRepositoryException _ => 
                 (StatusCodes.Status500InternalServerError, "There was an issue with the database operation."),
-
-            // Additional specific exceptions can be added here
 
             _ => 
                 (StatusCodes.Status500InternalServerError, "An unexpected error occurred.")
@@ -81,3 +76,4 @@ public class ExceptionHandlingMiddleware
         await context.Response.WriteAsync(result);
     }
 }
+

@@ -9,10 +9,10 @@ public record Price : IValueObject
     [BsonRepresentation(BsonType.Decimal128)]
     public decimal Value { get; private set; }
 
-    public Price(decimal amount)
+    public Price(decimal bidAmount)
     {
-        if (amount <= 0) throw new ArgumentException("BidAmount cannot be negative or zero.");
+        if (bidAmount <= 0) throw new ArgumentException("bidAmount cannot be negative or zero.");
 
-        Value = decimal.Round(amount, 2);
+        Value = decimal.Round(bidAmount, 2);
     }
 }

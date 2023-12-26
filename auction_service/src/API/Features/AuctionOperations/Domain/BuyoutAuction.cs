@@ -42,7 +42,7 @@ public class BuyoutAuction : Auction
     protected override void ValidateBid(Bid bid)
     {
         if (bid == null)
-            throw new ArgumentNullException(nameof(bid), "Bid cannot be null.");
+            throw new ArgumentNullException(nameof(bid), "bid cannot be null.");
         
         if (!IsActive)
             throw new InvalidOperationException("Attempted to place a bid on an inactive auction.");
@@ -51,12 +51,12 @@ public class BuyoutAuction : Auction
 
         if (highestBid != null && bid.BidAmount.Value <= highestBid.BidAmount.Value)
         {
-            throw new InvalidOperationException($"Bid amount of {bid.BidAmount.Value} must be higher than the current highest bid of {highestBid.BidAmount.Value}.");
+            throw new InvalidOperationException($"bid amount of {bid.BidAmount.Value} must be higher than the current highest bid of {highestBid.BidAmount.Value}.");
         }
 
         if (bid.BidAmount.Value > BuyoutAmount.Value)
         {
-            throw new InvalidOperationException($"Bid of {bid.BidAmount.Value} exceeds or equals the buyout price of {BuyoutAmount.Value}, which is not allowed.");
+            throw new InvalidOperationException($"bid of {bid.BidAmount.Value} exceeds or equals the buyout price of {BuyoutAmount.Value}, which is not allowed.");
         }
     }
 }
