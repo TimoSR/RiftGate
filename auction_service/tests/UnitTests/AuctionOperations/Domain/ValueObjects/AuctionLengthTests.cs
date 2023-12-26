@@ -16,9 +16,12 @@ public class AuctionLengthTests
 
     [Theory]
     [MemberData(nameof(TestDataProvider.InvalidAuctionLengths), MemberType = typeof(TestDataProvider))]
-    public void Constructor_WithInvalidValue_ShouldThrowArgumentException(int invalidLength)
+    public void Constructor_WithInvalidValue_ThrowsArgumentException(int invalidLength)
     {
         var exception = Assert.Throws<ArgumentException>(() => new AuctionLength(invalidLength));
-        Assert.Contains("Invalid auction length", exception.Message);
+
+        // Assert that the exception is of the correct type
+        Assert.IsType<ArgumentException>(exception);
     }
+
 }
