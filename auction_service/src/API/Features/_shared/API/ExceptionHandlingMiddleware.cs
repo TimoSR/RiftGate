@@ -16,7 +16,6 @@ public class ExceptionHandlingMiddleware
         _env = env;
     }
 
-
     public async Task InvokeAsync(HttpContext context)
     {
         try

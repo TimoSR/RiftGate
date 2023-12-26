@@ -19,19 +19,11 @@ public class GetAllActiveAuctions : IQueryHandler<GetAllActiveAuctionsQuery, Ser
     
     public async Task<ServiceResult<List<AuctionDTO>>> Handle(GetAllActiveAuctionsQuery query)
     {
-        try
-        {
-            var auctions = await _auctionRepository.GetAllActiveAuctionsAsync();
-            
-            var activeAuctionDTOs = _mapper.Map<List<AuctionDTO>>(auctions);
+        var auctions = await _auctionRepository.GetAllActiveAuctionsAsync();
+        
+        var activeAuctionDTOs = _mapper.Map<List<AuctionDTO>>(auctions);
 
-            return ServiceResult<List<AuctionDTO>>.Success(activeAuctionDTOs);
-        }
-        catch (Exception ex)
-        {
-            // Log the exception details and handle the error
-            return ServiceResult<List<AuctionDTO>>.Failure("Failed to retrieve active auctions.");
-        }
+        return ServiceResult<List<AuctionDTO>>.Success(activeAuctionDTOs);
     }
 }
 
