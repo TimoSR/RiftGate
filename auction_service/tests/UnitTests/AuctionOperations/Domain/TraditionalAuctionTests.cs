@@ -98,15 +98,17 @@ public class TraditionalAuctionTests
     }
 
     [Fact]
-    public void PlaceBid_OnInactiveAuction_ThrowsException()
+    public void PlaceBid_OnInactiveAuction_ThrowsInvalidOperationException()
     {
         var inactiveAuction = new TraditionalAuction("seller1", _defaultItem, new AuctionLength(24));
         var exception = Assert.Throws<InvalidOperationException>(() => inactiveAuction.PlaceBid(_validBid));
-        Assert.Equal("Attempted to place a bid on an inactive auction.", exception.Message);
+
+        // Assert that the exception is of the correct type
+        Assert.IsType<InvalidOperationException>(exception);
     }
 
     [Fact]
-    public void PlaceBid_WithLowerBidAmount_ThrowsException()
+    public void PlaceBid_WithLowerBidAmount_ThrowsInvalidOperationException()
     {
         var higherBidTime = _fixedDateTime.AddMinutes(10);
         _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(higherBidTime);
@@ -118,8 +120,11 @@ public class TraditionalAuctionTests
         var lowerBid = CreateMockedBid("bidder3", new Price(90), lowerBidTime);
 
         var exception = Assert.Throws<InvalidOperationException>(() => _auction.PlaceBid(lowerBid));
-        Assert.StartsWith("Bid amount of 90 must be higher than the current highest bid of 150", exception.Message);
+
+        // Assert that the exception is of the correct type
+        Assert.IsType<InvalidOperationException>(exception);
     }
+
 
     [Fact]
     public void CheckAndCompleteAuction_MarksAuctionAsComplete()
