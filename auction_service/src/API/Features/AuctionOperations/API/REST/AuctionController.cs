@@ -15,9 +15,10 @@ namespace API.Features.AuctionOperations.API.REST;
 [SwaggerDoc("Auction")]
 [ApiVersion("1.0")]
 //[Authorize]
-public class AuctionController : ControllerBase
+public partial class AuctionController : ControllerBase
 {
     private readonly IMapper _mapper; 
+    
     private readonly ICommandHandler<CompleteAuctionCommand> _completeAuctionHandler;
     private readonly ICommandHandler<CreateBuyoutAuctionCommand> _createBuyoutAuctionHandler;
     private readonly ICommandHandler<PlaceBidCommand> _placeBidHandler;
@@ -36,37 +37,5 @@ public class AuctionController : ControllerBase
         _createBuyoutAuctionHandler = createBuyoutAuctionHandler;
         _getAllActiveAuctionsHandler = getAllActiveAuctionsHandler;
         _placeBidHandler = placeBidHandler;
-    }
-    
-    [HttpPost("create-buyout-auction")]
-    public async Task<IActionResult> CreateBuyoutAuction([FromBody] CreateBuyoutAuctionRequest request)
-    {
-        var command = _mapper.Map<CreateBuyoutAuctionCommand>(request);
-        var result = await _createBuyoutAuctionHandler.Handle(command);
-        return Ok(result.Messages);
-    }
-
-    [HttpPost("place-bid-on-auction")]
-    public async Task<IActionResult> PlaceBidOnAuction([FromBody] PlaceBidRequest request)
-    {
-        var command = _mapper.Map<PlaceBidCommand>(request);
-        var result = await _placeBidHandler.Handle(command);
-        return Ok(result.Messages);
-    }
-
-    [HttpPost("complete-auction")]
-    public async Task<IActionResult> CompleteAuction([FromBody] CompleteAuctionRequest request)
-    {
-        var command = new CompleteAuctionCommand(request.RequestId, request.AuctionId);
-        var result = await _completeAuctionHandler.Handle(command);
-        return Ok(result.Messages);
-    }
-    
-    [HttpGet("all-active-auctions")]
-    public async Task<IActionResult> GetAllActiveAuctions()
-    {
-        var query = new GetAllActiveAuctionsQuery();
-        var result = await _getAllActiveAuctionsHandler.Handle(query);
-        return Ok(result.Data);
     }
 }
