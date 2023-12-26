@@ -32,25 +32,17 @@ public class PlaceBid : ICommandHandler<PlaceBidCommand>
 
     public async Task<ServiceResult> Handle(PlaceBidCommand command)
     {
-        try
-        {
-            var auction = await _auctionRepository.GetByIdAsync(command.AuctionId);
+        var auction = await _auctionRepository.GetByIdAsync(command.AuctionId);
 
-            var price = new Price(command.BidAmount);
-            var bid = new Bid(_idService, command.BidderId, price, _timeService);
-            
-            auction.PlaceBid(bid);
-            
-            await _auctionRepository.UpdateAsync(auction);
+        var price = new Price(command.BidAmount);
+        var bid = new Bid(_idService, command.BidderId, price, _timeService);
+        
+        auction.PlaceBid(bid);
+        
+        await _auctionRepository.UpdateAsync(auction);
 
-            _logger.LogInformation("Bid placed successfully for Auction ID {AuctionID}.", command.AuctionId);
-            return ServiceResult.Success("Bid placed successfully.");
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Failed to place bid on auction with ID {AuctionID}.", command.AuctionId);
-            return ServiceResult.Failure("Failed to place bid due to an unexpected error.");
-        }
+        _logger.LogInformation("Bid placed successfully for Auction ID {AuctionID}.", command.AuctionId);
+        return ServiceResult.Success("Bid placed successfully.");
     }
 }
 

@@ -28,7 +28,7 @@ public class ExceptionHandlingMiddleware
         }
     }
 
-    private Task HandleExceptionAsync(HttpContext context, Exception exception)
+    private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
         // Enhanced error details to include request path and method
         var errorDetails = new
@@ -45,22 +45,28 @@ public class ExceptionHandlingMiddleware
         {
             MongoRepositoryNotFoundException _ => 
                 (StatusCodes.Status404NotFound, "The specified resource was not found."),
-        
+
             ArgumentNullException _ => 
                 (StatusCodes.Status400BadRequest, "Required information was missing."),
-        
+
             ArgumentException _ => 
                 (StatusCodes.Status400BadRequest, "The argument provided was not valid."),
-        
+
             MongoRepositoryConnectionException _ => 
                 (StatusCodes.Status503ServiceUnavailable, "There was an issue connecting to the database."),
-        
+
+            MongoRepositoryException mongoEx when mongoEx.InnerException is TimeoutException =>
+                (StatusCodes.Status408RequestTimeout, "The database operation timed out."),
+
             MongoRepositoryException _ => 
                 (StatusCodes.Status500InternalServerError, "There was an issue with the database operation."),
-        
+
+            // Additional specific exceptions can be added here
+
             _ => 
                 (StatusCodes.Status500InternalServerError, "An unexpected error occurred.")
         };
+
 
         _logger.LogError(exception, 
             "LOG: Error occurred. TraceIdentifier: {TraceIdentifier}, RequestMethod: {RequestMethod}, RequestPath: {RequestPath}, " +
@@ -72,6 +78,6 @@ public class ExceptionHandlingMiddleware
 
         var result = JsonSerializer.Serialize(new { error = userMessage, detail = errorDetails });
 
-        return context.Response.WriteAsync(result);
+        await context.Response.WriteAsync(result);
     }
 }
