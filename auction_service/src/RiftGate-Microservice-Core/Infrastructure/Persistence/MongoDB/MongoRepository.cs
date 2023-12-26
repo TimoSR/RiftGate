@@ -11,7 +11,7 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
     private string CollectionName => typeof(T).Name + "s";
     private readonly IMongoDbManager _dbManager;
     private readonly IDomainEventDispatcher _domainEventDispatcher;
-    private static string EntityName => typeof(T).Name;
+    private string EntityName => typeof(T).Name;
 
     protected MongoRepository(IMongoDbManager dbManager, IDomainEventDispatcher domainEventDispatcher)
     {
