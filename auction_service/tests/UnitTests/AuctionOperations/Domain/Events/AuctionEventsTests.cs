@@ -1,11 +1,25 @@
 using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Events;
+using API.Features.AuctionOperations.Domain.Services;
 using API.Features.AuctionOperations.Domain.ValueObjects;
+using Moq;
 
 namespace UnitTests.AuctionOperations.Domain.Events;
 
 public class AuctionEventsTests
 {
+    private readonly Mock<IIdService> _mockIdService = new();
+    private readonly Mock<ITimeService> _mockTimeService = new();
+
+    private Bid CreateMockedBid(string bidderId, Price bidAmount, DateTime bidTime)
+    {
+        var validId = "generatedId";
+        _mockIdService.Setup(service => service.GenerateId()).Returns(validId);
+        _mockTimeService.Setup(service => service.GetCurrentTime()).Returns(bidTime);
+
+        return new Bid(_mockIdService.Object, bidderId, bidAmount, _mockTimeService.Object);
+    }
+
     [Fact]
     public void AuctionCompletedEvent_CreatesCorrectMessage()
     {
@@ -30,7 +44,7 @@ public class AuctionEventsTests
     public void BidPlacedEvent_CreatesCorrectMessage()
     {
         var bidTime = new DateTime(2023, 1, 1);
-        var bid = new Bid("Bidder123", new Price(100), bidTime);
+        var bid = CreateMockedBid("Bidder123", new Price(100), bidTime);
         var eventObj = new BidPlacedEvent("Auction123", bid);
 
         var expectedMessage = 
@@ -45,7 +59,7 @@ public class AuctionEventsTests
     public void AuctionSoldEvent_CreatesCorrectMessage()
     {
         var sellingTime = new DateTime(2023, 1, 1);
-        var winningBid = new Bid("Bidder123", new Price(150), sellingTime);
+        var winningBid = CreateMockedBid("Bidder123", new Price(150), sellingTime);
         var eventObj = new AuctionSoldEvent("Auction123", winningBid, sellingTime);
 
         var expectedMessage = 
