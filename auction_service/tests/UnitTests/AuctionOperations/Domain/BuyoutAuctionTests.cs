@@ -3,7 +3,7 @@ using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Events;
 using API.Features.AuctionOperations.Domain.Services;
 using API.Features.AuctionOperations.Domain.ValueObjects;
-using Moq;
+
 
 namespace UnitTests.AuctionOperations.Domain;
 
@@ -11,6 +11,7 @@ public class BuyoutAuctionTests
 {
     private readonly DateTime _fixedDateTime;
     private readonly Mock<ITimeService> _timeServiceMock;
+    private readonly Mock<IIdService> _idServiceMock;
     private readonly Price _buyoutPrice;
     private readonly Item _item;
     private readonly AuctionLength _auctionLength;
@@ -21,7 +22,9 @@ public class BuyoutAuctionTests
     {
         _fixedDateTime = new DateTime(2023, 1, 1);
         _timeServiceMock = new Mock<ITimeService>();
+        _idServiceMock = new Mock<IIdService>();
         _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(_fixedDateTime);
+        _idServiceMock.Setup(service => service.GenerateId()).Returns("generated-id");
 
         _buyoutPrice = new Price(100);
         
@@ -37,7 +40,12 @@ public class BuyoutAuctionTests
         
         _auctionLength = new AuctionLength(24);
         _sellerId = "seller123";
-        _validBid = new Bid("bidder1", new Price(50), _fixedDateTime);
+        _validBid = CreateMockedBid("bidder1", new Price(50), _fixedDateTime);
+    }
+
+    private Bid CreateMockedBid(string bidderId, Price bidAmount, DateTime bidTime)
+    {
+        return new Bid(_idServiceMock.Object, bidderId, bidAmount, _timeServiceMock.Object);
     }
 
     [Fact]
@@ -69,10 +77,10 @@ public class BuyoutAuctionTests
     {
         var auction = new BuyoutAuction(_sellerId, _item, _auctionLength, _buyoutPrice);
         auction.StartAuction(_timeServiceMock.Object);
-        var highBid = new Bid("bidder2", new Price(60), _timeServiceMock.Object.GetCurrentTime());
+        var highBid = CreateMockedBid("bidder2", new Price(60), _fixedDateTime);
         auction.PlaceBid(highBid);
 
-        var lowBid = new Bid("bidder1", new Price(55), _timeServiceMock.Object.GetCurrentTime());
+        var lowBid = CreateMockedBid("bidder1", new Price(55), _fixedDateTime);
 
         var exception = Assert.Throws<InvalidOperationException>(() => auction.PlaceBid(lowBid));
         Assert.Equal("Bid amount of 55 must be higher than the current highest bid of 60.", exception.Message);
@@ -81,15 +89,12 @@ public class BuyoutAuctionTests
     [Fact]
     public void PlaceBid_MeetsOrExceedsBuyout_ShouldCompleteAuction()
     {
-        // Arrange
         var auction = new BuyoutAuction(_sellerId, _item, _auctionLength, _buyoutPrice);
         auction.StartAuction(_timeServiceMock.Object);
-        var bid = new Bid("bidder1", _buyoutPrice, _fixedDateTime.AddHours(2));
+        var bid = CreateMockedBid("bidder1", _buyoutPrice, _fixedDateTime.AddHours(2));
 
-        // Act
         auction.PlaceBid(bid);
 
-        // Assert
         Assert.False(auction.IsActive);
         Assert.Contains(auction.DomainEvents, e => e is BidPlacedEvent);
         Assert.Contains(auction.DomainEvents, e => e is AuctionSoldEvent);
@@ -117,7 +122,7 @@ public class BuyoutAuctionTests
     {
         var auction = new BuyoutAuction(_sellerId, _item, _auctionLength, _buyoutPrice);
         auction.StartAuction(_timeServiceMock.Object);
-        var bid = new Bid("bidder1", new Price(80), _fixedDateTime.AddHours(24));
+        var bid = CreateMockedBid("bidder1", new Price(80), _fixedDateTime.AddHours(24));
 
         auction.PlaceBid(bid);
 

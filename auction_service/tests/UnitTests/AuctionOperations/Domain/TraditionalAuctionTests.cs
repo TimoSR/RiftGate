@@ -3,7 +3,6 @@ using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Events;
 using API.Features.AuctionOperations.Domain.Services;
 using API.Features.AuctionOperations.Domain.ValueObjects;
-using Moq;
 
 namespace UnitTests.AuctionOperations.Domain;
 
@@ -11,6 +10,7 @@ public class TraditionalAuctionTests
 {
     private readonly TraditionalAuction _auction;
     private readonly Mock<ITimeService> _timeServiceMock;
+    private readonly Mock<IIdService> _idServiceMock;
     private readonly DateTime _fixedDateTime;
     private readonly Bid _validBid;
     private readonly Item _defaultItem;
@@ -19,7 +19,9 @@ public class TraditionalAuctionTests
     {
         _fixedDateTime = new DateTime(2023, 1, 1);
         _timeServiceMock = new Mock<ITimeService>();
+        _idServiceMock = new Mock<IIdService>();
         _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(_fixedDateTime);
+        _idServiceMock.Setup(service => service.GenerateId()).Returns("generated-bid-id");
 
         _defaultItem = new Item(
             itemId: "default-item-id",
@@ -32,17 +34,21 @@ public class TraditionalAuctionTests
         );
 
         _auction = new TraditionalAuction("seller1", _defaultItem, new AuctionLength(24));
-        _validBid = new Bid("bidder1", new Price(100), _fixedDateTime);
+        _validBid = CreateMockedBid("bidder1", new Price(100), _fixedDateTime);
 
         // Use mock ITimeService when starting the auction
         _auction.StartAuction(_timeServiceMock.Object);
     }
-    
+
+    private Bid CreateMockedBid(string bidderId, Price bidAmount, DateTime bidTime)
+    {
+        return new Bid(_idServiceMock.Object, bidderId, bidAmount, _timeServiceMock.Object);
+    }
+
     [Fact]
     public void Constructor_WithNullSellerId_ThrowsArgumentNullException()
     {
         var exception = Record.Exception(() => new TraditionalAuction(null, _defaultItem, new AuctionLength(24)));
-
         Assert.NotNull(exception);
         Assert.IsType<ArgumentNullException>(exception);
     }
@@ -51,7 +57,6 @@ public class TraditionalAuctionTests
     public void Constructor_WithNullItem_ThrowsArgumentNullException()
     {
         var exception = Record.Exception(() => new TraditionalAuction("seller1", null, new AuctionLength(24)));
-
         Assert.NotNull(exception);
         Assert.IsType<ArgumentNullException>(exception);
     }
@@ -59,11 +64,9 @@ public class TraditionalAuctionTests
     [Theory]
     [InlineData(0)]
     [InlineData(-1)]
-    // Add more cases that you consider invalid for AuctionLengthHours
     public void Constructor_WithInvalidAuctionLength_ThrowsArgumentException(int invalidLength)
     {
         var exception = Record.Exception(() => new TraditionalAuction("seller1", _defaultItem, new AuctionLength(invalidLength)));
-
         Assert.NotNull(exception);
         Assert.IsType<ArgumentException>(exception);
     }
@@ -97,30 +100,23 @@ public class TraditionalAuctionTests
     [Fact]
     public void PlaceBid_OnInactiveAuction_ThrowsException()
     {
-        // Arrange
         var inactiveAuction = new TraditionalAuction("seller1", _defaultItem, new AuctionLength(24));
-
-        // Act & Assert
         var exception = Assert.Throws<InvalidOperationException>(() => inactiveAuction.PlaceBid(_validBid));
         Assert.Equal("Attempted to place a bid on an inactive auction.", exception.Message);
     }
 
-
     [Fact]
     public void PlaceBid_WithLowerBidAmount_ThrowsException()
     {
-        // Arrange
-        // Assuming the Auction uses ITimeService to assign timestamps to bids.
         var higherBidTime = _fixedDateTime.AddMinutes(10);
         _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(higherBidTime);
-        var higherBid = new Bid("bidder2", new Price(150), _timeServiceMock.Object.GetCurrentTime());
+        var higherBid = CreateMockedBid("bidder2", new Price(150), higherBidTime);
         _auction.PlaceBid(higherBid);
 
         var lowerBidTime = _fixedDateTime.AddMinutes(20);
         _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(lowerBidTime);
-        var lowerBid = new Bid("bidder3", new Price(90), _timeServiceMock.Object.GetCurrentTime());
+        var lowerBid = CreateMockedBid("bidder3", new Price(90), lowerBidTime);
 
-        // Act & Assert
         var exception = Assert.Throws<InvalidOperationException>(() => _auction.PlaceBid(lowerBid));
         Assert.StartsWith("Bid amount of 90 must be higher than the current highest bid of 150", exception.Message);
     }
@@ -128,14 +124,9 @@ public class TraditionalAuctionTests
     [Fact]
     public void CheckAndCompleteAuction_MarksAuctionAsComplete()
     {
-        // Arrange
         var timeAfterAuctionEnd = _fixedDateTime.AddHours(24);
         _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(timeAfterAuctionEnd);
-
-        // Act
         _auction.CheckAndCompleteAuction(_timeServiceMock.Object);
-
-        // Assert
         Assert.False(_auction.IsActive);
     }
 
