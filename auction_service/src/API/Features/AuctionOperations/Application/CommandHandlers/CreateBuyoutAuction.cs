@@ -31,28 +31,20 @@ public class CreateBuyoutAuction : ICommandHandler<CreateBuyoutAuctionCommand>
 
     public async Task<ServiceResult> Handle(CreateBuyoutAuctionCommand command)
     {
-        try
-        {
-            // Use AutoMapper to map the command to domain entities
-            var item = _mapper.Map<Item>(command);
-            var auctionLength = new AuctionLength(command.AuctionLength);
-            var price = new Price(command.BuyoutAmount);
+        // Use AutoMapper to map the command to domain entities
+        var item = _mapper.Map<Item>(command);
+        var auctionLength = new AuctionLength(command.AuctionLength);
+        var price = new Price(command.BuyoutAmount);
 
-            // Create a new buyout auction
-            var buyoutAuction = new BuyoutAuction(command.SellerId, item, auctionLength, price);
-            buyoutAuction.StartAuction(_timeService);
+        // Create a new buyout auction
+        var buyoutAuction = new BuyoutAuction(command.SellerId, item, auctionLength, price);
+        buyoutAuction.StartAuction(_timeService);
 
-            // Persist the new auction to the repository
-            await _auctionRepository.InsertAsync(buyoutAuction);
+        // Persist the new auction to the repository
+        await _auctionRepository.InsertAsync(buyoutAuction);
 
-            _logger.LogInformation("Created a new buyout auction with ID {AuctionID}", buyoutAuction.Id);
-            return ServiceResult.Success("Buyout auction created successfully.");
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error creating buyout auction");
-            return ServiceResult.Failure("Failed to create buyout auction.");
-        }
+        _logger.LogInformation("Created a new buyout auction with ID {AuctionID}", buyoutAuction.Id);
+        return ServiceResult.Success("Buyout auction created successfully.");
     }
 }
 

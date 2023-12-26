@@ -6,6 +6,7 @@ using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
 using Infrastructure.Swagger;
 using Infrastructure.Swagger.Attributes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Features.AuctionOperations.API.REST;
@@ -14,6 +15,7 @@ namespace API.Features.AuctionOperations.API.REST;
 [Route("api/v1/[controller]")]
 [SwaggerDoc("Auction")]
 [ApiVersion("1.0")]
+//[Authorize]
 public class AuctionController : ControllerBase
 {
     private readonly IMapper _mapper; 
