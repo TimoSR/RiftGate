@@ -2,7 +2,7 @@
 
 An openiated codefirst CQRS microservice framework inspired by Clean Domain Driven Design.
 
-The repository holds the code for the framework and an implementation Auction example utilizing the framework. 
+The repository holds the code for the framework and an Auction System Sample utilizing the framework. 
 
 The implementations have been follow principles in the following order.
 
