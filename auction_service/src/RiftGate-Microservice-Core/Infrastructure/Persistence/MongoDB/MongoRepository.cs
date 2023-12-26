@@ -11,6 +11,7 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
     private string CollectionName => typeof(T).Name + "s";
     private readonly IMongoDbManager _dbManager;
     private readonly IDomainEventDispatcher _domainEventDispatcher;
+    private static string EntityName => typeof(T).Name;
 
     protected MongoRepository(IMongoDbManager dbManager, IDomainEventDispatcher domainEventDispatcher)
     {
@@ -36,7 +37,7 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
         }
         catch (Exception ex)
         {
-            throw new MongoRepositoryException($"Error inserting entity into {CollectionName}. Details: {ex.Message}", ex);
+            throw new MongoRepositoryException($"Error inserting {EntityName} into {CollectionName}. Details: {ex.Message}", ex);
         }
     }
 
@@ -53,7 +54,7 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
         }
         catch (Exception ex)
         {
-            throw new MongoRepositoryException($"Error retrieving all entity from {CollectionName}. Details: {ex.Message}", ex);
+            throw new MongoRepositoryException($"Error retrieving all {EntityName} from {CollectionName}. Details: {ex.Message}", ex);
         }
     }
 
@@ -66,21 +67,25 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
 
             if (result == null)
             {
-                throw new MongoRepositoryNotFoundException($"Entity with id {id} was not found.");
+                throw new MongoRepositoryNotFoundException($"{EntityName} with id {id} was not found.");
             }
 
             return result;
         }
+        catch (MongoRepositoryNotFoundException)
+        {
+            // Rethrow the not found exception as it is
+            throw;
+        }
         catch (MongoException ex)
         {
-            throw new MongoRepositoryConnectionException($"Error connecting to MongoDB when retrieving entity with id {id}. Details: {ex.Message}", ex);
+            throw new MongoRepositoryConnectionException($"Error connecting to MongoDB when retrieving {EntityName} with id {id}. Details: {ex.Message}", ex);
         }
         catch (Exception ex)
         {
-            throw new MongoRepositoryException($"Error retrieving entity by id {id} from {CollectionName}. Details: {ex.Message}", ex);
+            throw new MongoRepositoryException($"Error retrieving {EntityName} by id {id} from {CollectionName}. Details: {ex.Message}", ex);
         }
     }
-
     
     public virtual async Task UpdateAsync(T entity)
     {
@@ -93,11 +98,11 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
         }
         catch (MongoException ex)
         {
-            throw new MongoRepositoryConnectionException($"Error connecting to MongoDB when updating entity with id {entity.Id}. Details: {ex.Message}", ex);
+            throw new MongoRepositoryConnectionException($"Error connecting to MongoDB when updating {EntityName} with id {entity.Id}. Details: {ex.Message}", ex);
         }
         catch (Exception ex)
         {
-            throw new MongoRepositoryException($"Error updating entity with id {entity.Id}. Details: {ex.Message}", ex);
+            throw new MongoRepositoryException($"Error updating {EntityName} with id {entity.Id}. Details: {ex.Message}", ex);
         }
     }
 
@@ -163,11 +168,11 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
         }
         catch (MongoException ex)
         {
-            throw new MongoRepositoryConnectionException($"Error connecting to MongoDB when deleting entity with id {entity.Id}. Details: {ex.Message}", ex);
+            throw new MongoRepositoryConnectionException($"Error connecting to MongoDB when deleting {EntityName} with id {entity.Id}. Details: {ex.Message}", ex);
         }
         catch (Exception ex)
         {
-            throw new MongoRepositoryException($"Error deleting entity by id {entity.Id} from {CollectionName}. Details: {ex.Message}", ex);
+            throw new MongoRepositoryException($"Error deleting {EntityName} by id {entity.Id} from {CollectionName}. Details: {ex.Message}", ex);
         }
     }
     
@@ -188,11 +193,11 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
         }
         catch (MongoException ex)
         {
-            throw new MongoRepositoryConnectionException($"Error connecting to MongoDB when deleting entity with id {entity.Id}. Details: {ex.Message}", ex);
+            throw new MongoRepositoryConnectionException($"Error connecting to MongoDB when deleting {EntityName} with id {entity.Id}. Details: {ex.Message}", ex);
         }
         catch (Exception ex)
         {
-            throw new MongoRepositoryException($"Error deleting entity by id {entity.Id} from {CollectionName}. Details: {ex.Message}", ex);
+            throw new MongoRepositoryException($"Error deleting {EntityName} by id {entity.Id} from {CollectionName}. Details: {ex.Message}", ex);
         }
     }
 }
