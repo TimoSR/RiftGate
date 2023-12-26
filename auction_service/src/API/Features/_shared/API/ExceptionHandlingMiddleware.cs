@@ -37,31 +37,30 @@ public class ExceptionHandlingMiddleware
             //RequestPath = context.Request.Path,
             //RequestMethod = context.Request.Method,
             ExceptionType = exception.GetType().Name,
-            Message = exception.Message
+            //Message = exception.Message
             //StackTrace = exception.StackTrace
         };
 
         var (statusCode, userMessage) = exception switch
         {
             MongoRepositoryNotFoundException _ => 
-                (StatusCodes.Status404NotFound, "The specified resource was not found."),
+                (StatusCodes.Status404NotFound, exception.Message),
 
             ArgumentNullException _ => 
-                (StatusCodes.Status400BadRequest, "Required information was missing."),
+                (StatusCodes.Status400BadRequest, exception.Message),
 
             ArgumentException _ => 
-                (StatusCodes.Status400BadRequest, "The argument provided was not valid."),
+                (StatusCodes.Status400BadRequest, exception.Message),
 
             MongoRepositoryConnectionException _ => 
-                (StatusCodes.Status503ServiceUnavailable, "There was an issue connecting to the database."),
+                (StatusCodes.Status503ServiceUnavailable, exception.Message),
 
             MongoRepositoryException _ => 
-                (StatusCodes.Status500InternalServerError, "There was an issue with the database operation."),
+                (StatusCodes.Status500InternalServerError, exception.Message),
 
             _ => 
-                (StatusCodes.Status500InternalServerError, "An unexpected error occurred.")
+                (StatusCodes.Status500InternalServerError, exception.Message)
         };
-
 
         _logger.LogError(exception, 
             "LOG: Error occurred. TraceIdentifier: {TraceIdentifier}, RequestMethod: {RequestMethod}, RequestPath: {RequestPath}, " +
@@ -71,8 +70,9 @@ public class ExceptionHandlingMiddleware
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = statusCode;
 
-        var result = JsonSerializer.Serialize(new { error = userMessage, detail = errorDetails });
-
+        //var result = JsonSerializer.Serialize(new { error = userMessage, detail = errorDetails });
+        var result = JsonSerializer.Serialize(new { error = userMessage });
+        
         await context.Response.WriteAsync(result);
     }
 }
