@@ -1,4 +1,4 @@
 # Riftgate
-Online Application Multi-User Systems.
+Breaking the boundaries between digital experiences.
 
-* Games / Metaverses
+A marketplace supporting digital wealth and ownership.
