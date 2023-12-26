@@ -34,7 +34,7 @@ public class Item : IValueObject
         Group = group ?? throw new ArgumentNullException(nameof(group));
         Type = type ?? throw new ArgumentNullException(nameof(type));
         Rarity = rarity ?? throw new ArgumentNullException(nameof(rarity));
-        Quantity = quantity > 0 ? quantity : throw new ArgumentException("Quantity must be greater than zero.", nameof(quantity));
+        Quantity = quantity > 0 ? quantity : throw new ArgumentException("quantity must be greater than zero.", nameof(quantity));
     }
 }
 
