@@ -31,6 +31,7 @@ public class CreateBuyoutAuction : ICommandHandler<CreateBuyoutAuctionCommand>
 
     public async Task<ServiceResult> Handle(CreateBuyoutAuctionCommand command)
     {
+
         // Use AutoMapper to map the command to domain entities
         var item = _mapper.Map<Item>(command);
         var auctionLength = new AuctionLength(command.AuctionLength);

@@ -57,12 +57,18 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
         }
     }
 
-    public virtual async Task<T?> GetByIdAsync(string id)
+    public virtual async Task<T> GetByIdAsync(string id)
     {
         try
         {
             var collection = GetCollection();
             var result = await collection.Find(IdFilter(id)).FirstOrDefaultAsync();
+
+            if (result == null)
+            {
+                throw new MongoRepositoryNotFoundException($"Entity with id {id} was not found.");
+            }
+
             return result;
         }
         catch (MongoException ex)
@@ -74,6 +80,7 @@ public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAgg
             throw new MongoRepositoryException($"Error retrieving entity by id {id} from {CollectionName}. Details: {ex.Message}", ex);
         }
     }
+
     
     public virtual async Task UpdateAsync(T entity)
     {
