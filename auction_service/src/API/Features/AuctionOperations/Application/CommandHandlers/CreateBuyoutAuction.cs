@@ -31,28 +31,20 @@ public class CreateBuyoutAuction : ICommandHandler<CreateBuyoutAuctionCommand>
 
     public async Task<ServiceResult> Handle(CreateBuyoutAuctionCommand command)
     {
-        try
-        {
-            // Use AutoMapper to map the command to domain entities
-            var item = _mapper.Map<Item>(command);
-            var auctionLength = new AuctionLength(command.AuctionLength);
-            var price = new Price(command.BuyoutAmount);
+        // Use AutoMapper to map the command to domain entities
+        var item = _mapper.Map<Item>(command);
+        var auctionLength = new AuctionLength(command.AuctionLengthHours);
+        var price = new Price(command.BuyoutAmount);
 
-            // Create a new buyout auction
-            var buyoutAuction = new BuyoutAuction(command.SellerId, item, auctionLength, price);
-            buyoutAuction.StartAuction(_timeService);
+        // Create a new buyout auction
+        var buyoutAuction = new BuyoutAuction(command.SellerId, item, auctionLength, price);
+        buyoutAuction.StartAuction(_timeService);
 
-            // Persist the new auction to the repository
-            await _auctionRepository.InsertAsync(buyoutAuction);
+        // Persist the new auction to the repository
+        await _auctionRepository.InsertAsync(buyoutAuction);
 
-            _logger.LogInformation("Created a new buyout auction with ID {AuctionID}", buyoutAuction.Id);
-            return ServiceResult.Success("Buyout auction created successfully.");
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error creating buyout auction");
-            return ServiceResult.Failure("Failed to create buyout auction.");
-        }
+        _logger.LogInformation("Created a new buyout auction with ID {AuctionID}", buyoutAuction.Id);
+        return ServiceResult.Success("Buyout auction created successfully.");
     }
 }
 
@@ -66,7 +58,7 @@ public record struct CreateBuyoutAuctionCommand(
     string ItemType, 
     string ItemRarity, 
     int ItemQuantity,
-    int AuctionLength, 
+    int AuctionLengthHours, 
     decimal BuyoutAmount
 ) : ICommand;
 
@@ -106,7 +98,7 @@ public record struct CreateBuyoutAuctionRequest : IRequest
     // Auction length in hours
     [Required(ErrorMessage = "Auction length is required.")]
     [Range(12, 48, ErrorMessage = "Auction length must be 12, 24, or 48 hours.")]
-    public int AuctionLength { get; set; }
+    public int AuctionLengthHours { get; set; }
 
     // Price properties
     [Required(ErrorMessage = "Buyout amount is required.")]

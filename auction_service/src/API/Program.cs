@@ -1,5 +1,5 @@
 using API._DIRegister;
-using API.Features.AuctionOperations.Infrastructure.SchedulesTasks;
+using API.Features._shared.API;
 using AspNetCoreRateLimit;
 using Infrastructure._DIRegister;
 using Infrastructure.Configuration;
@@ -58,7 +58,7 @@ public class Program
         // Add / Disable Subscriber 
         builder.Services.AddSubscriberClient();
         // Add / Disable Redis
-        builder.Services.AddRedisServices(config);
+        //builder.Services.AddRedisServices(config);
 
         // Adding All Pub & Sub Events with reflection
         builder.Services.AddSingleton<SubTopicsRegister>();
@@ -140,6 +140,7 @@ public class Program
         app.UseCors("MyCorsPolicy");
         //app.UseMiddleware<RequestLoggingMiddleware>();
         //app.UseIpRateLimiting();
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
         
         app.UseAuthentication();
         //app.UseAuthorization();

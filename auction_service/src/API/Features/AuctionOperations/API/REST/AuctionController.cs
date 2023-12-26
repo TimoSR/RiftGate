@@ -14,6 +14,7 @@ namespace API.Features.AuctionOperations.API.REST;
 [Route("api/v1/[controller]")]
 [SwaggerDoc("Auction")]
 [ApiVersion("1.0")]
+//[Authorize]
 public class AuctionController : ControllerBase
 {
     private readonly IMapper _mapper; 
@@ -48,20 +49,14 @@ public class AuctionController : ControllerBase
         {
             return Ok(result.Messages);
         }
-        else
-        {
-            return BadRequest(result.Messages);
-        }
+
+        return BadRequest(result.Messages);
     }
 
     [HttpPost("place-bid-on-auction")]
     public async Task<IActionResult> PlaceBidOnAuction([FromBody] PlaceBidRequest request)
     {
-        var command = new PlaceBidCommand(
-            request.RequestId, 
-            request.AuctionId,
-            request.BidderId,
-            request.BidAmount);
+        var command = _mapper.Map<PlaceBidCommand>(request);
 
         var result = await _placeBidHandler.Handle(command);
 
@@ -98,9 +93,7 @@ public class AuctionController : ControllerBase
         {
             return Ok(result.Data);
         }
-        else
-        {
-            return BadRequest(result.Messages);
-        }
+
+        return BadRequest(result.Messages);
     }
 }
