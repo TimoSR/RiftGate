@@ -1,7 +1,6 @@
 using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Services;
 using API.Features.AuctionOperations.Domain.ValueObjects;
-using Moq;
 
 namespace UnitTests.AuctionOperations.Domain.Entities;
 
