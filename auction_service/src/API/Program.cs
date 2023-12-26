@@ -1,6 +1,5 @@
 using API._DIRegister;
 using API.Features._shared.API;
-using API.Features.AuctionOperations.Infrastructure.SchedulesTasks;
 using AspNetCoreRateLimit;
 using Infrastructure._DIRegister;
 using Infrastructure.Configuration;
@@ -59,7 +58,7 @@ public class Program
         // Add / Disable Subscriber 
         builder.Services.AddSubscriberClient();
         // Add / Disable Redis
-        builder.Services.AddRedisServices(config);
+        //builder.Services.AddRedisServices(config);
 
         // Adding All Pub & Sub Events with reflection
         builder.Services.AddSingleton<SubTopicsRegister>();

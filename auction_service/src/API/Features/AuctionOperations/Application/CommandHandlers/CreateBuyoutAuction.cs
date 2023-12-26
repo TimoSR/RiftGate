@@ -31,10 +31,9 @@ public class CreateBuyoutAuction : ICommandHandler<CreateBuyoutAuctionCommand>
 
     public async Task<ServiceResult> Handle(CreateBuyoutAuctionCommand command)
     {
-
         // Use AutoMapper to map the command to domain entities
         var item = _mapper.Map<Item>(command);
-        var auctionLength = new AuctionLength(command.AuctionLength);
+        var auctionLength = new AuctionLength(command.AuctionLengthHours);
         var price = new Price(command.BuyoutAmount);
 
         // Create a new buyout auction
@@ -59,7 +58,7 @@ public record struct CreateBuyoutAuctionCommand(
     string ItemType, 
     string ItemRarity, 
     int ItemQuantity,
-    int AuctionLength, 
+    int AuctionLengthHours, 
     decimal BuyoutAmount
 ) : ICommand;
 
@@ -99,7 +98,7 @@ public record struct CreateBuyoutAuctionRequest : IRequest
     // Auction length in hours
     [Required(ErrorMessage = "Auction length is required.")]
     [Range(12, 48, ErrorMessage = "Auction length must be 12, 24, or 48 hours.")]
-    public int AuctionLength { get; set; }
+    public int AuctionLengthHours { get; set; }
 
     // Price properties
     [Required(ErrorMessage = "Buyout amount is required.")]

@@ -6,7 +6,6 @@ using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
 using Infrastructure.Swagger;
 using Infrastructure.Swagger.Attributes;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Features.AuctionOperations.API.REST;
@@ -50,20 +49,14 @@ public class AuctionController : ControllerBase
         {
             return Ok(result.Messages);
         }
-        else
-        {
-            return BadRequest(result.Messages);
-        }
+
+        return BadRequest(result.Messages);
     }
 
     [HttpPost("place-bid-on-auction")]
     public async Task<IActionResult> PlaceBidOnAuction([FromBody] PlaceBidRequest request)
     {
-        var command = new PlaceBidCommand(
-            request.RequestId, 
-            request.AuctionId,
-            request.BidderId,
-            request.BidAmount);
+        var command = _mapper.Map<PlaceBidCommand>(request);
 
         var result = await _placeBidHandler.Handle(command);
 
@@ -100,9 +93,7 @@ public class AuctionController : ControllerBase
         {
             return Ok(result.Data);
         }
-        else
-        {
-            return BadRequest(result.Messages);
-        }
+
+        return BadRequest(result.Messages);
     }
 }
