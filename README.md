@@ -1,2 +1,4 @@
 # Riftgate
-Online Multiplayer Game Services.
+Online Multi-User Application Services.
+
+* Games / Metaverses
