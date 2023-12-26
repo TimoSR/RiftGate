@@ -3,6 +3,7 @@ using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Repositories;
 using API.Features.AuctionOperations.Domain.Services;
 using API.Features.AuctionOperations.Domain.ValueObjects;
+using AutoMapper;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
 using Infrastructure.ValidationAttributes;
@@ -15,12 +16,18 @@ public class PlaceBid : ICommandHandler<PlaceBidCommand>
     private readonly IAuctionRepository _auctionRepository;
     private readonly ILogger<PlaceBid> _logger;
     private readonly ITimeService _timeService;
+    private readonly IIdService _idService;
 
-    public PlaceBid(IAuctionRepository auctionRepository, ILogger<PlaceBid> logger, ITimeService timeService)
+    public PlaceBid(
+        IAuctionRepository auctionRepository, 
+        ILogger<PlaceBid> logger, 
+        ITimeService timeService,
+        IIdService idService)
     {
         _auctionRepository = auctionRepository;
         _logger = logger;
         _timeService = timeService;
+        _idService = idService;
     }
 
     public async Task<ServiceResult> Handle(PlaceBidCommand command)
@@ -28,15 +35,9 @@ public class PlaceBid : ICommandHandler<PlaceBidCommand>
         try
         {
             var auction = await _auctionRepository.GetByIdAsync(command.AuctionId);
-            if (auction == null)
-            {
-                _logger.LogWarning("Auction with ID {AuctionID} not found.", command.AuctionId);
-                return ServiceResult.Failure($"Auction with ID {command.AuctionId} not found.");
-            }
-            
-            var Id = ObjectId.GenerateNewId().ToString();
+
             var price = new Price(command.BidAmount);
-            var bid = new Bid(Id, command.BidderId, price, _timeService);
+            var bid = new Bid(_idService, command.BidderId, price, _timeService);
             
             auction.PlaceBid(bid);
             
@@ -81,10 +82,10 @@ public record struct PlaceBidRequest : IRequest
     public decimal BidAmount { get; set; }
 }
 
-// public class PlaceBidProfile : Profile
-// {
-//     public PlaceBidProfile()
-//     {
-//         CreateMap<PlaceBidRequest, PlaceBidCommand>();
-//     }
-// }
+public class PlaceBidProfile : Profile
+{
+    public PlaceBidProfile()
+    {
+        CreateMap<PlaceBidRequest, PlaceBidCommand>();
+    }
+}
