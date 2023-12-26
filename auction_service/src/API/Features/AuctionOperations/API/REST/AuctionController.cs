@@ -42,45 +42,24 @@ public class AuctionController : ControllerBase
     public async Task<IActionResult> CreateBuyoutAuction([FromBody] CreateBuyoutAuctionRequest request)
     {
         var command = _mapper.Map<CreateBuyoutAuctionCommand>(request);
-
         var result = await _createBuyoutAuctionHandler.Handle(command);
-
-        if (result.IsSuccess)
-        {
-            return Ok(result.Messages);
-        }
-
-        return BadRequest(result.Messages);
+        return Ok(result.Messages);
     }
 
     [HttpPost("place-bid-on-auction")]
     public async Task<IActionResult> PlaceBidOnAuction([FromBody] PlaceBidRequest request)
     {
         var command = _mapper.Map<PlaceBidCommand>(request);
-
         var result = await _placeBidHandler.Handle(command);
-
-        if (result.IsSuccess)
-        {
-            return Ok(result.Messages);
-        }
-
-        return BadRequest(result.Messages);
+        return Ok(result.Messages);
     }
 
     [HttpPost("complete-auction")]
     public async Task<IActionResult> CompleteAuction([FromBody] CompleteAuctionRequest request)
     {
         var command = new CompleteAuctionCommand(request.RequestId, request.AuctionId);
-        
         var result = await _completeAuctionHandler.Handle(command);
-
-        if (result.IsSuccess)
-        {
-            return Ok(result.Messages);
-        }
-
-        return BadRequest(result.Messages);
+        return Ok(result.Messages);
     }
     
     [HttpGet("all-active-auctions")]
@@ -88,12 +67,6 @@ public class AuctionController : ControllerBase
     {
         var query = new GetAllActiveAuctionsQuery();
         var result = await _getAllActiveAuctionsHandler.Handle(query);
-
-        if (result.IsSuccess)
-        {
-            return Ok(result.Data);
-        }
-
-        return BadRequest(result.Messages);
+        return Ok(result.Data);
     }
 }
