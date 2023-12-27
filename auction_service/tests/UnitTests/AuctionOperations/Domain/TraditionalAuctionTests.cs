@@ -10,7 +10,6 @@ public class TraditionalAuctionTests
 {
     private readonly TraditionalAuction _auction;
     private readonly Mock<ITimeService> _timeServiceMock;
-    private readonly Mock<IIdService> _idServiceMock;
     private readonly DateTime _fixedDateTime;
     private readonly Bid _validBid;
     private readonly Item _defaultItem;
@@ -19,9 +18,7 @@ public class TraditionalAuctionTests
     {
         _fixedDateTime = new DateTime(2023, 1, 1);
         _timeServiceMock = new Mock<ITimeService>();
-        _idServiceMock = new Mock<IIdService>();
         _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(_fixedDateTime);
-        _idServiceMock.Setup(service => service.GenerateId()).Returns("generated-bid-id");
 
         _defaultItem = new Item(
             itemId: "default-item-id",
@@ -42,7 +39,7 @@ public class TraditionalAuctionTests
 
     private Bid CreateMockedBid(string bidderId, Price bidAmount, DateTime bidTime)
     {
-        return new Bid(_idServiceMock.Object, bidderId, bidAmount, _timeServiceMock.Object);
+        return new Bid(bidderId, bidAmount, _timeServiceMock.Object);
     }
 
     [Fact]
