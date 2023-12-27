@@ -7,10 +7,7 @@ namespace API._DIRegister;
 public static class RepositoryRegister
 {
     public static IServiceCollection AddApplicationRepositories(this IServiceCollection services)
-    {
-        // Register DomainEventDispatcher
-        services.AddTransient<IDomainEventDispatcher, DomainEventDispatcher>();
-        
+    {   
         // Registering IRepositories
         var types = Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract && t.GetInterfaces()
