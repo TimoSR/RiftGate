@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using API.Features.AuctionOperations.Domain;
 using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Repositories;
 using API.Features.AuctionOperations.Domain.Services;
@@ -16,18 +17,15 @@ public class PlaceBid : ICommandHandler<PlaceBidCommand>
     private readonly IAuctionRepository _auctionRepository;
     private readonly ILogger<PlaceBid> _logger;
     private readonly ITimeService _timeService;
-    private readonly IIdService _idService;
 
     public PlaceBid(
         IAuctionRepository auctionRepository, 
         ILogger<PlaceBid> logger, 
-        ITimeService timeService,
-        IIdService idService)
+        ITimeService timeService)
     {
         _auctionRepository = auctionRepository;
         _logger = logger;
         _timeService = timeService;
-        _idService = idService;
     }
 
     public async Task<ServiceResult> Handle(PlaceBidCommand command)
@@ -35,10 +33,10 @@ public class PlaceBid : ICommandHandler<PlaceBidCommand>
         var auction = await _auctionRepository.GetByIdAsync(command.AuctionId);
 
         var price = new Price(command.BidAmount);
-        var bid = new Bid(_idService, command.BidderId, price, _timeService);
+        var bid = new Bid(command.BidderId, price, _timeService);
         
         auction.PlaceBid(bid);
-        
+
         await _auctionRepository.UpdateAsync(auction);
 
         _logger.LogInformation("Bid placed successfully for Auction ID {AuctionID}.", command.AuctionId);
