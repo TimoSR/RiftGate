@@ -43,14 +43,14 @@ public class ExceptionHandlingMiddleware
 
         var (statusCode, userMessage) = exception switch
         {
-            MongoRepositoryNotFoundException _ => 
-                (StatusCodes.Status404NotFound, exception.Message),
-
             ArgumentNullException _ => 
                 (StatusCodes.Status400BadRequest, exception.Message),
 
             ArgumentException _ => 
                 (StatusCodes.Status400BadRequest, exception.Message),
+            
+            MongoRepositoryNotFoundException _ => 
+                (StatusCodes.Status404NotFound, exception.Message),
 
             MongoRepositoryConnectionException _ => 
                 (StatusCodes.Status503ServiceUnavailable, exception.Message),
