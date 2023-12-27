@@ -11,7 +11,6 @@ public class BuyoutAuctionTests
 {
     private readonly DateTime _fixedDateTime;
     private readonly Mock<ITimeService> _timeServiceMock;
-    private readonly Mock<IIdService> _idServiceMock;
     private readonly Price _buyoutPrice;
     private readonly Item _item;
     private readonly AuctionLength _auctionLength;
@@ -22,9 +21,7 @@ public class BuyoutAuctionTests
     {
         _fixedDateTime = new DateTime(2023, 1, 1);
         _timeServiceMock = new Mock<ITimeService>();
-        _idServiceMock = new Mock<IIdService>();
         _timeServiceMock.Setup(service => service.GetCurrentTime()).Returns(_fixedDateTime);
-        _idServiceMock.Setup(service => service.GenerateId()).Returns("generated-id");
 
         _buyoutPrice = new Price(100);
         
@@ -45,7 +42,7 @@ public class BuyoutAuctionTests
 
     private Bid CreateMockedBid(string bidderId, Price bidAmount, DateTime bidTime)
     {
-        return new Bid(_idServiceMock.Object, bidderId, bidAmount, _timeServiceMock.Object);
+        return new Bid(bidderId, bidAmount, _timeServiceMock.Object);
     }
 
     [Fact]
