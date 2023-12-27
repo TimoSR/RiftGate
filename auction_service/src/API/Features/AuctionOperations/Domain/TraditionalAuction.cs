@@ -1,4 +1,3 @@
-using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.ValueObjects;
 
 namespace API.Features.AuctionOperations.Domain;

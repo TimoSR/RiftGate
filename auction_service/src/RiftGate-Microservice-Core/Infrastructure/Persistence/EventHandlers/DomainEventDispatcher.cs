@@ -7,9 +7,9 @@ namespace Infrastructure.Persistence.EventHandlers;
 
 public class DomainEventDispatcher : IDomainEventDispatcher
 {
-    private readonly IMediator _mediator;
+    private readonly IPublisher _mediator;
 
-    public DomainEventDispatcher(IMediator mediator)
+    public DomainEventDispatcher(IPublisher mediator)
     {
         _mediator = mediator;
     }

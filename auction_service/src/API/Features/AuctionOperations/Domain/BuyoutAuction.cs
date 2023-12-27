@@ -1,13 +1,11 @@
 using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Events;
 using API.Features.AuctionOperations.Domain.ValueObjects;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace API.Features.AuctionOperations.Domain;
 
 public class BuyoutAuction : Auction
 {
-    
     public BuyoutAuction(
         string sellerId, 
         Item item, 
