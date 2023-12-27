@@ -22,7 +22,7 @@ public readonly record struct BidPlacedEvent(string AuctionId, Bid Bid) : IDomai
         $"Event: " +
         $"New bid placed on auction {AuctionId}. " +
         $"Timestamp: {Bid.TimeStamp:yyyy-MM-dd HH:mm:ss} (UTC). " +
-        $"Bid Amount: {Bid.BidAmount.Value:C}. " +
+        $"Bid Amount: {Bid.BidAmount.Value}. " +
         $"Bidder: {Bid.BidderId}.";
 }
 
@@ -30,7 +30,7 @@ public readonly record struct AuctionSoldEvent(string AuctionId, Bid WinningBid,
 {
     public string Message => 
         $"Auction '{AuctionId}' was successfully sold to bidder '{WinningBid.BidderId}' " +
-        $"with a winning bid of {WinningBid.BidAmount.Value:C} at {SellingTime:yyyy-MM-dd HH:mm:ss} (UTC).";
+        $"with a winning bid of {WinningBid.BidAmount.Value} at {SellingTime:yyyy-MM-dd HH:mm:ss} (UTC).";
 }
 
 public readonly record struct AuctionExpiredEvent(string AuctionId, DateTime ExpiredTime) : IDomainEvent
