@@ -17,16 +17,12 @@ public abstract class Entity : IEntity
             cm.UnmapMember(c => c.DomainEvents); // Ignore the DomainEvents
         });
     }
-    
+
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; }
-    
-    [BsonIgnore]
-    private readonly List<INotification>? _domainEvents = new();
+    public string Id { get; protected init; } = ObjectId.GenerateNewId().ToString();
 
-    [BsonIgnore]
-    public IReadOnlyCollection<INotification>? DomainEvents => _domainEvents?.AsReadOnly();
+    [BsonIgnore] public List<INotification>? DomainEvents { get; private set; }
 
     public bool IsDeleted { get; private set; }
 
@@ -43,16 +39,17 @@ public abstract class Entity : IEntity
 
     public void AddDomainEvent(INotification eventItem)
     {
-        _domainEvents?.Add(eventItem);
+        DomainEvents ??= new List<INotification>();
+        DomainEvents?.Add(eventItem);
     }
 
     public void RemoveDomainEvent(INotification eventItem)
     {
-        _domainEvents?.Remove(eventItem);
+        DomainEvents?.Remove(eventItem);
     }
 
     public void ClearDomainEvents()
     {
-        _domainEvents?.Clear();
+        DomainEvents?.Clear();
     }
 }

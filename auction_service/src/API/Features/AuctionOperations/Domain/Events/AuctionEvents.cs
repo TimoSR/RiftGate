@@ -3,7 +3,7 @@ using CodingPatterns.DomainLayer;
 
 namespace API.Features.AuctionOperations.Domain.Events;
 
-public record AuctionCompletedEvent(string AuctionId, DateTime CompletionTime) : IDomainEvent
+public readonly record struct AuctionCompletedEvent(string AuctionId, DateTime CompletionTime) : IDomainEvent
 {
     public string Message => 
         $"Auction {AuctionId} completed at {CompletionTime:yyyy-MM-dd HH:mm:ss} (UTC).";
@@ -12,12 +12,14 @@ public record AuctionCompletedEvent(string AuctionId, DateTime CompletionTime) :
 public readonly record struct AuctionStartedEvent(string AuctionId, DateTime StartTime) : IDomainEvent
 {
     public string Message => 
+        $"Event: " +
         $"Auction {AuctionId} started at {StartTime:yyyy-MM-dd HH:mm:ss} (UTC).";
 }
 
 public readonly record struct BidPlacedEvent(string AuctionId, Bid Bid) : IDomainEvent
 {
     public string Message => 
+        $"Event: " +
         $"New bid placed on auction {AuctionId}. " +
         $"Timestamp: {Bid.TimeStamp:yyyy-MM-dd HH:mm:ss} (UTC). " +
         $"Bid Amount: {Bid.BidAmount.Value:C}. " +

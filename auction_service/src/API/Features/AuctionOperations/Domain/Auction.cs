@@ -37,7 +37,7 @@ public abstract class Auction : Entity, IAggregateRoot
     [BsonElement("isActive")]
     public bool IsActive { get; private set; }
 
-    protected  Auction(
+    protected Auction(
         string sellerId, 
         Item item, 
         AuctionLength auctionLength,

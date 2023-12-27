@@ -7,7 +7,7 @@ public interface IEntity
 {
     string Id { get; }
     [BsonIgnore]
-    IReadOnlyCollection<INotification>? DomainEvents { get; }
+    List<INotification> DomainEvents { get; }
     void AddDomainEvent(INotification eventItem);
     void RemoveDomainEvent(INotification eventItem);
     void ClearDomainEvents();

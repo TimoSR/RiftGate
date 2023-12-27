@@ -17,10 +17,9 @@ public class Bid : Entity
     [BsonElement("timeStamp")]
     public DateTime TimeStamp { get; private set; }
 
-    public Bid(IIdService id, string bidderId, Price bidAmount, ITimeService timeService)
+    public Bid(string bidderId, Price bidAmount, ITimeService timeService)
     {
         Validate(bidderId, bidAmount);
-        Id = id.GenerateId();
         BidderId = bidderId;
         BidAmount = bidAmount;
         TimeStamp = timeService.GetCurrentTime();
