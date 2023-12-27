@@ -39,14 +39,14 @@ public class CreateBuyoutAuction : ICommandHandler<CreateBuyoutAuctionCommand>
         // Create a new buyout auction
         var buyoutAuction = new BuyoutAuction(command.SellerId, item, auctionLength, price);
         
+        _logger.LogInformation(
+            "Request {RequestId}: Trying to create new buyout auction with ID {AuctionID}", 
+            command.RequestId, buyoutAuction.Id);
+        
         buyoutAuction.StartAuction(_timeService);
 
         // Persist the new auction to the repository
         await _auctionRepository.InsertAsync(buyoutAuction);
-
-        _logger.LogInformation(
-            "Request {RequestId}: Created a new buyout auction with ID {AuctionID}", 
-            command.RequestId, buyoutAuction.Id);
         
         return ServiceResult.Success("Buyout auction created successfully.");
     }
