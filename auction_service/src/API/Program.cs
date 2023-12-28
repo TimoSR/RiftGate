@@ -47,6 +47,7 @@ public class Program
         builder.Services.AddSingleton(config);
 
         Console.WriteLine($"\n{serviceName}");
+        Console.WriteLine("\n###################################\n");
 
         // Custom Tools written tools to simplify development
         builder.Services.RegisterInfrastructureServices();

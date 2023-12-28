@@ -45,7 +45,7 @@ public static class MongoDbRegistration
             var databases = client.ListDatabaseNames().ToEnumerable().ToDictionary(name => name, name => name);
 
             // Print the database names to the console
-            Console.WriteLine("Connected to databases: \n");
+            Console.WriteLine("You have following collections: \n");
             foreach (var dbName in databases.Keys)
             {
                 Console.WriteLine($"* {dbName}");
