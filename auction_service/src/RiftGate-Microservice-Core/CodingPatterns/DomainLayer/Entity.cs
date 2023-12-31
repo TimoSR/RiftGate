@@ -7,17 +7,6 @@ namespace CodingPatterns.DomainLayer;
 
 public abstract class Entity : IEntity
 {
-    static Entity()
-    {
-        BsonClassMap.RegisterClassMap<Entity>(cm =>
-        {
-            cm.AutoMap();
-            cm.SetIgnoreExtraElements(true);
-            cm.MapIdMember(c => c.Id);
-            cm.UnmapMember(c => c.DomainEvents); // Ignore the DomainEvents
-        });
-    }
-
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; protected init; } = ObjectId.GenerateNewId().ToString();

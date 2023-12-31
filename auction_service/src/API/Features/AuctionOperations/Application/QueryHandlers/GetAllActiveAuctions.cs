@@ -1,4 +1,4 @@
-using API.Features.AuctionOperations.Application.DTO;
+using API.Features.AuctionOperations.Application.QueryHandlers.DTO;
 using API.Features.AuctionOperations.Domain.Repositories;
 using AutoMapper;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
