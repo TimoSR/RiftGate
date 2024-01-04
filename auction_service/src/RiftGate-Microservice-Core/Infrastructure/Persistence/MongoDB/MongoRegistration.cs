@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace Infrastructure.Persistence.MongoDB;
 
-public static class MongoDbRegistration
+public static class MongoRegistration
 {
     public static IServiceCollection AddMongoDbServices(this IServiceCollection services, ICustomConfiguration config)
     {
@@ -38,7 +38,7 @@ public static class MongoDbRegistration
             return client;
         });
 
-        services.AddSingleton<IMongoDbManager, MongoDbManager>(sp =>
+        services.AddSingleton<IMongoDbManager, MongoManagerService>(sp =>
         {
             var client = sp.GetRequiredService<IMongoClient>();
             var databases = client.ListDatabaseNames().ToEnumerable().ToDictionary(name => name, name => name);
@@ -71,7 +71,7 @@ public static class MongoDbRegistration
                 }
             }
 
-            return new MongoDbManager(client, databaseName, databases);
+            return new MongoManagerService(client, databaseName, databases);
         });
 
         return services;

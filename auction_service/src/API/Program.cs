@@ -58,7 +58,7 @@ public class Program
         builder.Services.AddPublisherClient(config);
         // Add / Disable Subscriber 
         builder.Services.AddSubscriberClient();
-        // Add / Disable RedisCacheService
+        // Add / Disable RedisCacheManagerService
         builder.Services.AddRedisServices(config);
 
         // Adding All Pub & Sub Events with reflection
@@ -114,7 +114,7 @@ public class Program
             });
         });
         
-        // Add memory cache services
+        // Add memory cacheManager services
         builder.Services.AddMemoryCache();
         builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
         

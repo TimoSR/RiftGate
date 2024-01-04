@@ -19,8 +19,8 @@ public static class RedisRegistration
             // Check the connection status
             if (!client.IsConnected)
             {
-                Console.WriteLine("Failed to establish a connection to RedisCacheService.");
-                throw new InvalidOperationException("Cannot start application without RedisCacheService connection.");
+                Console.WriteLine("Failed to establish a connection to RedisCacheManagerService.");
+                throw new InvalidOperationException("Cannot start application without RedisCacheManagerService connection.");
             }
 
             Console.WriteLine("\n###################################");
@@ -34,7 +34,7 @@ public static class RedisRegistration
             }
             else
             {
-                throw new InvalidOperationException("Unexpected response from RedisCacheService.");
+                throw new InvalidOperationException("Unexpected response from RedisCacheManagerService.");
             }
             
             Console.WriteLine("\n###################################");
@@ -42,7 +42,7 @@ public static class RedisRegistration
             return client;
         });
 
-        services.AddSingleton<ICache, RedisCacheService>();
+        services.AddSingleton<ICacheManager, RedisCacheManagerService>();
 
         return services;
     }

@@ -6,12 +6,12 @@ namespace Infrastructure.Persistence.Redis;
 public class CachedRepositoryDecorator<T>: IRepository<T> where T : IAggregateRoot
 {
     private readonly IRepository<T> _decoratedRepository;
-    private readonly ICache _cache;
+    private readonly ICacheManager _cacheManager;
 
-    public CachedRepositoryDecorator(IRepository<T> decoratedRepository, ICache cache)
+    public CachedRepositoryDecorator(IRepository<T> decoratedRepository, ICacheManager cacheManager)
     {
         _decoratedRepository = decoratedRepository;
-        _cache = cache;
+        _cacheManager = cacheManager;
     }
 
     public Task<List<T>> GetAllAsync()
@@ -22,7 +22,7 @@ public class CachedRepositoryDecorator<T>: IRepository<T> where T : IAggregateRo
     public async Task<T> GetByIdAsync(string id)
     {
         var cacheKey = $"{typeof(T).Name}-{id}";
-        var cachedEntity = await _cache.GetAsync<T>(cacheKey);
+        var cachedEntity = await _cacheManager.GetAsync<T>(cacheKey);
         if (cachedEntity != null)
         {
             return cachedEntity;
@@ -31,7 +31,7 @@ public class CachedRepositoryDecorator<T>: IRepository<T> where T : IAggregateRo
         var entity = await _decoratedRepository.GetByIdAsync(id);
         if (entity != null)
         {
-            await _cache.SetAsync(cacheKey, entity, TimeSpan.FromMinutes(30));
+            await _cacheManager.SetAsync(cacheKey, entity, TimeSpan.FromMinutes(30));
         }
         return entity;
     }
@@ -50,13 +50,13 @@ public class CachedRepositoryDecorator<T>: IRepository<T> where T : IAggregateRo
     {
         await _decoratedRepository.UpdateAsync(entity);
         var cacheKey = $"{typeof(T).Name}-{entity.Id}";
-        await _cache.InvalidateAsync(cacheKey);
+        await _cacheManager.InvalidateAsync(cacheKey);
     }
 
     public async Task DeleteAsync(T entity)
     {
         await _decoratedRepository.DeleteAsync(entity);
         var cacheKey = $"{typeof(T).Name}-{entity.Id}";
-        await _cache.InvalidateAsync(cacheKey);
+        await _cacheManager.InvalidateAsync(cacheKey);
     }
 }

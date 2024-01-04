@@ -3,13 +3,13 @@ using MongoDB.Driver;
 
 namespace Infrastructure.Persistence.MongoDB;
 
-public class MongoDbManager : IMongoDbManager
+public class MongoManagerService : IMongoDbManager
 {
     private readonly IMongoClient _client;
     private readonly string _defaultDatabase;
     private readonly IDictionary<string, string> _databaseNames;
 
-    public MongoDbManager(IMongoClient client, string defaultDatabase, IDictionary<string, string> databaseNames)
+    public MongoManagerService(IMongoClient client, string defaultDatabase, IDictionary<string, string> databaseNames)
     {
         _client = client;
         _defaultDatabase = defaultDatabase; 
