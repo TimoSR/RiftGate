@@ -3,6 +3,7 @@ using API.Features.AuctionOperations.Domain;
 using API.Features.AuctionOperations.Domain.Repositories;
 using API.Features.AuctionOperations.Domain.Services;
 using API.Features.AuctionOperations.Domain.ValueObjects;
+using API.Features.AuctionOperations.Infrastructure.CachedRepositories;
 using AutoMapper;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
@@ -13,17 +14,20 @@ namespace API.Features.AuctionOperations.Application.CommandHandlers;
 public class CreateBuyoutAuction : ICommandHandler<CreateBuyoutAuctionCommand>
 {
     private readonly IAuctionRepository _auctionRepository;
+    private readonly ICachedAuctionRepository _cachedAuctionRepository;
     private readonly ILogger<CreateBuyoutAuction> _logger;
     private readonly IMapper _mapper;
     private readonly ITimeService _timeService;
 
     public CreateBuyoutAuction(
         IAuctionRepository auctionRepository,
+        ICachedAuctionRepository cachedAuctionRepository,
         ILogger<CreateBuyoutAuction> logger,
         IMapper mapper,
         ITimeService timeService)
     {
         _auctionRepository = auctionRepository ?? throw new ArgumentNullException(nameof(auctionRepository));
+        _cachedAuctionRepository = cachedAuctionRepository ?? throw new ArgumentNullException(nameof(cachedAuctionRepository));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _timeService = timeService ?? throw new ArgumentException(nameof(timeService));
