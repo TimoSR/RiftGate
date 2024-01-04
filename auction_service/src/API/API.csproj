@@ -42,13 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\AFeature\Application\Controllers\V1\REST\" />
-    <Folder Include="Features\AFeature\Application\Controllers\V1\Webhooks\" />
-    <Folder Include="Features\AFeature\Application\Controllers\V2\" />
-    <Folder Include="Features\AFeature\Domain\AggregateRoots\" />
-    <Folder Include="Features\AFeature\Domain\Repositories\1RepositoryPrAggregateRoot\" />
-    <Folder Include="Features\AFeature\Infrastructure\Repositories\" />
-    <Folder Include="Features\AFeature\Infrastructure\Services\" />
     <Folder Include="Features\AuctionAnalytics\" />
     <Folder Include="Features\AuctionOrchestrator\" />
     <Folder Include="Features\_shared\InfrastructureLayer\Utilities\" />
