@@ -21,7 +21,7 @@ public abstract class MongoRepository<T> : IRepository<T> where T : AggregateRoo
 
     private FilterDefinition<T> IdFilter(string id) => Builders<T>.Filter.Eq(aggregateRoot => aggregateRoot.Id, id);
 
-    public virtual async Task InsertAsync(T entity)
+    public virtual async Task AddAsync(T entity)
     {
         try
         {
