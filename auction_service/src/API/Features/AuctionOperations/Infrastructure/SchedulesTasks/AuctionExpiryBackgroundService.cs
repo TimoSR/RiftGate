@@ -26,7 +26,7 @@ public class AuctionExpiryBackgroundService : BackgroundService
                 await auctionExpiryChecker.CheckAndCompleteExpiredAuctions();
             }
 
-            await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken); // Adjust the time interval as needed
+            await Task.Delay(TimeSpan.FromHours(24), stoppingToken);
         }
     }
 }
