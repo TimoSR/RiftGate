@@ -3,7 +3,7 @@ using CodingPatterns.InfrastructureLayer;
 
 namespace Infrastructure.Persistence.Redis;
 
-public class CachedRepositoryDecorator<T>  where T : IAggregateRoot
+public class CachedRepositoryDecorator<T>: IRepository<T> where T : IAggregateRoot
 {
     private readonly IRepository<T> _decoratedRepository;
     private readonly ICache _cache;
@@ -12,6 +12,11 @@ public class CachedRepositoryDecorator<T>  where T : IAggregateRoot
     {
         _decoratedRepository = decoratedRepository;
         _cache = cache;
+    }
+
+    public Task<List<T>> GetAllAsync()
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<T> GetByIdAsync(string id)
@@ -29,6 +34,11 @@ public class CachedRepositoryDecorator<T>  where T : IAggregateRoot
             await _cache.SetAsync(cacheKey, entity, TimeSpan.FromMinutes(30));
         }
         return entity;
+    }
+
+    public Task SoftDeleteAsync(T entity)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task AddAsync(T entity)
