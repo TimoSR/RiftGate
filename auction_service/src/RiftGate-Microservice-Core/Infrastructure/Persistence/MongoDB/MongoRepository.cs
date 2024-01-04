@@ -19,7 +19,7 @@ public abstract class MongoRepository<T> : IRepository<T> where T : AggregateRoo
 
     protected IMongoCollection<T> GetCollection() => _dbManager.GetCollection<T>(CollectionName);
 
-    private FilterDefinition<T> IdFilter(string id) => Builders<T>.Filter.Eq("Id", id);
+    private FilterDefinition<T> IdFilter(string id) => Builders<T>.Filter.Eq(aggregateRoot => aggregateRoot.Id, id);
 
     public virtual async Task InsertAsync(T entity)
     {

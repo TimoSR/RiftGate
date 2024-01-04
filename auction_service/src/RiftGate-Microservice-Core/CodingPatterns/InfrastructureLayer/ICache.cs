@@ -1,6 +1,6 @@
-namespace Infrastructure.Persistence._Interfaces;
+namespace CodingPatterns.InfrastructureLayer;
 
-public interface ICacheManager
+public interface ICache
 {
     Task<bool> SetValueAsync(string key, string value, TimeSpan? expiry = null);
     Task<(bool IsSuccess, string Value)> GetValueAsync(string key);

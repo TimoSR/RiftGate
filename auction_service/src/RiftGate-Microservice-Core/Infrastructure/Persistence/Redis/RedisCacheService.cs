@@ -1,19 +1,15 @@
-using Infrastructure.Persistence._Interfaces;
 using StackExchange.Redis;
-using Microsoft.Extensions.Logging;
-using System;
+using CodingPatterns.InfrastructureLayer;
 
 namespace Infrastructure.Persistence.Redis;
 
-public class RedisManager : ICacheManager
+public class RedisCacheService : ICache
 {
     private readonly IConnectionMultiplexer _redisConnection;
-    private readonly ILogger<RedisManager> _logger;
 
-    public RedisManager(IConnectionMultiplexer redisConnection, ILogger<RedisManager> logger)
+    public RedisCacheService(IConnectionMultiplexer redisConnection)
     {
-        _redisConnection = redisConnection;
-        _logger = logger;
+        _redisConnection = redisConnection ?? throw new ArgumentNullException(nameof(redisConnection));
     }
 
     public async Task<bool> SetValueAsync(string key, string value, TimeSpan? expiry = null)
@@ -25,7 +21,7 @@ public class RedisManager : ICacheManager
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error setting value in Redis for key: {Key}", key);
+            //_logger.LogError(ex, "Error setting value in RedisCacheService for key: {Key}", key);
             return false;
         }
     }
@@ -40,7 +36,7 @@ public class RedisManager : ICacheManager
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error getting value from Redis for key: {Key}", key);
+            //_logger.LogError(ex, "Error getting value from RedisCacheService for key: {Key}", key);
             return (false, null);
         }
     }
@@ -54,7 +50,7 @@ public class RedisManager : ICacheManager
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error removing key from Redis: {Key}", key);
+            //_logger.LogError(ex, "Error removing key from RedisCacheService: {Key}", key);
             return false;
         }
     }
@@ -68,7 +64,7 @@ public class RedisManager : ICacheManager
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error checking key existence in Redis: {Key}", key);
+            //_logger.LogError(ex, "Error checking key existence in RedisCacheService: {Key}", key);
             return false;
         }
     }

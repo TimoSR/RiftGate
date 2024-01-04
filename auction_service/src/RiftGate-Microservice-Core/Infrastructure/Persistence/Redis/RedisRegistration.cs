@@ -1,6 +1,5 @@
+using CodingPatterns.InfrastructureLayer;
 using Infrastructure.Configuration;
-using Infrastructure.Persistence._Interfaces;
-using Infrastructure.UtilityServices._Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
@@ -20,8 +19,8 @@ public static class RedisRegistration
             // Check the connection status
             if (!client.IsConnected)
             {
-                Console.WriteLine("Failed to establish a connection to Redis.");
-                throw new InvalidOperationException("Cannot start application without Redis connection.");
+                Console.WriteLine("Failed to establish a connection to RedisCacheService.");
+                throw new InvalidOperationException("Cannot start application without RedisCacheService connection.");
             }
 
             Console.WriteLine("\n###################################");
@@ -35,7 +34,7 @@ public static class RedisRegistration
             }
             else
             {
-                throw new InvalidOperationException("Unexpected response from Redis.");
+                throw new InvalidOperationException("Unexpected response from RedisCacheService.");
             }
             
             Console.WriteLine("\n###################################");
@@ -43,7 +42,7 @@ public static class RedisRegistration
             return client;
         });
 
-        services.AddSingleton<ICacheManager, RedisManager>();
+        services.AddSingleton<ICache, RedisCacheService>();
 
         return services;
     }

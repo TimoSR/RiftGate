@@ -1,4 +1,4 @@
-namespace _SharedKernel.Patterns.IntegrationEvents.GooglePubSub._Attributes;
+namespace CodingPatterns.InfrastructureLayer.IntegrationEvents.GooglePubSub._Attributes;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class TopicNameAttribute : Attribute

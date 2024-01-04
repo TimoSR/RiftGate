@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Reflection;
-using _SharedKernel.Patterns.IntegrationEvents.GooglePubSub._Attributes;
 using API.Features._shared.ApplicationLayer;
+using CodingPatterns.InfrastructureLayer.IntegrationEvents.GooglePubSub._Attributes;
 using Google.Api.Gax.ResourceNames;
 using Google.Cloud.PubSub.V1;
 using Infrastructure.Configuration;
