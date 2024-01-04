@@ -8,7 +8,7 @@ public class CachedRepositoryDecorator<T>: IRepository<T> where T : IAggregateRo
     private readonly IRepository<T> _decoratedRepository;
     private readonly ICacheManager _cacheManager;
 
-    public CachedRepositoryDecorator(IRepository<T> decoratedRepository, ICacheManager cacheManager)
+    protected CachedRepositoryDecorator(IRepository<T> decoratedRepository, ICacheManager cacheManager)
     {
         _decoratedRepository = decoratedRepository;
         _cacheManager = cacheManager;
