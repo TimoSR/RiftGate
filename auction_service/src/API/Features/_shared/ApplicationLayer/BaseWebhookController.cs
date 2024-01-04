@@ -13,7 +13,7 @@ namespace API.Features._shared.ApplicationLayer
             _integrationEventHandler = integrationEventHandler;
         }
 
-        protected async Task<TEventData> OnEvent<TEventData>() where TEventData : class, ISubscribeIntegrationEvent
+        protected async Task<TEventData> OnEvent<TEventData>() where TEventData : class, ISubscribeEvent
         {
             using var reader = new StreamReader(Request.Body);
             var receivedEventJson = await reader.ReadToEndAsync();

@@ -1,6 +1,6 @@
 namespace CodingPatterns.InfrastructureLayer.IntegrationEvents;
 
-public interface IPublishIntegrationEvent : IIntegrationEvent
+public interface IPublishEvent : IIntegrationEvent
 {
     public string Message { get; }
 }

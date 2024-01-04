@@ -1,6 +1,6 @@
 namespace CodingPatterns.InfrastructureLayer.IntegrationEvents;
 
-public interface ISubscribeIntegrationEvent : IIntegrationEvent
+public interface ISubscribeEvent : IIntegrationEvent
 {
     
 }

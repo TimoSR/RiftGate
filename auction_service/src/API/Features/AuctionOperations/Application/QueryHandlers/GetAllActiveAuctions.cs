@@ -10,11 +10,17 @@ public class GetAllActiveAuctions : IQueryHandler<GetAllActiveAuctionsQuery, Ser
 {
     private readonly IAuctionRepository _auctionRepository;
     private readonly IMapper _mapper;
+    private readonly ILogger<GetAllActiveAuctions> _logger;
 
-    public GetAllActiveAuctions(IAuctionRepository auctionRepository, IMapper mapper)
+    public GetAllActiveAuctions(
+        IAuctionRepository auctionRepository, 
+        IMapper mapper,
+        ILogger<GetAllActiveAuctions> logger
+        )
     {
         _auctionRepository = auctionRepository;
         _mapper = mapper;
+        _logger = logger;
     }
     
     public async Task<ServiceResult<List<AuctionDTO>>> Handle(GetAllActiveAuctionsQuery query)
