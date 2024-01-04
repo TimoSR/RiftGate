@@ -42,7 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\AuctionAnalytics\" />
     <Folder Include="Features\_shared\InfrastructureLayer\Utilities\" />
   </ItemGroup>
 
