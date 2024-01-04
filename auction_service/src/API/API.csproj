@@ -25,8 +25,7 @@
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="7.0.9" />
-    <PackageReference Include="MongoDB.Driver" Version="2.20.0" />
-    <PackageReference Include="MongoDB.Driver.Core" Version="2.20.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.23.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
     <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.15" />
@@ -51,8 +50,7 @@
     <Folder Include="Features\AFeature\Domain\Repositories\1RepositoryPrAggregateRoot\" />
     <Folder Include="Features\AFeature\Infrastructure\Repositories\" />
     <Folder Include="Features\AFeature\Infrastructure\Services\" />
-    <Folder Include="Features\AuctionOperations\Application\IntegrationEvents\Published\" />
-    <Folder Include="Features\AuctionOperations\Application\IntegrationEvents\Subscribed\" />
+    <Folder Include="Features\AuctionAnalytics\" />
     <Folder Include="Features\AuctionOrchestrator\" />
     <Folder Include="Features\_shared\InfrastructureLayer\Utilities\" />
   </ItemGroup>

@@ -3,7 +3,7 @@ using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.ValueObjects;
 using AutoMapper;
 
-namespace API.Features.AuctionOperations.Application.DTO;
+namespace API.Features.AuctionOperations.Application.QueryHandlers.DTO;
 
 public record struct AuctionDTO(
     string Id,

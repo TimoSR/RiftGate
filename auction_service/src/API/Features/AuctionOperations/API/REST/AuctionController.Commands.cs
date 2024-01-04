@@ -1,10 +1,12 @@
 using API.Features.AuctionOperations.Application.CommandHandlers;
+using HotChocolate.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Features.AuctionOperations.API.REST;
 
 public partial class AuctionController
 {
+    [AllowAnonymous]
     [HttpPost("create-buyout-auction")]
     public async Task<IActionResult> CreateBuyoutAuction([FromBody] CreateBuyoutAuctionRequest request)
     {

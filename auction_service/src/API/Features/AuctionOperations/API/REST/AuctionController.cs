@@ -1,6 +1,6 @@
 using API.Features.AuctionOperations.Application.CommandHandlers;
-using API.Features.AuctionOperations.Application.DTO;
 using API.Features.AuctionOperations.Application.QueryHandlers;
+using API.Features.AuctionOperations.Application.QueryHandlers.DTO;
 using AutoMapper;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;

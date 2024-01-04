@@ -39,7 +39,7 @@ public class IntegrationEventHandler : IIntegrationEventHandler
         _protobufSerializer = protobufSerializer;
     }
 
-    public TEvent? ProcessReceivedEvent<TEvent>(string receivedEvent) where TEvent : class, ISubscribeIntegrationEvent
+    public TEvent? ProcessReceivedEvent<TEvent>(string receivedEvent) where TEvent : class, ISubscribeEvent
     {   
         var pubSubEvent = JsonConvert.DeserializeObject<PubSubEvent>(receivedEvent);
         if (pubSubEvent == null)
@@ -69,7 +69,7 @@ public class IntegrationEventHandler : IIntegrationEventHandler
         return null;
     }
     
-    private TEvent? TryDeserialize<TEvent>(string data, Func<string, TEvent?> deserializeFunc) where TEvent : class, ISubscribeIntegrationEvent
+    private TEvent? TryDeserialize<TEvent>(string data, Func<string, TEvent?> deserializeFunc) where TEvent : class, ISubscribeEvent
     {
         try
         {
@@ -91,7 +91,7 @@ public class IntegrationEventHandler : IIntegrationEventHandler
             pubSubEvent.Message.PublishTime);
     }
     
-    public async Task PublishJsonEventAsync<TEvent>(TEvent eventMessage) where TEvent : IPublishIntegrationEvent
+    public async Task PublishJsonEventAsync<TEvent>(TEvent eventMessage) where TEvent : IPublishEvent
     {
         var eventType = typeof(TEvent);
         var serializedMessage = _jsonSerializer.Serialize(eventMessage);
@@ -99,7 +99,7 @@ public class IntegrationEventHandler : IIntegrationEventHandler
         await PublishMessageAsync(eventMessage, topicId, eventType.Name, serializedMessage);
     }
 
-    public async Task PublishProtobufEventAsync<TEvent>(TEvent eventMessage) where TEvent : IPublishIntegrationEvent
+    public async Task PublishProtobufEventAsync<TEvent>(TEvent eventMessage) where TEvent : IPublishEvent
     {
         var eventType = typeof(TEvent);
         var serializedMessage = _protobufSerializer.Serialize(eventMessage);
@@ -117,7 +117,7 @@ public class IntegrationEventHandler : IIntegrationEventHandler
         return $"{_serviceName}-{eventName}";
     }
 
-    private async Task PublishMessageAsync<TEvent>(TEvent @event, string topicId, string eventType, string formattedMessage) where TEvent : IPublishIntegrationEvent
+    private async Task PublishMessageAsync<TEvent>(TEvent @event, string topicId, string eventType, string formattedMessage) where TEvent : IPublishEvent
     {
         var topicName = TopicName.FromProjectTopic(_projectId, topicId);
         

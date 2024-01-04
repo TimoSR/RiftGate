@@ -14,7 +14,7 @@ public class DomainEventDispatcher : IDomainEventDispatcher
         _mediator = mediator;
     }
 
-    public async Task DispatchEventsAsync<T>(T entity) where T : Entity
+    public async Task DispatchEventsAsync<T>(T entity) where T : AggregateRoot
     {
         var domainEvents = entity.DomainEvents?.ToList() ?? new List<INotification>();
 
