@@ -1,7 +1,7 @@
 using System.Reflection;
-using _SharedKernel.Patterns.IntegrationEvents.GooglePubSub._Attributes;
 using CodingPatterns.InfrastructureLayer.GooglePubSub;
 using CodingPatterns.InfrastructureLayer.IntegrationEvents;
+using CodingPatterns.InfrastructureLayer.IntegrationEvents.GooglePubSub._Attributes;
 using Google.Cloud.PubSub.V1;
 using Google.Protobuf;
 using Infrastructure.Configuration;

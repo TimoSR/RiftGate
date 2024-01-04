@@ -58,7 +58,7 @@ public class Program
         builder.Services.AddPublisherClient(config);
         // Add / Disable Subscriber 
         builder.Services.AddSubscriberClient();
-        // Add / Disable Redis
+        // Add / Disable RedisCacheService
         builder.Services.AddRedisServices(config);
 
         // Adding All Pub & Sub Events with reflection

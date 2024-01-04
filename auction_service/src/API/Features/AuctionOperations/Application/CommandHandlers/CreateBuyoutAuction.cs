@@ -46,7 +46,7 @@ public class CreateBuyoutAuction : ICommandHandler<CreateBuyoutAuctionCommand>
         buyoutAuction.StartAuction(_timeService);
 
         // Persist the new auction to the repository
-        await _auctionRepository.InsertAsync(buyoutAuction);
+        await _auctionRepository.AddAsync(buyoutAuction);
         
         return ServiceResult.Success("Buyout auction created successfully.");
     }

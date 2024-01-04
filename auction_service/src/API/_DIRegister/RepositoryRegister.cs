@@ -1,6 +1,5 @@
 using System.Reflection;
 using CodingPatterns.DomainLayer;
-using Infrastructure.Persistence.EventHandlers;
 
 namespace API._DIRegister;
 

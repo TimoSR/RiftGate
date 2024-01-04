@@ -1,4 +1,4 @@
-namespace _SharedKernel.Patterns.IntegrationEvents.GooglePubSub._Attributes;
+namespace CodingPatterns.InfrastructureLayer.IntegrationEvents.GooglePubSub._Attributes;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 public class EventSubscriptionAttribute : Attribute

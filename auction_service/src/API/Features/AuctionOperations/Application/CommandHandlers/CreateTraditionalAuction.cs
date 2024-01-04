@@ -27,7 +27,7 @@ public class CreateTraditionalAuction : ICommandHandler<CreateTradAuctionCommand
             var traditionalAuction = new TraditionalAuction(command.SellerId, command.Item, command.AuctionLength);
 
             // Persist the new auction to the repository
-            await _auctionRepository.InsertAsync(traditionalAuction);
+            await _auctionRepository.AddAsync(traditionalAuction);
 
             _logger.LogInformation("Created a new traditional auction with ID {AuctionID}", traditionalAuction.Id);
             return ServiceResult.Success("Traditional auction created successfully.");
