@@ -14,4 +14,8 @@ The implementations have been follow principles in the following order.
 
 # Running the Project
 
-The project can't run without the neccassary env dependencies. 
+The project can't run without the neccassary env dependencies Q.Q
+
+If you have this magical env file in your zip file? 
+
+You are lucky! Copy it into the root of the project like the .env.example!
