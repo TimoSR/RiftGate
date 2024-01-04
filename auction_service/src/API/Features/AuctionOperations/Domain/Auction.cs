@@ -11,7 +11,7 @@ namespace API.Features.AuctionOperations.Domain;
 
 [BsonDiscriminator("auction", RootClass = true)]
 [BsonKnownTypes(typeof(BuyoutAuction), typeof(TraditionalAuction))]
-public abstract class Auction : Entity, IAggregateRoot
+public abstract class Auction : AggregateRoot
 {   
     [BsonElement("startTime")]
     public DateTime StartTime { get; private set; }

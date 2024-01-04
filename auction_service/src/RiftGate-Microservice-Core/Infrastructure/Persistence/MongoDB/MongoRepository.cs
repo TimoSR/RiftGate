@@ -4,7 +4,7 @@ using MongoDB.Driver;
 
 namespace Infrastructure.Persistence.MongoDB;
 
-public abstract class MongoRepository<T> : IRepository<T> where T : Entity, IAggregateRoot
+public abstract class MongoRepository<T> : IRepository<T> where T : AggregateRoot
 {
     private string CollectionName => typeof(T).Name + "s";
     private readonly IMongoDbManager _dbManager;
