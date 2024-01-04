@@ -19,7 +19,6 @@ public class AuctionRepository: MongoRepository<Auction>, IAuctionRepository
     {
         var collection = GetCollection();
 
-        // Filter by IsActive
         var filter = Builders<Auction>.Filter.Eq(a => a.IsActive, true);
         
         var auctions =  await collection.Find(filter).ToListAsync();
