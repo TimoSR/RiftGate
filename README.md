@@ -11,3 +11,7 @@ The implementations have been follow principles in the following order.
 4. Don't Repeat Yourself
 5. Command / Query Pattern
 6. Domain Driven Design
+
+# Running the Project
+
+The project can't run without the neccassary env dependencies. 
