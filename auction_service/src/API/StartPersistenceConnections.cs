@@ -9,7 +9,7 @@ namespace API
         private readonly IMongoDbManager _mongoDbManager;
         private readonly PubTopicsRegister _pubTopicsRegister;
         private readonly SubTopicsRegister _subTopicsRegister;
-        private readonly ICache _cache;
+        private readonly ICacheManager _cacheManager;
         private readonly ILogger<StartPersistenceConnections> _logger;
 
         public StartPersistenceConnections(IServiceProvider serviceProvider, ILogger<StartPersistenceConnections> logger)
@@ -17,7 +17,7 @@ namespace API
             _mongoDbManager = serviceProvider.GetService<IMongoDbManager>();
             _pubTopicsRegister = serviceProvider.GetService<PubTopicsRegister>();
             _subTopicsRegister = serviceProvider.GetService<SubTopicsRegister>();
-            _cache = serviceProvider.GetService<ICache>();
+            _cacheManager = serviceProvider.GetService<ICacheManager>();
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -40,7 +40,7 @@ namespace API
                 // Handle this situation as needed.
             }
 
-            if (_cache == null)
+            if (_cacheManager == null)
             {
                 _logger.LogWarning("CacheManager is not configured.");
             }

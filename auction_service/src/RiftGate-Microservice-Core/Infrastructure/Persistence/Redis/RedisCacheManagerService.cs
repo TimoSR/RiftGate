@@ -4,11 +4,11 @@ using Newtonsoft.Json;
 
 namespace Infrastructure.Persistence.Redis;
 
-public class RedisCacheService : ICache
+public class RedisCacheManagerService : ICacheManager
 {
     private readonly IDatabase _database;
 
-    public RedisCacheService(IConnectionMultiplexer redisConnection)
+    public RedisCacheManagerService(IConnectionMultiplexer redisConnection)
     {
         _database = redisConnection.GetDatabase() ?? throw new ArgumentNullException(nameof(redisConnection));
     }
