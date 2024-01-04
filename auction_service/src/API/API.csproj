@@ -43,7 +43,6 @@
 
   <ItemGroup>
     <Folder Include="Features\AuctionAnalytics\" />
-    <Folder Include="Features\AuctionOrchestrator\" />
     <Folder Include="Features\_shared\InfrastructureLayer\Utilities\" />
   </ItemGroup>
 
