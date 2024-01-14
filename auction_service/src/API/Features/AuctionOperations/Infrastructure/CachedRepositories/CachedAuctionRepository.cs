@@ -8,11 +8,11 @@ namespace API.Features.AuctionOperations.Infrastructure.CachedRepositories;
 
 public class CachedAuctionRepository : CachedRepositoryDecorator<Auction>, ICachedAuctionRepository
 {
-    private readonly IAuctionRepository _decoratedRepository;
+    private readonly IAuctionRepository _repository;
     
-    public CachedAuctionRepository(IAuctionRepository decoratedRepository, ICacheManager cacheManager) : base(decoratedRepository, cacheManager)
+    public CachedAuctionRepository(IAuctionRepository repository, ICacheManager cacheManager) : base(repository, cacheManager)
     {
-        _decoratedRepository = decoratedRepository ?? throw new ArgumentNullException(nameof(decoratedRepository));
+        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
     public Task<List<Auction>> GetAllActiveAuctionsAsync()
