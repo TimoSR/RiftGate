@@ -18,6 +18,11 @@ public class CachedRepositoryDecorator<T>: IRepository<T> where T : IAggregateRo
     {
         throw new NotImplementedException();
     }
+    
+    public Task SoftDeleteAsync(T entity)
+    {
+        throw new NotImplementedException();
+    }
 
     public async Task<T> GetByIdAsync(string id)
     {
@@ -33,12 +38,8 @@ public class CachedRepositoryDecorator<T>: IRepository<T> where T : IAggregateRo
         {
             await _cacheManager.SetAsync(cacheKey, entity, TimeSpan.FromMinutes(30));
         }
+        
         return entity;
-    }
-
-    public Task SoftDeleteAsync(T entity)
-    {
-        throw new NotImplementedException();
     }
 
     public async Task AddAsync(T entity)

@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Reflection;
-using API.Features._shared.ApplicationLayer;
 using CodingPatterns.InfrastructureLayer.IntegrationEvents.GooglePubSub._Attributes;
 using Google.Api.Gax.ResourceNames;
 using Google.Cloud.PubSub.V1;
+using Infrastructure.API;
 using Infrastructure.Configuration;
 
 namespace API._DIRegister;
@@ -62,7 +62,7 @@ public class SubTopicsRegister
         Console.WriteLine("\nRegistering Push Subscriptions:");
 
         var controllers = Assembly.GetExecutingAssembly().ExportedTypes
-            .Where(t => t.IsSubclassOf(typeof(BaseWebhookController)))
+            .Where(t => t.IsSubclassOf(typeof(IntegrationEventListeners)))
             .ToArray();
 
         foreach (var controller in controllers)
