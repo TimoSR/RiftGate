@@ -17,14 +17,15 @@ namespace API.Features.AuctionOperations.API.EventListeners;
 [Authorize]
 public class UserAuctionSubscriptions : IntegrationEventListeners
 {
-    private const string UserService = "auction-service"; 
+    private const string UserService = "auction-service";
+    private ILogger<UserAuctionSubscriptions> _logger;
     
     public UserAuctionSubscriptions(
         IIntegrationEventHandler integrationEventHandler,
-        IProtobufSerializer protobufSerializer
-    ) : base(integrationEventHandler, protobufSerializer)
+        IProtobufSerializer protobufSerializer,
+        ILogger<UserAuctionSubscriptions> logger) : base(integrationEventHandler, protobufSerializer)
     {
-
+        _logger = logger;
     }
     
     [AllowAnonymous]
@@ -32,11 +33,11 @@ public class UserAuctionSubscriptions : IntegrationEventListeners
     [EventSubscription($"{UserService}-AuctionStartedTopic")]
     public async Task<IActionResult> HandleAuctionStartedEvent()
     {
-        Console.WriteLine("Something");
         var data = await OnEvent<AuctionStartedIntegrationEvent>();
-        Console.Write($"Testing Serialization Data is Programmable. " +
-                      $"AuctionId: {data?.AuctionId} " +
-                      $"StartTime: {data?.StartTime}");
+        _logger.LogInformation(
+            $"Testing Serialization Data is Programmable. " +
+            $"AuctionId: {data?.AuctionId} " +
+            $"StartTime: {data?.StartTime} (UTC)");
         return Ok();
     }
 }
