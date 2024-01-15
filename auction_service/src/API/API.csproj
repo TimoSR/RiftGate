@@ -42,7 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\AuctionOperations\Application\EventHandlers\Topics\" />
     <Folder Include="Features\_shared\" />
   </ItemGroup>
 

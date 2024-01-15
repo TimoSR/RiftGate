@@ -1,6 +1,6 @@
 namespace CodingPatterns.InfrastructureLayer.IntegrationEvents.GooglePubSub._Attributes;
 
-[AttributeUsage(AttributeTargets.Class)]
+[AttributeUsage(AttributeTargets.Struct)]
 public class TopicNameAttribute : Attribute
 {
     public string Name { get; }
