@@ -22,12 +22,15 @@ public class AuctionStartedHandler : INotificationHandler<AuctionStartedEvent>
     {
         _logger.LogInformation(notification.Message);
         
-        var integrationEvent = new AuctionStartedIntEvent
-        {
-            AuctionId = notification.AuctionId,
-            StartTime = notification.StartTime
-        };
+        var integrationEvent = new AuctionStartedIntegrationEvent(
+            auctionId : notification.AuctionId,
+            startTime : notification.StartTime
+        );
 
         await _eventHandler.PublishProtobufEventAsync(integrationEvent);
+        
+        // var result = await _eventHandler.PublishProtobufEventAsync(integrationEvent);
+        //
+        // _logger.LogInformation(result);
     }
 }

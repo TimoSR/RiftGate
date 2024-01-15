@@ -7,7 +7,6 @@ using Google.Protobuf;
 using Infrastructure.Configuration;
 using Infrastructure.Persistence._Interfaces;
 using Infrastructure.UtilityServices;
-using Infrastructure.UtilityServices._Interfaces;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Encoding = System.Text.Encoding;

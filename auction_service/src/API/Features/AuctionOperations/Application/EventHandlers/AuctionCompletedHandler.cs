@@ -22,11 +22,10 @@ public class AuctionCompletedHandler : INotificationHandler<AuctionCompletedEven
     {
         _logger.LogInformation(notification.Message);
         
-        var integrationEvent = new AuctionCompletedIntEvent
-        {
-            AuctionId = notification.AuctionId,
-            CompletionTime = notification.CompletionTime
-        };
+        var integrationEvent = new AuctionCompletedIntegrationEvent(
+            auctionId: notification.AuctionId,
+            completionTime: notification.CompletionTime
+        );
 
         await _eventHandler.PublishProtobufEventAsync(integrationEvent);
     }

@@ -7,7 +7,7 @@ namespace API.Features.AuctionOperations.Application.EventHandlers.Topics;
 
 [ProtoContract]
 [TopicName("AuctionSoldTopic")]
-public readonly record struct AuctionSoldIntEvent : IPublishEvent
+public record AuctionSoldIntegrationEvent : IPublishEvent
 {
     [ProtoMember(1)]
     public string AuctionId { get; init; }
@@ -18,7 +18,7 @@ public readonly record struct AuctionSoldIntEvent : IPublishEvent
     [ProtoMember(3)]
     public DateTime SellingTime { get; init; }
 
-    public AuctionSoldIntEvent(string auctionId, Bid winningBid, DateTime sellingTime)
+    public AuctionSoldIntegrationEvent(string auctionId, Bid winningBid, DateTime sellingTime)
     {
         AuctionId = auctionId;
         WinningBid = winningBid;

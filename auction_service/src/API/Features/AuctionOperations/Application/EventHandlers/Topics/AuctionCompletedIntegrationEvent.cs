@@ -6,21 +6,21 @@ using System;
 namespace API.Features.AuctionOperations.Application.EventHandlers.Topics;
 
 [ProtoContract]
-[TopicName("AuctionStartedTopic")]
-public readonly record struct AuctionStartedIntEvent : IPublishEvent
+[TopicName("AuctionCompletedTopic")]
+public record AuctionCompletedIntegrationEvent : IPublishEvent
 {
     [ProtoMember(1)]
     public string AuctionId { get; init; }
 
     [ProtoMember(2)]
-    public DateTime StartTime { get; init; }
+    public DateTime CompletionTime { get; init; }
 
-    public AuctionStartedIntEvent(string auctionId, DateTime startTime)
+    public AuctionCompletedIntegrationEvent(string auctionId, DateTime completionTime)
     {
         AuctionId = auctionId;
-        StartTime = startTime;
+        CompletionTime = completionTime;
     }
 
     public string Message => 
-        $"Event: Auction {AuctionId} started at {StartTime:yyyy-MM-dd HH:mm:ss} (UTC).";
+        $"Auction {AuctionId} completed at {CompletionTime:yyyy-MM-dd HH:mm:ss} (UTC).";
 }
