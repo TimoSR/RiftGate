@@ -31,3 +31,4 @@ public partial class AuctionController
         return Ok(result.Messages);
     }
 }
+
