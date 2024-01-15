@@ -23,7 +23,7 @@ public class UserAuctionSubscriptions : IntegrationEventListeners
     public UserAuctionSubscriptions(
         IIntegrationEventHandler integrationEventHandler,
         IProtobufSerializer protobufSerializer,
-        ILogger<UserAuctionSubscriptions> logger) : base(integrationEventHandler, protobufSerializer)
+        ILogger<UserAuctionSubscriptions> logger) : base(integrationEventHandler, protobufSerializer, logger)
     {
         _logger = logger;
     }
@@ -35,7 +35,7 @@ public class UserAuctionSubscriptions : IntegrationEventListeners
     {
         var data = await OnEvent<AuctionStartedIntegrationEvent>();
         _logger.LogInformation(
-            $"Testing Serialization Data is Programmable. " +
+            $"Testing PubSub Event Data is Programmable after deserialization. " +
             $"AuctionId: {data?.AuctionId} " +
             $"StartTime: {data?.StartTime} (UTC)");
         return Ok();
