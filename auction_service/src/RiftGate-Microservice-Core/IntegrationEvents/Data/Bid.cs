@@ -3,7 +3,7 @@ using ProtoBuf;
 namespace IntegrationEvents.Data;
 
 [ProtoContract]
-public class Bid
+public record Bid
 {
     [ProtoMember(1)]
     public Price BidAmount { get; set; }

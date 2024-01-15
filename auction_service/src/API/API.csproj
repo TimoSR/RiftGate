@@ -42,8 +42,4 @@
     <ProjectReference Include="..\RiftGate-Microservice-Core\IntegrationEvents\IntegrationEvents.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\AuctionOperations\API\EventListeners\Subscriptions\" />
-  </ItemGroup>
-
 </Project>
