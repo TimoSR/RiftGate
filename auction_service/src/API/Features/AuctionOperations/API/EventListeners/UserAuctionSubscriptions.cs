@@ -1,10 +1,11 @@
-using API.Features.AuctionOperations.API.EventListeners.Subscriptions;
+
 using CodingPatterns.InfrastructureLayer.IntegrationEvents.GooglePubSub._Attributes;
 using Infrastructure.API;
 using Infrastructure.Persistence._Interfaces;
 using Infrastructure.Swagger;
 using Infrastructure.Swagger.Attributes;
 using Infrastructure.UtilityServices;
+using IntegrationEvents;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,9 @@ namespace API.Features.AuctionOperations.API.EventListeners;
 [Authorize]
 public class UserAuctionSubscriptions : IntegrationEventListeners
 {
+    
+    // This class can be used to trigger commands, and by that trigger new domain events in the domain that will be handled. 
+    
     private const string UserService = "auction-service";
     private ILogger<UserAuctionSubscriptions> _logger;
     

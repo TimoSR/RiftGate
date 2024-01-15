@@ -1,9 +1,8 @@
-using API.Features.AuctionOperations.Domain.Entities;
 using CodingPatterns.InfrastructureLayer.IntegrationEvents;
-using CodingPatterns.InfrastructureLayer.IntegrationEvents.GooglePubSub._Attributes;
+using IntegrationEvents.Data;
 using ProtoBuf;
 
-namespace API.Features.AuctionOperations.API.EventListeners.Subscriptions;
+namespace IntegrationEvents;
 
 [ProtoContract]
 public record AuctionSoldIntegrationEvent : ISubscribeEvent

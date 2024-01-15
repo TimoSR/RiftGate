@@ -1,7 +1,7 @@
 using CodingPatterns.InfrastructureLayer.IntegrationEvents;
 using ProtoBuf;
 
-namespace API.Features.AuctionOperations.API.EventListeners.Subscriptions;
+namespace IntegrationEvents;
 
 [ProtoContract]
 public record AuctionStartedIntegrationEvent : ISubscribeEvent

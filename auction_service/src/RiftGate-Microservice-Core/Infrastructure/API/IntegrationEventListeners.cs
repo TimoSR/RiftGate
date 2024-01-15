@@ -27,7 +27,7 @@ public abstract class IntegrationEventListeners : ControllerBase
         using var reader = new StreamReader(Request.Body);
         var receivedEventJson = await reader.ReadToEndAsync();
         var pubSubEvent = JsonConvert.DeserializeObject<PubSubEvent>(receivedEventJson);
-        _logger.LogInformation($"Received {pubSubEvent.Message.Attributes.EventType}");
+        _logger.LogInformation($"Received: {pubSubEvent.Message.Attributes.EventType} at [{DateTime.UtcNow} (UTC)]");
         byte[] data = Convert.FromBase64String(pubSubEvent.Message.Data);
         string decodedString = Encoding.UTF8.GetString(data);
         return _protobufSerializer.Deserialize<TEventData>(decodedString);

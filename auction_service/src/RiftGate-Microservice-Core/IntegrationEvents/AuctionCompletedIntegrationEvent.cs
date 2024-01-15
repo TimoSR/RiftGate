@@ -1,11 +1,9 @@
 using CodingPatterns.InfrastructureLayer.IntegrationEvents;
-using CodingPatterns.InfrastructureLayer.IntegrationEvents.GooglePubSub._Attributes;
 using ProtoBuf;
 
-namespace API.Features.AuctionOperations.API.EventListeners.Subscriptions;
+namespace IntegrationEvents;
 
 [ProtoContract]
-[TopicName("AuctionCompletedTopic")]
 public record AuctionCompletedIntegrationEvent : ISubscribeEvent
 {
     [ProtoMember(1)]

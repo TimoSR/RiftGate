@@ -74,13 +74,11 @@ public record struct CreateBuyoutAuctionRequest : IRequest
 {
     public Guid RequestId { get; set; }
     [Required(ErrorMessage = $"{nameof(SellerId)} is required.")]
-    //[StringLength(24, ErrorMessage = $"{nameof(SellerId)} must be a 24-character string.", MinimumLength = 24)]
     [HexString(24)]
     public string SellerId { get; set; }
 
     // Item properties
     [Required(ErrorMessage = $"{nameof(ItemId)} is required.")]
-    //[StringLength(24, ErrorMessage = $"{nameof(ItemId)} must be a 24-character string.", MinimumLength = 24)]
     [HexString(24)]
     public string ItemId { get; set; }
 
