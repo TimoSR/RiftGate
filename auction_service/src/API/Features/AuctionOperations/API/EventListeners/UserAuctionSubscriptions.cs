@@ -17,6 +17,9 @@ namespace API.Features.AuctionOperations.API.EventListeners;
 [Authorize]
 public class UserAuctionSubscriptions : IntegrationEventListeners
 {
+    
+    // This class can be used to trigger commands, and by that trigger new domain events in the domain that will be handled. 
+    
     private const string UserService = "auction-service";
     private ILogger<UserAuctionSubscriptions> _logger;
     
