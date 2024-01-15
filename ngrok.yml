@@ -1,0 +1,9 @@
+version: 2
+authtoken: 2Lzxw6HRkenxQ5gwmzzumwa7PRP_7Ed3tKpazs1BLemT25r6X
+tunnels:
+  first:
+    proto: http
+    addr: http://localhost:5284
+  second:
+    proto: http
+    addr: https://localhost:7076

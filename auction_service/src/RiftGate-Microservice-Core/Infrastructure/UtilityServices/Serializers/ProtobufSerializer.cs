@@ -1,4 +1,3 @@
-using Infrastructure.UtilityServices._Interfaces;
 using ProtoBuf;
 
 namespace Infrastructure.UtilityServices.Serializers;

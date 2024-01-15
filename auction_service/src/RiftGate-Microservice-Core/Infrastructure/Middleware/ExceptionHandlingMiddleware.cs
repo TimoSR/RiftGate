@@ -1,6 +1,8 @@
+using System.Text.Json;
+using Infrastructure.Persistence.MongoDB;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace Infrastructure.Middleware;
 
@@ -8,11 +10,13 @@ public class ExceptionHandlingMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger<ExceptionHandlingMiddleware> _logger;
+    private readonly IWebHostEnvironment _env;
 
-    public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
+    public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger, IWebHostEnvironment env)
     {
         _next = next;
         _logger = logger;
+        _env = env;
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -23,29 +27,56 @@ public class ExceptionHandlingMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An unhandled exception has occurred.");
             await HandleExceptionAsync(context, ex);
         }
     }
 
-    private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+    private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        // You can customize the response based on the exception type
-        context.Response.ContentType = "application/json";
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-
-        return context.Response.WriteAsync(new ErrorDetails
+        // Enhanced error details to include request path and method
+        var errorDetails = new
         {
-            StatusCode = context.Response.StatusCode,
-            Message = "An internal server error occurred." // Don't expose internal details
-        }.ToString());
+            //TraceIdentifier = context.TraceIdentifier,
+            //RequestPath = context.Request.Path,
+            //RequestMethod = context.Request.Method,
+            ExceptionType = exception.GetType().Name,
+            //Message = exception.Message
+            //StackTrace = exception.StackTrace
+        };
+
+        var (statusCode, userMessage) = exception switch
+        {
+            ArgumentNullException _ => 
+                (StatusCodes.Status400BadRequest, exception.Message),
+
+            ArgumentException _ => 
+                (StatusCodes.Status400BadRequest, exception.Message),
+            
+            MongoRepositoryNotFoundException _ => 
+                (StatusCodes.Status404NotFound, exception.Message),
+
+            MongoRepositoryConnectionException _ => 
+                (StatusCodes.Status503ServiceUnavailable, exception.Message),
+
+            MongoRepositoryException _ => 
+                (StatusCodes.Status500InternalServerError, exception.Message),
+
+            _ => 
+                (StatusCodes.Status500InternalServerError, exception.Message)
+        };
+
+        _logger.LogError(exception, 
+            "LOG: Error occurred. TraceIdentifier: {TraceIdentifier}, RequestMethod: {RequestMethod}, RequestPath: {RequestPath}, " +
+            "StatusCode: {StatusCode}, Exception: {ExceptionType}", 
+            context.TraceIdentifier, context.Request.Method, context.Request.Path, statusCode, exception.GetType().Name);
+
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = statusCode;
+
+        //var result = JsonSerializer.Serialize(new { error = userMessage, detail = errorDetails });
+        var result = JsonSerializer.Serialize(new { error = userMessage });
+        
+        await context.Response.WriteAsync(result);
     }
 }
 
-public class ErrorDetails
-{
-    public int StatusCode { get; set; }
-    public string Message { get; set; }
-
-    public override string ToString() => JsonConvert.SerializeObject(this);
-}
