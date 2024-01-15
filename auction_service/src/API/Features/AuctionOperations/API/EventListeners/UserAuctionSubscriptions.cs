@@ -1,10 +1,11 @@
-using API.Features.AuctionOperations.API.EventListeners.Subscriptions;
+
 using CodingPatterns.InfrastructureLayer.IntegrationEvents.GooglePubSub._Attributes;
 using Infrastructure.API;
 using Infrastructure.Persistence._Interfaces;
 using Infrastructure.Swagger;
 using Infrastructure.Swagger.Attributes;
 using Infrastructure.UtilityServices;
+using IntegrationEvents;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

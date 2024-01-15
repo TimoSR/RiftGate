@@ -39,10 +39,11 @@
   <ItemGroup>
     <ProjectReference Include="..\RiftGate-Microservice-Core\CodingPatterns\CodingPatterns.csproj" />
     <ProjectReference Include="..\RiftGate-Microservice-Core\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\RiftGate-Microservice-Core\IntegrationEvents\IntegrationEvents.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\_shared\" />
+    <Folder Include="Features\AuctionOperations\API\EventListeners\Subscriptions\" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 using CodingPatterns.InfrastructureLayer.IntegrationEvents;
 
-namespace API.Features.AuctionOperations.API.EventListeners.Subscriptions;
+namespace IntegrationEvents;
 
 public record AuctionExpiredIntegrationEvent : ISubscribeEvent
 {
