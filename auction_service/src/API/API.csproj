@@ -43,6 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\AuctionOperations\API\GraphQL\" />
     <Folder Include="Features\AuctionOperations\Application\CommandHandlers\CreateTraditionalAuction\EventHandlers\" />
     <Folder Include="Features\AuctionOperations\Application\CommandHandlers\DeleteAuction\EventHandlers\" />
   </ItemGroup>
