@@ -1,6 +1,5 @@
 using API.Features.AuctionOperations.Domain.Entities;
 using CodingPatterns.DomainLayer;
-using MongoDB.Driver;
 
 namespace API.Features.AuctionOperations.Domain.Repositories;
 

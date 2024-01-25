@@ -1,7 +1,7 @@
 using API.Features.AuctionOperations.Domain;
 using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Repositories;
-using CodingPatterns.DomainLayer;
+using CodingPatterns.InfrastructureLayer;
 using Infrastructure.Persistence._Interfaces;
 using Infrastructure.Persistence.MongoDB;
 using MongoDB.Bson;

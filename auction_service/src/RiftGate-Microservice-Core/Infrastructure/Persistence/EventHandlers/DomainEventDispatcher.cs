@@ -1,4 +1,5 @@
 using CodingPatterns.DomainLayer;
+using CodingPatterns.InfrastructureLayer;
 using MediatR;
 
 namespace Infrastructure.Persistence.EventHandlers;

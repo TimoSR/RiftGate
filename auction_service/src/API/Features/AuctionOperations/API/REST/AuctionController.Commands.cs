@@ -1,4 +1,7 @@
 using API.Features.AuctionOperations.Application.CommandHandlers;
+using API.Features.AuctionOperations.Application.CommandHandlers.CompleteAuction;
+using API.Features.AuctionOperations.Application.CommandHandlers.CreateBuyoutAuction;
+using API.Features.AuctionOperations.Application.CommandHandlers.PlaceBid;
 using HotChocolate.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,3 +34,4 @@ public partial class AuctionController
         return Ok(result.Messages);
     }
 }
+

@@ -1,4 +1,5 @@
     using CodingPatterns.DomainLayer;
+    using CodingPatterns.InfrastructureLayer;
     using Google.Cloud.PubSub.V1;
     using Grpc.Core;
     using Infrastructure.Configuration;

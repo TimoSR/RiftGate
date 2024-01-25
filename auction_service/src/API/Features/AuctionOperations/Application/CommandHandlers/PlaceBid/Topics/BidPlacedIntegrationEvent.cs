@@ -1,9 +1,9 @@
+using API.Features.AuctionOperations.Domain.Entities;
 using CodingPatterns.InfrastructureLayer.IntegrationEvents;
 using CodingPatterns.InfrastructureLayer.IntegrationEvents.GooglePubSub._Attributes;
 using ProtoBuf;
-using API.Features.AuctionOperations.Domain.Entities;
 
-namespace API.Features.AuctionOperations.Application.EventHandlers.Topics;
+namespace API.Features.AuctionOperations.Application.CommandHandlers.PlaceBid.Topics;
 
 [ProtoContract]
 [TopicName("BidPlacedTopic")]

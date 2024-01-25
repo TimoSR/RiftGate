@@ -1,4 +1,5 @@
 using CodingPatterns.DomainLayer;
+using CodingPatterns.InfrastructureLayer;
 using Infrastructure.Persistence._Interfaces;
 using MongoDB.Driver;
 
