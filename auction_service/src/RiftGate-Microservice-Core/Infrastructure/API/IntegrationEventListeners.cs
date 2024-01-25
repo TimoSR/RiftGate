@@ -21,6 +21,10 @@ public abstract class IntegrationEventListeners : ControllerBase
         _protobufSerializer = protobufSerializer;
         _logger = logger;
     }
+    
+    // This needs to be moved to somewhere else, and used as a method.
+    // There where something about returning a string
+    // Also to adhere to single responsibility principle it should not be in the integrationEventHandler
 
     protected async Task<TEventData?> OnEvent<TEventData>() where TEventData : class, ISubscribeEvent
     {
