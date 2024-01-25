@@ -1,4 +1,6 @@
-namespace CodingPatterns.DomainLayer;
+using CodingPatterns.DomainLayer;
+
+namespace CodingPatterns.InfrastructureLayer;
 
 public interface IDomainEventDispatcher
 {
