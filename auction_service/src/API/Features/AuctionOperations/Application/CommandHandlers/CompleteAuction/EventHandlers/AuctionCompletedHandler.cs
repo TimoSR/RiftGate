@@ -1,9 +1,9 @@
-using API.Features.AuctionOperations.Application.EventHandlers.Topics;
+using API.Features.AuctionOperations.Application.CommandHandlers.CompleteAuction.Topics;
 using API.Features.AuctionOperations.Domain.Events;
 using Infrastructure.Persistence._Interfaces;
 using MediatR;
 
-namespace API.Features.AuctionOperations.Application.EventHandlers;
+namespace API.Features.AuctionOperations.Application.CommandHandlers.CompleteAuction.EventHandlers;
 
 public class AuctionCompletedHandler : INotificationHandler<AuctionCompletedEvent>
 {

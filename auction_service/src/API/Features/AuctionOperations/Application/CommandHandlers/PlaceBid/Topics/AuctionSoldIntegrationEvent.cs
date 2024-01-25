@@ -3,7 +3,7 @@ using CodingPatterns.InfrastructureLayer.IntegrationEvents;
 using CodingPatterns.InfrastructureLayer.IntegrationEvents.GooglePubSub._Attributes;
 using ProtoBuf;
 
-namespace API.Features.AuctionOperations.Application.EventHandlers.Topics;
+namespace API.Features.AuctionOperations.Application.CommandHandlers.PlaceBid.Topics;
 
 [ProtoContract]
 [TopicName("AuctionSoldTopic")]

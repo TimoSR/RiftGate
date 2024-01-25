@@ -5,7 +5,7 @@ using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
 using Infrastructure.ValidationAttributes;
 
-namespace API.Features.AuctionOperations.Application.CommandHandlers;
+namespace API.Features.AuctionOperations.Application.CommandHandlers.CompleteAuction;
 
 public class CompleteAuction : ICommandHandler<CompleteAuctionCommand>
 {

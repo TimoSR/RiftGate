@@ -1,12 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using API.Features.AuctionOperations.Domain;
-using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Repositories;
 using API.Features.AuctionOperations.Domain.ValueObjects;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
 
-namespace API.Features.AuctionOperations.Application.CommandHandlers;
+namespace API.Features.AuctionOperations.Application.CommandHandlers.CreateTraditionalAuction;
 
 public class CreateTraditionalAuction : ICommandHandler<CreateTradAuctionCommand>
 {

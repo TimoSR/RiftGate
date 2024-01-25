@@ -1,6 +1,10 @@
 using API.Features.AuctionOperations.Application.CommandHandlers;
+using API.Features.AuctionOperations.Application.CommandHandlers.CompleteAuction;
+using API.Features.AuctionOperations.Application.CommandHandlers.CreateBuyoutAuction;
+using API.Features.AuctionOperations.Application.CommandHandlers.PlaceBid;
 using API.Features.AuctionOperations.Application.QueryHandlers;
 using API.Features.AuctionOperations.Application.QueryHandlers.DTO;
+using API.Features.AuctionOperations.Application.QueryHandlers.GetAllActiveAuctions;
 using AutoMapper;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;

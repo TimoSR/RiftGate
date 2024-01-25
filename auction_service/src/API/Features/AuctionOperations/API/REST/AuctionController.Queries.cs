@@ -1,4 +1,5 @@
 using API.Features.AuctionOperations.Application.QueryHandlers;
+using API.Features.AuctionOperations.Application.QueryHandlers.GetAllActiveAuctions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Features.AuctionOperations.API.REST;

@@ -4,7 +4,6 @@ using API.Features.AuctionOperations.Domain.Events;
 using API.Features.AuctionOperations.Domain.Services;
 using API.Features.AuctionOperations.Domain.ValueObjects;
 
-
 namespace UnitTests.AuctionOperations.Domain;
 
 public class BuyoutAuctionTests

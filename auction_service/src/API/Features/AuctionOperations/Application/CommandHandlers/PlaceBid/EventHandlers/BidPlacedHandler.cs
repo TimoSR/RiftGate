@@ -1,7 +1,7 @@
 using API.Features.AuctionOperations.Domain.Events;
 using MediatR;
 
-namespace API.Features.AuctionOperations.Application.EventHandlers;
+namespace API.Features.AuctionOperations.Application.CommandHandlers.PlaceBid.EventHandlers;
 
 public class BidPlacedHandler : INotificationHandler<BidPlacedEvent>
 {

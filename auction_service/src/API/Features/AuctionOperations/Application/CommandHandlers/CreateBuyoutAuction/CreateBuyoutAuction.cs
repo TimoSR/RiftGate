@@ -9,7 +9,7 @@ using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
 using Infrastructure.ValidationAttributes;
 
-namespace API.Features.AuctionOperations.Application.CommandHandlers;
+namespace API.Features.AuctionOperations.Application.CommandHandlers.CreateBuyoutAuction;
 
 public class CreateBuyoutAuction : ICommandHandler<CreateBuyoutAuctionCommand>
 {

@@ -1,4 +1,7 @@
 using API.Features.AuctionOperations.Application.CommandHandlers;
+using API.Features.AuctionOperations.Application.CommandHandlers.CompleteAuction;
+using API.Features.AuctionOperations.Application.CommandHandlers.CreateBuyoutAuction;
+using API.Features.AuctionOperations.Application.CommandHandlers.PlaceBid;
 using HotChocolate.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

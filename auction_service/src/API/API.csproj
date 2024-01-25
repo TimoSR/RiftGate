@@ -42,4 +42,9 @@
     <ProjectReference Include="..\RiftGate-Microservice-Core\IntegrationEvents\IntegrationEvents.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\AuctionOperations\Application\CommandHandlers\CreateTraditionalAuction\EventHandlers\" />
+    <Folder Include="Features\AuctionOperations\Application\CommandHandlers\DeleteAuction\EventHandlers\" />
+  </ItemGroup>
+
 </Project>

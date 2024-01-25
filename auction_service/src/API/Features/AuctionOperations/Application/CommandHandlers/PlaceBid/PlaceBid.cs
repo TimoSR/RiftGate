@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using API.Features.AuctionOperations.Domain;
 using API.Features.AuctionOperations.Domain.Entities;
 using API.Features.AuctionOperations.Domain.Repositories;
 using API.Features.AuctionOperations.Domain.Services;
@@ -8,9 +7,8 @@ using AutoMapper;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
 using Infrastructure.ValidationAttributes;
-using MongoDB.Bson;
 
-namespace API.Features.AuctionOperations.Application.CommandHandlers;
+namespace API.Features.AuctionOperations.Application.CommandHandlers.PlaceBid;
 
 public class PlaceBid : ICommandHandler<PlaceBidCommand>
 {

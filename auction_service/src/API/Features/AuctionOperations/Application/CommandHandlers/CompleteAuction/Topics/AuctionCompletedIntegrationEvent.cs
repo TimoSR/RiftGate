@@ -1,9 +1,8 @@
 using CodingPatterns.InfrastructureLayer.IntegrationEvents;
 using CodingPatterns.InfrastructureLayer.IntegrationEvents.GooglePubSub._Attributes;
 using ProtoBuf;
-using System;
 
-namespace API.Features.AuctionOperations.Application.EventHandlers.Topics;
+namespace API.Features.AuctionOperations.Application.CommandHandlers.CompleteAuction.Topics;
 
 [ProtoContract]
 [TopicName("AuctionCompletedTopic")]

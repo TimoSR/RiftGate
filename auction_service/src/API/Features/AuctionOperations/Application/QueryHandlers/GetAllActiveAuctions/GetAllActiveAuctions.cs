@@ -4,7 +4,7 @@ using AutoMapper;
 using CodingPatterns.ApplicationLayer.ApplicationServices;
 using CodingPatterns.ApplicationLayer.ServiceResultPattern;
 
-namespace API.Features.AuctionOperations.Application.QueryHandlers;
+namespace API.Features.AuctionOperations.Application.QueryHandlers.GetAllActiveAuctions;
 
 public class GetAllActiveAuctions : IQueryHandler<GetAllActiveAuctionsQuery, ServiceResult<List<AuctionDTO>>>
 {
